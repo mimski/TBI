@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loanda.Web", "Loanda.Web\Loanda.Web.csproj", "{9415F17A-1FB4-457C-93DE-EF645EB91E75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loanda.Web", "Loanda.Web\Loanda.Web.csproj", "{9415F17A-1FB4-457C-93DE-EF645EB91E75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loanda.Data", "Loanda.Data\Loanda.Data.csproj", "{A0864D05-59D9-4073-8030-4FADA4C6002E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loanda.Services", "Loanda.Services\Loanda.Services.csproj", "{D94AB4EE-A3D2-49E0-B8AA-91A7E6985CF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loanda.Services.Tests", "Loanda.Services.Tests\Loanda.Services.Tests.csproj", "{67CDAA77-5B35-4127-ABB1-2D3055DAD998}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{9415F17A-1FB4-457C-93DE-EF645EB91E75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9415F17A-1FB4-457C-93DE-EF645EB91E75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9415F17A-1FB4-457C-93DE-EF645EB91E75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0864D05-59D9-4073-8030-4FADA4C6002E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0864D05-59D9-4073-8030-4FADA4C6002E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0864D05-59D9-4073-8030-4FADA4C6002E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0864D05-59D9-4073-8030-4FADA4C6002E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D94AB4EE-A3D2-49E0-B8AA-91A7E6985CF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94AB4EE-A3D2-49E0-B8AA-91A7E6985CF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94AB4EE-A3D2-49E0-B8AA-91A7E6985CF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94AB4EE-A3D2-49E0-B8AA-91A7E6985CF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CDAA77-5B35-4127-ABB1-2D3055DAD998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67CDAA77-5B35-4127-ABB1-2D3055DAD998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67CDAA77-5B35-4127-ABB1-2D3055DAD998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67CDAA77-5B35-4127-ABB1-2D3055DAD998}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
