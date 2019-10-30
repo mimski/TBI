@@ -19,8 +19,8 @@
 <table>
 <tr>
 <td align="center">
-The application is <b>e-mail applications manager</b> - a system, capable to facilitate tracking, monitoring and processing customer loan applications coming to the bank via e-mail.
-Loanda boosts user productivity :rocket: by creating perfect productive environment.
+<b>E-mail applications manager</b> - a system, capable to facilitate tracking, monitoring and processing customer loan applications coming to the bank via e-mail.<br />
+Loanda boosts user productivity :rocket: by creating perfect productive environment.<br />
 It has the best features for getting work done :raised_hands:.
 </td>
 </tr>
