@@ -1,6 +1,4 @@
  # Loanda
-
-
 <p align="center">
   <a>
     <img src="https://img.shields.io/badge/TelerikAlpha-.NET-green" />
@@ -30,7 +28,7 @@ It has the best features for getting work done :raised_hands:.
 
 ## Simplified application process
 <p align="center">
-<img src="https://user-images.githubusercontent.com/44443424/67824297-94e8c300-face-11e9-97c0-c9d5791564ef.png" width="800px;"/>
+<img src="https://user-images.githubusercontent.com/44443424/67824297-94e8c300-face-11e9-97c0-c9d5791564ef.png" width="600px;"/>
 </p>
 
 ## Features✨
@@ -47,7 +45,7 @@ It has the best features for getting work done :raised_hands:.
 <br>
 
 ## Built with
-- [ASP.NET 2.2](https://dotnet.microsoft.com/apps/aspnet)
+- [ASP.NET Core 2.2](https://dotnet.microsoft.com/apps/aspnet)
 - [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 - [Microsoft Entity Framework Core 2.2.6](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/2.2.6)
 
