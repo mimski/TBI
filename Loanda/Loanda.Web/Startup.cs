@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Loanda.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Loanda.Data.Context;
+using Loanda.Entities;
+using Loanda.Web.Providers;
 
 namespace Loanda.Web
 {
@@ -44,6 +46,9 @@ namespace Loanda.Web
                 .AddEntityFrameworkStores<LoandaContext>()
                 .AddDefaultTokenProviders();
 
+
+            services.AddScoped(typeof(IUserManager<>), typeof(UserManagerWrapper<>));
+
             //services.AddDefaultIdentity<IdentityUser>()
             //    .AddDefaultUI(UIFramework.Bootstrap4)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -74,6 +79,10 @@ namespace Loanda.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                 name: "adminArea",
+                 template: "{area:exists}/{controller=Users}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
