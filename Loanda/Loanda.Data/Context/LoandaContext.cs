@@ -1,4 +1,6 @@
-﻿using Loanda.Entities;
+﻿using Loanda.Data.JsonTools;
+using Loanda.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -21,8 +23,25 @@ namespace Loanda.Data.Context
         public virtual DbSet<EmailAttachment> EmailAttachments { get; set; }
         public virtual DbSet<EmailStatus> EmailStatuses { get; set; }
 
+        private void LoadJsonDataInDatabase(ModelBuilder modelBuilder)
+        {
+            var jsonManager = new JsonManager(modelBuilder);
+
+            //try
+            //{
+            jsonManager.RegisterJson<User>("users.json");
+            jsonManager.RegisterJson<IdentityUserRole<string>>("userRoles.json");
+            jsonManager.RegisterJson<IdentityRole>("roles.json");
+            //}
+            //catch (Exception)
+            //{
+            //    return;
+            //}
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            LoadJsonDataInDatabase(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(modelBuilder);
