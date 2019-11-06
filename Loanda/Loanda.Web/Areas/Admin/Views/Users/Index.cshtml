@@ -1,0 +1,42 @@
+﻿@model IndexViewModel
+@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Index";
+}
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<partial name="_UserGrid" model="Model.Users" />
+
+<div class="modal" id="my_modal">
+	<div class="modal-dialog">
+		<partial name="_UserModal" model="null" />
+	</div>
+</div>
+
+@section Scripts {
+	<script>
+		//Towa mi wze dushata
+		var userId;
+		function myFunction(id) {
+			userId = id;
+			$('#my_modal').modal('show');
+		}
+		$('#my_modal').on('show.bs.modal', function (e) {
+			$(e.currentTarget).find('input[name="ID"]').val(userId);
+		})
+	</script>
+    <script>
+        $(document).on("click", "#contentPager a", function () {
+            $.ajax({
+                url: $(this).attr("href"),
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    $('#content').html(result);
+                }
+            });
+            return false;
+        });
+    </script>
+	<partial name="_ValidationScriptsPartial" />
+}
