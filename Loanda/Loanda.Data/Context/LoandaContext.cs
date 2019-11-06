@@ -17,6 +17,9 @@ namespace Loanda.Data.Context
         public virtual DbSet<LoanApplication> LoanApplications { get; set; }
 
         public virtual DbSet<ReceivedEmail> ReceivedEmails { get; set; }
+        public virtual DbSet<ApplicationStatus> ApplicationStatuses { get; set; }
+        public virtual DbSet<EmailAttachment> EmailAttachments { get; set; }
+        public virtual DbSet<EmailStatus> EmailStatuses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
