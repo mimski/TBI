@@ -1,0 +1,12 @@
+﻿[
+  {
+    "Id": "31d4807f-7f5f-4ffa-90c1-a131e2d3855e",
+    "Username": "user_pesho@abv.bg",
+    "NormalizedUsername": "USER_PESHO@ABV.BG",
+    "Email": "user_pesho@abv.bg",
+    "NormalizedEmail": "USER_PESHO@ABV.BG",
+    "PasswordHash": "AQAAAAEAACcQAAAAECewgbwibVC/7nEpYLbJB26wOJyT9i8Dfcx6WFFCTnGy5xqwptVYNBIZEWK37eaaMA==",
+    "SecurityStamp": "WNDRYHCTXU3MSZ7NYBDFJQDL5VU2LBXS",
+    "ConcurrencyStamp": "715dad2a-9a3f-4a7d-bca1-e40799bb172c"
+  }
+]
