@@ -26,7 +26,7 @@ namespace Loanda.Data.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(1200);
+                        .HasMaxLength(255);
 
                     b.Property<string>("City")
                         .IsRequired()

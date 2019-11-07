@@ -1,6 +1,7 @@
 ﻿using Loanda.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using static Loanda.Data.Context.Constants.DataValidationConstants.Applicant;
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
@@ -16,15 +17,15 @@ namespace Loanda.Data.Context.EntityConfigurations
                .IsRequired();
 
             builder.Property(applicant => applicant.FirstName)
-                .HasMaxLength(120)
+                .HasMaxLength(MaxFirstNameLenght)
                 .IsRequired();
 
             builder.Property(applicant => applicant.MiddleName)
-                .HasMaxLength(120)
+                .HasMaxLength(MaxMiddleNameLenght)
                 .IsRequired(false);
 
             builder.Property(applicant => applicant.LastName)
-                .HasMaxLength(120)
+                .HasMaxLength(MaxLastNameLenght)
                 .IsRequired();
 
             builder.Property(applicant => applicant.DateOfBirth)
@@ -35,11 +36,11 @@ namespace Loanda.Data.Context.EntityConfigurations
                .IsRequired();
 
             builder.Property(applicant => applicant.Address)
-              .HasMaxLength(1200)
+              .HasMaxLength(MaxAddressLenght)
               .IsRequired();
 
             builder.Property(applicant => applicant.City)
-               .HasMaxLength(40)
+               .HasMaxLength(MaxCityLenght)
                .IsRequired();
 
             builder.Property(applicant => applicant.EmailAddress)
