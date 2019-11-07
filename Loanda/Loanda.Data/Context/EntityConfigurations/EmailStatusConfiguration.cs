@@ -1,6 +1,7 @@
 ﻿using Loanda.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using static Loanda.Data.Context.Constants.DataValidationConstants.EmailStatus;
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
@@ -13,7 +14,7 @@ namespace Loanda.Data.Context.EntityConfigurations
             builder.HasKey(emailStatuses => emailStatuses.Id);
 
             builder.Property(emailStatuses => emailStatuses.Name)
-                .HasMaxLength(20)
+                .HasMaxLength(MaxNameLenght)
                 .IsRequired();
         }
     }

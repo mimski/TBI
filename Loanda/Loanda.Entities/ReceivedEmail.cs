@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Loanda.Entities
 {
@@ -19,16 +18,16 @@ namespace Loanda.Entities
 
         public string Body { get; set; }
 
-        public ICollection<EmailAttachment> EmailAttachments { get; set; }
+        public virtual ICollection<EmailAttachment> EmailAttachments { get; set; }
 
-        public EmailStatus EmailStatus { get; set; }
+        public virtual EmailStatus EmailStatus { get; set; }
 
         public int EmailStatusId { get; set; }
 
-        public Applicant Applicant { get; set; }
+        public virtual Applicant Applicant { get; set; }
 
         public Guid ApplicantId { get; set; }
 
-        public bool IsReviewed { get; set; } = false; // TODO: Default value to be configured as false
+        public bool IsReviewed { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace Loanda.Data.Migrations
                     LastName = table.Column<string>(maxLength: 120, nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
                     PhoneNumber = table.Column<string>(nullable: false),
-                    Address = table.Column<string>(maxLength: 1200, nullable: false),
+                    Address = table.Column<string>(maxLength: 255, nullable: false),
                     City = table.Column<string>(maxLength: 40, nullable: false),
                     EmailAddress = table.Column<string>(nullable: false)
                 },

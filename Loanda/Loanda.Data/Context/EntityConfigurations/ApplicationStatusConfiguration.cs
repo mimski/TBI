@@ -1,6 +1,7 @@
 ﻿using Loanda.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using static Loanda.Data.Context.Constants.DataValidationConstants.ApplicationStatus;
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
@@ -13,7 +14,7 @@ namespace Loanda.Data.Context.EntityConfigurations
             builder.HasKey(applicationStatus => applicationStatus.Id);
 
             builder.Property(applicationStatus => applicationStatus.Name)
-                .HasMaxLength(20)
+                .HasMaxLength(MaxNameLenght)
                 .IsRequired();
         }
     }
