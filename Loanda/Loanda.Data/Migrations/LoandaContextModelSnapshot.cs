@@ -16,7 +16,7 @@ namespace Loanda.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Loanda.Entities.Applicant", b =>
@@ -25,16 +25,21 @@ namespace Loanda.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(1200);
 
                     b.Property<string>("City")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(40);
 
-                    b.Property<DateTime?>("CreatedOn");
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime?>("DateOfBirth");
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime?>("DeletedOn");
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("date");
 
                     b.Property<string>("EGN")
                         .IsRequired();
@@ -43,18 +48,25 @@ namespace Loanda.Data.Migrations
                         .IsRequired();
 
                     b.Property<string>("FirstName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(120);
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(120);
+
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(120);
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("date");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired();
-
-                    b.Property<string>("MiddleName");
-
-                    b.Property<DateTime?>("ModifiedOn");
-
-                    b.Property<string>("PhoneNumber");
 
                     b.HasKey("Id");
 
@@ -66,7 +78,9 @@ namespace Loanda.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
@@ -78,7 +92,8 @@ namespace Loanda.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired();
 
                     b.Property<long>("FileSizeInMb");
 
@@ -96,7 +111,9 @@ namespace Loanda.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
@@ -110,15 +127,20 @@ namespace Loanda.Data.Migrations
 
                     b.Property<Guid>("ApplicantId");
 
-                    b.Property<int?>("ApplicationStatusId");
+                    b.Property<int>("ApplicationStatusId");
 
-                    b.Property<DateTime?>("CreatedOn");
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime?>("DeletedOn");
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("date");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
-                    b.Property<DateTime?>("ModifiedOn");
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -138,17 +160,26 @@ namespace Loanda.Data.Migrations
 
                     b.Property<string>("Body");
 
-                    b.Property<DateTime?>("CreatedOn");
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("date");
 
                     b.Property<DateTime>("DateReceived");
 
-                    b.Property<DateTime?>("DeletedOn");
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("date");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<int>("EmailStatusId");
 
-                    b.Property<bool>("IsReviewed");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
-                    b.Property<DateTime?>("ModifiedOn");
+                    b.Property<bool>("IsReviewed")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("date");
 
                     b.Property<string>("SenderEmail")
                         .IsRequired();
@@ -160,6 +191,8 @@ namespace Loanda.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicantId");
+
+                    b.HasIndex("EmailStatusId");
 
                     b.ToTable("ReceivedEmails");
                 });
@@ -220,25 +253,6 @@ namespace Loanda.Data.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "31d4807f-7f5f-4ffa-90c1-a131e2d3855e",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "715dad2a-9a3f-4a7d-bca1-e40799bb172c",
-                            Email = "user_pesho@abv.bg",
-                            EmailConfirmed = false,
-                            IsDeleted = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USER_PESHO@ABV.BG",
-                            NormalizedUserName = "USER_PESHO@ABV.BG",
-                            PasswordHash = "AQAAAAEAACcQAAAAECewgbwibVC/7nEpYLbJB26wOJyT9i8Dfcx6WFFCTnGy5xqwptVYNBIZEWK37eaaMA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "WNDRYHCTXU3MSZ7NYBDFJQDL5VU2LBXS",
-                            TwoFactorEnabled = false,
-                            UserName = "user_pesho@abv.bg"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -262,22 +276,6 @@ namespace Loanda.Data.Migrations
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "959596e5-93e4-4272-8cfb-6e71a4254370",
-                            ConcurrencyStamp = "20d35162-b35c-4b2e-80c1-81a15bc1b2f3",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "5197310d-5d42-4337-bb59-2fd06e6a8fcd",
-                            ConcurrencyStamp = "a3bc9d45-276b-442f-bc6b-b1a5763df30d",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -347,18 +345,6 @@ namespace Loanda.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "45a3335a-44de-44f7-b77c-bfa7d3c10a7c",
-                            RoleId = "959596e5-93e4-4272-8cfb-6e71a4254370"
-                        },
-                        new
-                        {
-                            UserId = "31d4807f-7f5f-4ffa-90c1-a131e2d3855e",
-                            RoleId = "5197310d-5d42-4337-bb59-2fd06e6a8fcd"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -379,7 +365,7 @@ namespace Loanda.Data.Migrations
             modelBuilder.Entity("Loanda.Entities.EmailAttachment", b =>
                 {
                     b.HasOne("Loanda.Entities.ReceivedEmail", "ReceivedEmail")
-                        .WithMany()
+                        .WithMany("EmailAttachments")
                         .HasForeignKey("ReceivedEmailId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -391,9 +377,10 @@ namespace Loanda.Data.Migrations
                         .HasForeignKey("ApplicantId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Loanda.Entities.ApplicationStatus")
+                    b.HasOne("Loanda.Entities.ApplicationStatus", "ApplicationStatus")
                         .WithMany("LoanApplications")
-                        .HasForeignKey("ApplicationStatusId");
+                        .HasForeignKey("ApplicationStatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Loanda.Entities.ReceivedEmail", b =>
@@ -401,6 +388,11 @@ namespace Loanda.Data.Migrations
                     b.HasOne("Loanda.Entities.Applicant", "Applicant")
                         .WithMany()
                         .HasForeignKey("ApplicantId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Loanda.Entities.EmailStatus", "EmailStatus")
+                        .WithMany()
+                        .HasForeignKey("EmailStatusId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
