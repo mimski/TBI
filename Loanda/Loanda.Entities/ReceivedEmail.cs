@@ -19,11 +19,11 @@ namespace Loanda.Entities
 
         public string Body { get; set; }
 
-        // public ICollection<EmailAttachment> EmailAttachments { get; set; }
+        public ICollection<EmailAttachment> EmailAttachments { get; set; }
 
-        // public EmailStatus EmailStatus { get; set; }
+        public EmailStatus EmailStatus { get; set; }
 
-        // public int EmailStatusId { get; set; }
+        public int EmailStatusId { get; set; }
 
         public Applicant Applicant { get; set; }
 

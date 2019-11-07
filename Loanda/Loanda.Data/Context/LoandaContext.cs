@@ -41,7 +41,7 @@ namespace Loanda.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            LoadJsonDataInDatabase(modelBuilder);
+            //LoadJsonDataInDatabase(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(modelBuilder);

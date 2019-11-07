@@ -13,18 +13,18 @@ namespace Loanda.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeletedOn = table.Column<DateTime>(type: "date", nullable: true),
                     EGN = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: false),
-                    MiddleName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: false),
-                    DateOfBirth = table.Column<DateTime>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: false),
-                    City = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(maxLength: 120, nullable: false),
+                    MiddleName = table.Column<string>(maxLength: 120, nullable: true),
+                    LastName = table.Column<string>(maxLength: 120, nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(maxLength: 1200, nullable: false),
+                    City = table.Column<string>(maxLength: 40, nullable: false),
                     EmailAddress = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -38,7 +38,7 @@ namespace Loanda.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +94,7 @@ namespace Loanda.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,44 +102,16 @@ namespace Loanda.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ReceivedEmails",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    SenderEmail = table.Column<string>(nullable: false),
-                    SenderName = table.Column<string>(nullable: true),
-                    DateReceived = table.Column<DateTime>(nullable: false),
-                    Subject = table.Column<string>(nullable: true),
-                    Body = table.Column<string>(nullable: true),
-                    ApplicantId = table.Column<Guid>(nullable: false),
-                    IsReviewed = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReceivedEmails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ReceivedEmails_Applicants_ApplicantId",
-                        column: x => x.ApplicantId,
-                        principalTable: "Applicants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "LoanApplications",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeletedOn = table.Column<DateTime>(type: "date", nullable: true),
                     ApplicantId = table.Column<Guid>(nullable: false),
-                    ApplicationStatusId = table.Column<int>(nullable: true)
+                    ApplicationStatusId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,7 +127,7 @@ namespace Loanda.Data.Migrations
                         column: x => x.ApplicationStatusId,
                         principalTable: "ApplicationStatuses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -265,13 +237,48 @@ namespace Loanda.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ReceivedEmails",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeletedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    SenderEmail = table.Column<string>(nullable: false),
+                    SenderName = table.Column<string>(nullable: true),
+                    DateReceived = table.Column<DateTime>(nullable: false),
+                    Subject = table.Column<string>(nullable: true),
+                    Body = table.Column<string>(nullable: true),
+                    EmailStatusId = table.Column<int>(nullable: false),
+                    ApplicantId = table.Column<Guid>(nullable: false),
+                    IsReviewed = table.Column<bool>(nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReceivedEmails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReceivedEmails_Applicants_ApplicantId",
+                        column: x => x.ApplicantId,
+                        principalTable: "Applicants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReceivedEmails_EmailStatuses_EmailStatusId",
+                        column: x => x.EmailStatusId,
+                        principalTable: "EmailStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EmailAttachments",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     FileSizeInMb = table.Column<long>(nullable: false),
-                    Content = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: false),
                     ReceivedEmailId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -341,6 +348,11 @@ namespace Loanda.Data.Migrations
                 name: "IX_ReceivedEmails_ApplicantId",
                 table: "ReceivedEmails",
                 column: "ApplicantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReceivedEmails_EmailStatusId",
+                table: "ReceivedEmails",
+                column: "EmailStatusId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -364,9 +376,6 @@ namespace Loanda.Data.Migrations
                 name: "EmailAttachments");
 
             migrationBuilder.DropTable(
-                name: "EmailStatuses");
-
-            migrationBuilder.DropTable(
                 name: "LoanApplications");
 
             migrationBuilder.DropTable(
@@ -383,6 +392,9 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Applicants");
+
+            migrationBuilder.DropTable(
+                name: "EmailStatuses");
         }
     }
 }
