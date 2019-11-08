@@ -30,8 +30,8 @@ namespace Loanda.Data.Context
             //try
             //{
             jsonManager.RegisterJson<User>("users.json");
-            jsonManager.RegisterJson<IdentityUserRole<string>>("userRoles.json");
             jsonManager.RegisterJson<IdentityRole>("roles.json");
+            jsonManager.RegisterJson<IdentityUserRole<string>>("userRoles.json");
             //}
             //catch (Exception)
             //{
@@ -41,7 +41,7 @@ namespace Loanda.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //LoadJsonDataInDatabase(modelBuilder);
+            LoadJsonDataInDatabase(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
