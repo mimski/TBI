@@ -15,10 +15,10 @@ namespace Loanda.Services
 
         public ApplicantService(LoandaContext context)
         {
-            this.context = context;
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<Guid> Create(string firstName, string middleName, string lastName, string egn, string phoneNumber, string adress, string city)
+        public async Task<Guid> CreateAsync(string firstName, string middleName, string lastName, string egn, string phoneNumber, string adress, string city)
         {
             var applicant = new Applicant
             {
@@ -38,7 +38,7 @@ namespace Loanda.Services
             return applicant.Id;
         }
 
-        public async Task<bool> Edit(Guid id, string firstName, string middleName, string lastName, string egn, string phoneNumber, string adress, string city)
+        public async Task<bool> EditAsync(Guid id, string firstName, string middleName, string lastName, string egn, string phoneNumber, string adress, string city)
         {
             var applicant = await this.context.Applicants.FindAsync(id);
 
@@ -62,7 +62,7 @@ namespace Loanda.Services
             return true;
         }
 
-        public async Task<bool> Exists(int id)
+        public async Task<bool> ExistsAsync(Guid id)
         {
             return await this.context.Applicants.AnyAsync(applicant => applicant.Equals(id));
         }
