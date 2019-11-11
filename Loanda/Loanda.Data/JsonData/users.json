@@ -1,5 +1,15 @@
 ﻿[
   {
+    "Id": "010dbb8b-5eb3-47ef-9c53-22018551b422",
+    "Username": "Admin100@abv.bg",
+    "NormalizedUsername": "ADMIN100@ABV.BG",
+    "Email": "admin@admin.com",
+    "NormalizedEmail": "ADMIN@ADMIN.COM",
+    "PasswordHash": "AQAAAAEAACcQAAAAED1sUbN+sPoFdrWJk/ICn2vfzPbC9s6bV/ae5bApThXRg9oKJOUmtPfdAVyfpIsVRw==",
+    "SecurityStamp": "CFQ3UGEFW7IBYB5GSVN2XPABAZW4DMYC",
+    "ConcurrencyStamp": "578ddff5-8f49-48f0-a5c8-69b2bbb20552"
+  },
+  {
     "Id": "31d4807f-7f5f-4ffa-90c1-a131e2d3855e",
     "Username": "user_pesho@abv.bg",
     "NormalizedUsername": "USER_PESHO@ABV.BG",

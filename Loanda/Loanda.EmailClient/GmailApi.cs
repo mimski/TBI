@@ -3,6 +3,7 @@ using Google.Apis.Gmail.v1;
 using Google.Apis.Gmail.v1.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
+using Loanda.EmailClient.Contracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,16 +12,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Loanda.Services
+namespace Loanda.EmailClient
 {
-    public class GmailApiService
+    public class GmailApi : IGmailApi
     {
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/gmail-dotnet-quickstart.json
         static string[] Scopes = { GmailService.Scope.GmailReadonly };
         static string ApplicationName = "Gmail API .NET Quickstart";
 
-        internal static void GetEmailsFromGmail()
+        public async Task GetEmailsFromGmail()
         {
             UserCredential credential;
 
@@ -46,6 +47,8 @@ namespace Loanda.Services
                 ApplicationName = ApplicationName,
             });
 
+
+            
             // Define parameters of request.
             UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
 
@@ -67,7 +70,7 @@ namespace Loanda.Services
             {
                 var emailInfoRequest = service.Users.Messages.Get("tbiloanda@gmail.com", email.Id);
 
-                var emailInfoResponse = emailInfoRequest.ExecuteAsync().Result;
+                var emailInfoResponse =  await emailInfoRequest.ExecuteAsync();
 
                 var emailText = emailInfoResponse.Snippet;
 
@@ -116,8 +119,10 @@ namespace Loanda.Services
 
         public static string Base64Decode(string base64EncodedData)
         {
-            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
-            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            base64EncodedData = base64EncodedData.Replace('-', '+');
+            base64EncodedData = base64EncodedData.Replace('_', '/');
+            byte[] encode = Convert.FromBase64String(base64EncodedData);
+            return Encoding.UTF8.GetString(encode);
         }
     }
 }
