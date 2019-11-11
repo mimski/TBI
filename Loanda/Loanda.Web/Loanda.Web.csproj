@@ -17,6 +17,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Loanda.Data\Loanda.Data.csproj" />
+    <ProjectReference Include="..\Loanda.EmailClient\Loanda.EmailClient.csproj" />
+    <ProjectReference Include="..\Loanda.Services\Loanda.Services.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

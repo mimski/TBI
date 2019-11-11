@@ -5,13 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Loanda.Web.Models;
+using Loanda.EmailClient.Contracts;
 
 namespace Loanda.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IGmailApi gmailApi;
+
+        public HomeController(IGmailApi gmailApi)
+        {
+            this.gmailApi = gmailApi;
+        }
+
         public IActionResult Index()
         {
+            this.gmailApi.GetEmailsFromGmail();
+
             return View();
         }
 

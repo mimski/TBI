@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Loanda.Data\Loanda.Data.csproj" />
+    <PackageReference Include="Google.Apis.Gmail.v1" Version="1.42.0.1635" />
   </ItemGroup>
 
 </Project>

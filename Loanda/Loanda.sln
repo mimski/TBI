@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loanda.Services", "Loanda.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loanda.Services.Tests", "Loanda.Services.Tests\Loanda.Services.Tests.csproj", "{67CDAA77-5B35-4127-ABB1-2D3055DAD998}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loanda.Entities", "Loanda.Entities\Loanda.Entities.csproj", "{83BE326E-3ABC-42C4-A8CF-DCAE3B67401C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loanda.Entities", "Loanda.Entities\Loanda.Entities.csproj", "{83BE326E-3ABC-42C4-A8CF-DCAE3B67401C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loanda.EmailClient", "Loanda.EmailClient\Loanda.EmailClient.csproj", "{7F2FD411-13FF-4AFE-9A32-886B2775FB57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{83BE326E-3ABC-42C4-A8CF-DCAE3B67401C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83BE326E-3ABC-42C4-A8CF-DCAE3B67401C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83BE326E-3ABC-42C4-A8CF-DCAE3B67401C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F2FD411-13FF-4AFE-9A32-886B2775FB57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F2FD411-13FF-4AFE-9A32-886B2775FB57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F2FD411-13FF-4AFE-9A32-886B2775FB57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F2FD411-13FF-4AFE-9A32-886B2775FB57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
