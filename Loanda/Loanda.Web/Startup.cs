@@ -17,6 +17,8 @@ using Loanda.Services;
 using Loanda.Web.Mappers.Contracts;
 using Loanda.EmailClient;
 using Loanda.EmailClient.Contracts;
+using Loanda.Services.Mapper.Contracts;
+using Loanda.Services.Mapper;
 
 namespace Loanda.Web
 {
@@ -65,11 +67,13 @@ namespace Loanda.Web
 
             //services.AddSingleton<IMapper<BookViewModel, Book>, BookMapper>();
 
+            services.AddSingleton<IEmailDtoMapper, EmailDtoMapper>();
+
             #endregion
 
             #region Register Apis
 
-            services.AddSingleton<IGmailApi, GmailApi>();
+            services.AddScoped<IGmailApi, GmailApi>();
 
             #endregion
 

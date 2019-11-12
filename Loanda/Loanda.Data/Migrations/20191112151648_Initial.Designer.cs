@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Loanda.Data.Migrations
 {
     [DbContext(typeof(LoandaContext))]
-    [Migration("20191108202216_Initial")]
+    [Migration("20191112151648_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,7 +158,7 @@ namespace Loanda.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("ApplicantId");
+                    b.Property<Guid?>("ApplicantId");
 
                     b.Property<string>("Body");
 
@@ -170,7 +170,7 @@ namespace Loanda.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("date");
 
-                    b.Property<int>("EmailStatusId");
+                    b.Property<int?>("EmailStatusId");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -453,13 +453,11 @@ namespace Loanda.Data.Migrations
                 {
                     b.HasOne("Loanda.Entities.Applicant", "Applicant")
                         .WithMany()
-                        .HasForeignKey("ApplicantId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicantId");
 
                     b.HasOne("Loanda.Entities.EmailStatus", "EmailStatus")
                         .WithMany()
-                        .HasForeignKey("EmailStatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EmailStatusId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

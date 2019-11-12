@@ -22,11 +22,11 @@ namespace Loanda.Entities
 
         public virtual EmailStatus EmailStatus { get; set; }
 
-        public int EmailStatusId { get; set; }
+        public int? EmailStatusId { get; set; }
 
         public virtual Applicant Applicant { get; set; }
 
-        public Guid ApplicantId { get; set; }
+        public Guid? ApplicantId { get; set; }
 
         public bool IsReviewed { get; set; }
     }
