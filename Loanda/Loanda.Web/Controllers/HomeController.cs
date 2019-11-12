@@ -8,6 +8,7 @@ using Loanda.Web.Models;
 using Loanda.Web.Areas.Identity.Pages.Account;
 using Microsoft.AspNetCore.Identity;
 using Loanda.Entities;
+using Loanda.EmailClient.Contracts;
 
 namespace Loanda.Web.Controllers
 {
@@ -15,26 +16,22 @@ namespace Loanda.Web.Controllers
     {
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
-        public HomeController(SignInManager<User> signInManager, UserManager<User> userManager)
+        private readonly IGmailApi gmailApi;
+
+        public HomeController(SignInManager<User> signInManager, UserManager<User> userManager, IGmailApi gmailApi)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
-        }
-
-        private readonly IGmailApi gmailApi;
-
-        public HomeController(IGmailApi gmailApi)
-        {
             this.gmailApi = gmailApi;
         }
 
-        public IActionResult Index()
+        public async Task <IActionResult> Index()
         {
             if(User.Identity.IsAuthenticated)
             {
+                await this.gmailApi.GetEmailsFromGmail();
                 return View("Privacy");
             }
-            this.gmailApi.GetEmailsFromGmail();
 
             return View();
         }
