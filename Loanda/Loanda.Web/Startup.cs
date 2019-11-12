@@ -11,6 +11,14 @@ using Loanda.Data.Context;
 using Loanda.Entities;
 using Loanda.Web.Providers;
 using Loanda.Web.Infrastracture;
+using System.Reflection;
+using Loanda.Services.Contracts;
+using Loanda.Services;
+using Loanda.Web.Mappers.Contracts;
+using Loanda.EmailClient;
+using Loanda.EmailClient.Contracts;
+using Loanda.Services.Mapper.Contracts;
+using Loanda.Services.Mapper;
 
 namespace Loanda.Web
 {
@@ -41,6 +49,33 @@ namespace Loanda.Web
                 .AddDefaultTokenProviders();
 
             services.AddScoped(typeof(IUserManager<>), typeof(UserManagerWrapper<>));
+
+            #region Register all services from the service layer
+
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IApplicantService, ApplicantService>();
+            services.AddScoped<IEmailAttachmentService, EmailAttachmentService>();
+
+            //services.Scan(x => x.FromAssemblies(Assembly.Load("Loanda.Service"))
+            //    .AddClasses(classes => classes.Where(type => type.Name.EndWith("Service"))))
+            //    .AsImplementedInterfaces()
+            //    .WithScopedLifetime();
+
+            #endregion
+
+            #region Register all mappers
+
+            //services.AddSingleton<IMapper<BookViewModel, Book>, BookMapper>();
+
+            services.AddSingleton<IEmailDtoMapper, EmailDtoMapper>();
+
+            #endregion
+
+            #region Register Apis
+
+            services.AddScoped<IGmailApi, GmailApi>();
+
+            #endregion
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
