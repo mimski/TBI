@@ -250,8 +250,8 @@ namespace Loanda.Data.Migrations
                     DateReceived = table.Column<DateTime>(nullable: false),
                     Subject = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true),
-                    EmailStatusId = table.Column<int>(nullable: false),
-                    ApplicantId = table.Column<Guid>(nullable: false),
+                    EmailStatusId = table.Column<int>(nullable: true),
+                    ApplicantId = table.Column<Guid>(nullable: true),
                     IsReviewed = table.Column<bool>(nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -262,13 +262,13 @@ namespace Loanda.Data.Migrations
                         column: x => x.ApplicantId,
                         principalTable: "Applicants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ReceivedEmails_EmailStatuses_EmailStatusId",
                         column: x => x.EmailStatusId,
                         principalTable: "EmailStatuses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
