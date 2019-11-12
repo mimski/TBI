@@ -1,8 +1,8 @@
 ﻿
 namespace Loanda.Web.Mappers.Contracts
 {
-    public interface IMapper<TEntity, UViewModel>
+    public interface IMapper<TDto, UViewModel>
     {
-        UViewModel Map(TEntity entity);
+        UViewModel Map(TDto dto);
     }
 }

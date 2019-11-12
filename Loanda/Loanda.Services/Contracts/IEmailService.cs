@@ -9,5 +9,7 @@ namespace Loanda.Services.Contracts
     public interface IEmailService
     {
         Task<EmailDTO> CreateAsync(EmailDTO emailDto);
+
+        Task<ICollection<EmailDTO>> GetAllAsync();
     }
 }

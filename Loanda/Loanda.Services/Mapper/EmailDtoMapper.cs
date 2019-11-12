@@ -34,9 +34,14 @@ namespace Loanda.Services.Mapper
             };
         }
 
-        //public ICollection<ReceivedEmail> Map(ICollection<EmailDTO> emailDtos)
-        //{
-        //    return emailDtos.Select(this.Map().ToList());
-        //}
+        public ICollection<ReceivedEmail> Map(ICollection<EmailDTO> emailDtos)
+        {
+            return emailDtos.Select(this.Map).ToList();
+        }
+
+        public ICollection<EmailDTO> Map(ICollection<ReceivedEmail> emailDtos)
+        {
+            return emailDtos.Select(this.Map).ToList();
+        }
     }
 }

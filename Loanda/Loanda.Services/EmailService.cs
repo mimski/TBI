@@ -34,10 +34,11 @@ namespace Loanda.Services
             return emailDto;
         }
 
-        //public async Task<IEnumerable<EmailService>> GetAll()
-        //{
-        //    return await this.context.ReceivedEmails.ToListAsync();  
-        //}
-
+        public async Task<ICollection<EmailDTO>> GetAllAsync()
+        {
+            var emails = await this.context.ReceivedEmails.ToListAsync();
+           
+            return dtoMapper.Map(emails);
+        }
     }
 }
