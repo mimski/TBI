@@ -9,10 +9,10 @@
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><span class="text-white">Hello @UserManager.GetUserName(User)!</span></a>
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><span class="text-dark">Hello @UserManager.GetUserName(User)!</span></a>
             </li>
             <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link"><span class="text-white">Logout</span></button>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link"><span class="text-dark">Logout</span></button>
             </li>
         </ul>
     </form>
