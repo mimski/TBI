@@ -4,6 +4,8 @@ using Google.Apis.Gmail.v1.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Loanda.EmailClient.Contracts;
+using Loanda.Services.Contracts;
+using Loanda.Services.DTOs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +21,14 @@ namespace Loanda.EmailClient
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/gmail-dotnet-quickstart.json
         static string[] Scopes = { GmailService.Scope.GmailReadonly };
-        static string ApplicationName = "Gmail API .NET Quickstart";
+        //static string ApplicationName = "Gmail API .NET Quickstart";
+
+        private readonly IEmailService emailService;
+
+        public GmailApi(IEmailService emailService)
+        {
+            this.emailService = emailService;
+        }
 
         public async Task GetEmailsFromGmail()
         {
@@ -44,10 +53,8 @@ namespace Loanda.EmailClient
             var service = new GmailService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
+                //ApplicationName = ApplicationName,
             });
-
-
             
             // Define parameters of request.
             UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
@@ -56,15 +63,15 @@ namespace Loanda.EmailClient
 
             var emailListRespons = emailListRequest.ExecuteAsync().Result;
 
-            var from = string.Empty;
-            var receivedDate = string.Empty;
             var subject = string.Empty;
-            //byte[] attachments = null;
+            var body = string.Empty;
+            var receivedDate = string.Empty;
+            var senderEmail = string.Empty;
+            var senderName = string.Empty;
+            var from = string.Empty;
             byte attachmentSize = 0;
             var countOfAttachments = 0;
             double? totalAttachmentsSize = 0;
-            var body = string.Empty;
-
 
             foreach (var email in emailListRespons.Messages)
             {
@@ -72,12 +79,28 @@ namespace Loanda.EmailClient
 
                 var emailInfoResponse =  await emailInfoRequest.ExecuteAsync();
 
-                var emailText = emailInfoResponse.Snippet;
-
                 subject = emailInfoResponse.Payload.Headers.FirstOrDefault(e => e.Name.Equals("Subject")).Value;
-                from = emailInfoResponse.Payload.Headers.FirstOrDefault(e => e.Name.Equals("From")).Value;
+
+                from = emailInfoResponse.Payload.Headers
+                    .FirstOrDefault(e => e.Name.Equals("From"))
+                    .Value;
+
+                senderEmail = from
+                    .Split(new[] { '<', '>'}, StringSplitOptions.RemoveEmptyEntries)
+                    .ToList()
+                    .Last()
+                    .Trim();
+
+                senderName = from
+                    .Split('<')
+                    .ToList()
+                    .First()
+                    .Trim();
+
 
                 // TODO: the time zone calculations must be consider
+                //receivedDate = emailInfoResponse.Payload.Headers.FirstOrDefault(e => e.Name.Equals("Date")).Value.ToString().Split(';').ToList().Last().Trim();
+
                 receivedDate = emailInfoResponse.Payload.Headers.FirstOrDefault(e => e.Name.Equals("Date")).Value.ToString().Split(';').ToList().Last().Trim();
 
                 // Email do not have attachments
@@ -114,6 +137,17 @@ namespace Loanda.EmailClient
                 totalAttachmentsSize = 0;
                 //attachments = emailInfoResponse.Payload.Parts..Headers.FirstOrDefault(e => e.Name.Equals("Subject")).Value;
                 var tuk = string.Empty;
+
+                var emailDto = new EmailDTO
+                {
+                    Subject = subject,
+                    Body = body,
+                    //DateReceived = receivedDate,
+                    SenderName = senderName,
+                    SenderEmail = senderEmail
+                };
+
+                await this.emailService.CreateAsync(emailDto);
             }
         }
 

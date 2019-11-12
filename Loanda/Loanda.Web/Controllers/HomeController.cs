@@ -18,9 +18,9 @@ namespace Loanda.Web.Controllers
             this.gmailApi = gmailApi;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            this.gmailApi.GetEmailsFromGmail();
+            await this.gmailApi.GetEmailsFromGmail();
 
             return Redirect("Identity/Account/Login");
         }
