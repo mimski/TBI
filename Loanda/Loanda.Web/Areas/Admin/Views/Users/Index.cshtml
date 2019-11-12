@@ -1,11 +1,13 @@
 ﻿@model IndexViewModel
 @{
-    Layout = "/Views/Shared/_AdminLayout.cshtml";
+    //Layout = "/Views/Shared/_AdminLayout.cshtml";
     ViewData["Title"] = "Index";
 }
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 
 <partial name="_UserGrid" model="Model.Users" />
+
+<link rel="stylesheet" href="~/css/userPanel.css" />
 
 <div class="modal" id="my_modal">
 	<div class="modal-dialog">
@@ -15,7 +17,6 @@
 
 @section Scripts {
 	<script>
-		//Towa mi wze dushata
 		var userId;
 		function myFunction(id) {
 			userId = id;
