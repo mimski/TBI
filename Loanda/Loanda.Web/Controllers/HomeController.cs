@@ -22,7 +22,7 @@ namespace Loanda.Web.Controllers
         {
             this.gmailApi.GetEmailsFromGmail();
 
-            return View();
+            return Redirect("Identity/Account/Login");
         }
 
         public IActionResult Privacy()
