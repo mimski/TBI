@@ -46,8 +46,12 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Index">Emails</a>
+                    </li>
+
                     @*@if (User.IsInRole("Administrator"))
-                        {*@
+        {*@
                     <li class="nav-item text-black"><a class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
                     @*}*@
 
@@ -65,7 +69,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - Loanda.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2019 - Loanda - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 

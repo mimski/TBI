@@ -19,6 +19,9 @@ using Loanda.EmailClient;
 using Loanda.EmailClient.Contracts;
 using Loanda.Services.Mapper.Contracts;
 using Loanda.Services.Mapper;
+using Loanda.Web.Mappers;
+using Loanda.Web.Models.Email;
+using Loanda.Services.DTOs;
 
 namespace Loanda.Web
 {
@@ -68,6 +71,10 @@ namespace Loanda.Web
             //services.AddSingleton<IMapper<BookViewModel, Book>, BookMapper>();
 
             services.AddSingleton<IEmailDtoMapper, EmailDtoMapper>();
+
+
+            services.AddSingleton<IMapper<EmailDTO, EmailViewModel>, EmailViewModelMapper>();
+
 
             #endregion
 

@@ -10,5 +10,8 @@ namespace Loanda.Services.Mapper.Contracts
     {
         EmailDTO Map(ReceivedEmail recievedEmail);
         ReceivedEmail Map(EmailDTO recievedEmail);
+        ICollection<ReceivedEmail> Map(ICollection<EmailDTO> emailDtos);
+        ICollection<EmailDTO> Map(ICollection<ReceivedEmail> emailDtos);
+      
     }
 }
