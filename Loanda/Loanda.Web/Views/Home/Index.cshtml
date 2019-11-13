@@ -24,6 +24,12 @@
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--===============================================================================================-->
+    <style>
+        #customPass{
+            color: red;
+            margin-left: 60px;
+        }
+    </style>
 </head>
 <body>
 
@@ -40,7 +46,7 @@
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                        <input asp-for="Email" class="input100" type="text" name="email" placeholder="Email">
+                        <input asp-for="Email" class="input100" id="emailId" type="text" name="email" placeholder="Email">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -48,15 +54,19 @@
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input asp-for="Password" class="input100" type="password" name="password" placeholder="Password">
+                        <input asp-for="Password" class="input100" id="passwordId" type="password" name="password" placeholder="Password">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </span>
                     </div>
-
+                    <div>
+                        <span>
+                            <span id="customPass" ></span>
+                        </span>
+                    </div>
                     <div class="container-login100-form-btn">
-                        <button class="login100-form-btn" type="submit" asp-controller="Home" asp-action="Login">
+                        <button class="login100-form-btn" type="button" onclick="Check()" @*asp-controller="Home" asp-action="Login"*@>
                             Login
                         </button>
                     </div>
@@ -71,17 +81,12 @@
                     </div>
 
                     <div class="text-center p-t-136">
-                    
-
 
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-
-
 
     <!--===============================================================================================-->
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -99,5 +104,29 @@
     </script>
     <!--===============================================================================================-->
     <script src="js/main.js"></script>
-
+    <script>
+        function Check() {
+            let email = $("#emailId").val();
+            let password = $("#passwordId").val();
+            
+            $.ajax(
+                {
+                    type: 'post',
+                    url: "home/checkforcredentials",
+                    data: {
+                        'email': email,
+                        'password': password
+                    },
+                    success: function (result) {
+                        if (result) {
+                            window.location.replace("http://localhost:51114/Home/Privacy");
+                        }
+                        else {
+                            $('#customPass').text('Invalid Login Attempt!');
+                        }
+                    },
+                    
+            })
+        }
+    </script>
 </body>
