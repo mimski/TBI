@@ -19,15 +19,13 @@
 
                     <div class="md-form mb-5">
                         <i class="fa fa-lock prefix grey-text"></i>
-                        <input asp-for="NewPassword" type="text" class="form-control validate hidden">
-                        <label asp-for="NewPassword" data-error="wrong" data-success="right" for="form3">New Password</label>
+                        <input asp-for="NewPassword" type="text" class="form-control validate hidden"placeholder="New Password">
                         <span asp-validation-for="NewPassword" class="text-danger"></span>
                     </div>
 
                     <div class="md-form mb-4">
                         <i class="fa fa-lock prefix grey-text"></i>
-                        <input asp-for="ConfirmPassword" type="text" class="form-control validate hidden">
-                        <label data-error="wrong" data-success="right" for="form3">New Password</label>
+                        <input asp-for="ConfirmPassword" type="text" class="form-control validate hidden" placeholder="Confirm Password">
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
 
@@ -35,7 +33,7 @@
                         <strong class="p-2 bd-highlight" style="margin-top: 6px">Admin:</strong>
                         <span class="p-2 bd-highlight">
                             <label class="bs-switch">
-                                <input asp-for="IsAdmin" type="checkbox" checked>
+                                <input asp-for="IsAdmin" type="checkbox" checked="Model.IsAdmin?false:'checked'">
                                 <span class="slider round"></span>
                             </label>
                         </span>
@@ -43,7 +41,7 @@
                         <strong class="p-2 bd-highlight" style="margin-top: 6px">Locked:</strong>
                         <span class="p-2 bd-highlight">
                             <label class="bs-switch">
-                                <input asp-for="IsLocked" type="checkbox" checked>
+                                <input asp-for="IsLocked" type="checkbox" checked="Model.IsLocked?false:'checked'">
                                 <span class="slider round"></span>
                             </label>
                         </span>
