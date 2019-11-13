@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Loanda.Entities;
 using Loanda.Services.Contracts;
 using Loanda.Services.DTOs;
 using Loanda.Web.Mappers.Contracts;
@@ -14,9 +15,9 @@ namespace Loanda.Web.Controllers
     public class EmailController : Controller
     {
         private readonly IEmailService emailService;
-        private readonly IMapper<EmailDTO, EmailViewModel> emailMapper;
+        private readonly IMapper<ReceivedEmail, EmailViewModel> emailMapper;
 
-        public EmailController(IEmailService emailService, IMapper<EmailDTO, EmailViewModel> emailMapper)
+        public EmailController(IEmailService emailService, IMapper<ReceivedEmail, EmailViewModel> emailMapper)
         {
             this.emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
             this.emailMapper = emailMapper ?? throw new ArgumentNullException(nameof(emailMapper));

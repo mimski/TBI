@@ -1,4 +1,5 @@
-﻿using Loanda.Services.DTOs;
+﻿using Loanda.Entities;
+using Loanda.Services.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +9,8 @@ namespace Loanda.Services.Contracts
 {
     public interface IEmailService
     {
-        Task<EmailDTO> CreateAsync(EmailDTO emailDto);
+        Task<bool> CreateAsync(EmailDTO emailDto);
 
-        Task<ICollection<EmailDTO>> GetAllAsync();
+        Task<ICollection<ReceivedEmail>> GetAllAsync();
     }
 }
