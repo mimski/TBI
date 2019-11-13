@@ -1,20 +1,27 @@
-﻿using Loanda.Services.DTOs;
+﻿using Loanda.Entities;
+using Loanda.Services.DTOs;
 using Loanda.Web.Mappers.Contracts;
 using Loanda.Web.Models.Email;
 
 namespace Loanda.Web.Mappers
 {
-    public class EmailViewModelMapper : IMapper<EmailDTO, EmailViewModel>
+    public class EmailViewModelMapper : IMapper<ReceivedEmail, EmailViewModel>
     {
-        public EmailViewModel Map(EmailDTO entity)
+        public EmailViewModel Map(ReceivedEmail entity)
         {
             var emailViewModel = new EmailViewModel
             {
-                //Id = entity.Id,
+                IsReviewed = entity.IsReviewed,
+                Id = entity.Id,
                 Subject = entity.Subject,
                 Body = entity.Body,
                 DateReceived = entity.DateReceived,
-                //CreatedOn = entity.CreatedOn,
+                SenderEmail = entity.SenderEmail,
+                SenderName = entity.SenderName,
+                CreatedOn = entity.CreatedOn,
+                ModifiedOn = entity.ModifiedOn,
+                IsDeleted = entity.IsDeleted,
+
                 //EmailStatusType = entity.EmailStatus.Type,
                 //EmailAttachmentsCount = entity.EmailAttachments.Count,
                 //Attachments = entity.EmailAttachments,

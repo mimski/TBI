@@ -101,6 +101,8 @@ namespace Loanda.EmailClient
                 // TODO: the time zone calculations must be consider
                 //receivedDate = emailInfoResponse.Payload.Headers.FirstOrDefault(e => e.Name.Equals("Date")).Value.ToString().Split(';').ToList().Last().Trim();
 
+
+                // TODO: Check if take the correct date
                 receivedDate = emailInfoResponse.Payload.Headers.FirstOrDefault(e => e.Name.Equals("Date")).Value.ToString().Split(';').ToList().Last().Trim();
 
                 // Email do not have attachments

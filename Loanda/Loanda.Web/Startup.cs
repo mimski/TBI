@@ -73,7 +73,7 @@ namespace Loanda.Web
             services.AddSingleton<IEmailDtoMapper, EmailDtoMapper>();
 
 
-            services.AddSingleton<IMapper<EmailDTO, EmailViewModel>, EmailViewModelMapper>();
+            services.AddSingleton<IMapper<ReceivedEmail, EmailViewModel>, EmailViewModelMapper>();
 
 
             #endregion

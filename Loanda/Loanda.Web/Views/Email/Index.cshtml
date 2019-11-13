@@ -6,55 +6,103 @@
 <h1>Emails</h1>
 
 @*<p>
-    <a class="btn btn-outline-primary" title="Create an author" asp-action="Create"><i class="fas fa-user-plus"></i><b> Create</b></a>
-</p>*@
-<form asp-controller="Email" asp-action="Index" method="post">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Subject)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Body)
-                </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.ModifiedOn)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DeletedOn)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsDeleted)
-                </th>*@
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Subject)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Body)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.ModifiedOn)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DeletedOn)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsDeleted)
-                    </td>*@
-                    @*<td>
-                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    </td>*@
-                </tr>
-            }
-        </tbody>
-    </table>
-</form>
+        <a class="btn btn-outline-primary" title="Create an author" asp-action="Create"><i class="fas fa-user-plus"></i><b> Create</b></a>
+    </p>*@
+
+
+<div class="container-fluid">
+
+    <form asp-controller="Email" asp-action="Index" method="post">
+        <div class="row">
+            <div class="col">
+                @Html.DisplayNameFor(model => model.IsReviewed)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(model => model.Id)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(model => model.DateReceived)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(model => model.SenderEmail)
+            </div>
+            <div class="col">
+
+                @Html.DisplayNameFor(model => model.SenderName)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(model => model.Subject)
+            </div>
+            @*<div class="col">
+
+                @Html.DisplayNameFor(model => model.Body)
+            </div>*@
+            <div class="col">
+
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(model => model.ModifiedOn)
+            </div>
+            <div class="col">
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </div>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.IsReviewed)
+                </div>
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </div>
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.DateReceived)
+                </div>
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.SenderEmail)
+                </div>
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.SenderName)
+                </div>
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </div>
+                @*<div class="col-2">
+                    @Html.DisplayFor(modelItem => item.Body)
+                </div>*@
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </div>
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.ModifiedOn)
+                </div>
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.IsDeleted)
+                </div>
+            </div>
+        }
+
+        @*<div class="row">
+                <div class="col-12">
+                    <table class="table">
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>*@
+    </form>
+</div>

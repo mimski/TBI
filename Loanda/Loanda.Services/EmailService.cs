@@ -23,7 +23,7 @@ namespace Loanda.Services
             this.dtoMapper = dtoMapper;
         }
 
-        public async Task<EmailDTO> CreateAsync(EmailDTO emailDto)
+        public async Task<bool> CreateAsync(EmailDTO emailDto)
         {
             var email = dtoMapper.Map(emailDto);
 
@@ -31,14 +31,14 @@ namespace Loanda.Services
 
             await this.context.SaveChangesAsync();
 
-            return emailDto;
+            return true;
         }
 
-        public async Task<ICollection<EmailDTO>> GetAllAsync()
+        public async Task<ICollection<ReceivedEmail>> GetAllAsync()
         {
             var emails = await this.context.ReceivedEmails.ToListAsync();
            
-            return dtoMapper.Map(emails);
+            return emails;
         }
     }
 }
