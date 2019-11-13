@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Loanda.Data.Migrations
 {
     [DbContext(typeof(LoandaContext))]
-    [Migration("20191112151648_Initial")]
+    [Migration("20191113182337_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
