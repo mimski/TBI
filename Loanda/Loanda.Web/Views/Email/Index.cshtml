@@ -14,71 +14,71 @@
 
     <form asp-controller="Email" asp-action="Index" method="post">
         <div class="row">
-            <div class="col">
+            <div class="col-sm-1">
                 @Html.DisplayNameFor(model => model.IsReviewed)
             </div>
-            <div class="col">
+            <div class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Id)
             </div>
-            <div class="col">
+            <div class="col-sm-1">
                 @Html.DisplayNameFor(model => model.DateReceived)
             </div>
-            <div class="col">
+            <div class="col-sm-1">
                 @Html.DisplayNameFor(model => model.SenderEmail)
             </div>
-            <div class="col">
+            <div class="col-sm-1">
 
                 @Html.DisplayNameFor(model => model.SenderName)
             </div>
-            <div class="col">
+            <div class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Subject)
             </div>
             @*<div class="col">
 
                 @Html.DisplayNameFor(model => model.Body)
             </div>*@
-            <div class="col">
+            <div class="col-sm-1">
 
                 @Html.DisplayNameFor(model => model.CreatedOn)
             </div>
-            <div class="col">
+            <div class="col-sm-1">
                 @Html.DisplayNameFor(model => model.ModifiedOn)
             </div>
-            <div class="col">
+            <div class="col-sm-1">
                 @Html.DisplayNameFor(model => model.IsDeleted)
             </div>
         </div>
         @foreach (var item in Model)
         {
             <div class="row">
-                <div class="col">
+                <div class="col-sm-1">
                     @Html.DisplayFor(modelItem => item.IsReviewed)
                 </div>
-                <div class="col">
+                <div class="col-sm-2">
                     @Html.DisplayFor(modelItem => item.Id)
                 </div>
-                <div class="col">
+                <div class="col-sm-1">
                     @Html.DisplayFor(modelItem => item.DateReceived)
                 </div>
-                <div class="col">
+                <div class="col-sm-1">
                     @Html.DisplayFor(modelItem => item.SenderEmail)
                 </div>
-                <div class="col">
+                <div class="col-sm-1">
                     @Html.DisplayFor(modelItem => item.SenderName)
                 </div>
-                <div class="col">
+                <div class="col-sm-2">
                     @Html.DisplayFor(modelItem => item.Subject)
                 </div>
                 @*<div class="col-2">
                     @Html.DisplayFor(modelItem => item.Body)
                 </div>*@
-                <div class="col">
+                <div class="col-sm-1">
                     @Html.DisplayFor(modelItem => item.CreatedOn)
                 </div>
-                <div class="col">
+                <div class="col-sm-1">
                     @Html.DisplayFor(modelItem => item.ModifiedOn)
                 </div>
-                <div class="col">
+                <div class="col-sm-1">
                     @Html.DisplayFor(modelItem => item.IsDeleted)
                 </div>
             </div>
