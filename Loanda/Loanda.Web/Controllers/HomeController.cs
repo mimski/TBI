@@ -46,15 +46,26 @@ namespace Loanda.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public async Task<IActionResult> Login(LoginViewModel input)
+        //public async Task<IActionResult> Login(LoginViewModel input)
+        //{
+        //    var result = await signInManager.PasswordSignInAsync(input.Email, input.Password, input.RememberMe, lockoutOnFailure: false);
+        //    if (result.Succeeded)
+        //    {
+        //        var user = userManager.FindByNameAsync(input.Email);
+        //        return Redirect("Privacy");
+        //    }
+        //    return RedirectToAction("Index");
+        //}
+
+        [HttpPost]
+        public async Task<bool> CheckForCredentials(string email, string password)
         {
-            var result = await signInManager.PasswordSignInAsync(input.Email, input.Password, input.RememberMe, lockoutOnFailure: false);
+            var result = await signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                var user = userManager.FindByNameAsync(input.Email);
-                return Redirect("Privacy");
+                return true;
             }
-            return View();
+            return false;
         }
     }
 }
