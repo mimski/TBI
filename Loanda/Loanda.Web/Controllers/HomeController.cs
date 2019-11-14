@@ -29,7 +29,7 @@ namespace Loanda.Web.Controllers
         {
             if(User.Identity.IsAuthenticated)
             {
-                await this.gmailApi.GetEmailsFromGmail();
+                await this.gmailApi.GetEmailsFromGmailAsync();
                 return View("Privacy");
             }
 

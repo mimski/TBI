@@ -1,9 +1,8 @@
 ﻿using Loanda.Entities;
 using Loanda.Services.DTOs;
 using Loanda.Services.Mapper.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Loanda.Services.Mapper
 {
@@ -25,6 +24,16 @@ namespace Loanda.Services.Mapper
                 Content = emailAttachmentDto.Content,
                 FileSizeInMb = emailAttachmentDto.FileSizeInMb
             };
+        }
+
+        public ICollection<EmailAttachment> Map(ICollection<EmailAttachmentDTO> emailAttachmentDto)
+        {
+            return emailAttachmentDto.Select(this.Map).ToList();
+        }
+
+        public ICollection<EmailAttachmentDTO> Map(ICollection<EmailAttachment> emailAttachmentDto)
+        {
+            return emailAttachmentDto.Select(this.Map).ToList();
         }
     }
 }
