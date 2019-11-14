@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Loanda.Web.Models.Email.EmailViewModel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Received Emails";
 }
 
 <h1>Emails</h1>
@@ -17,9 +17,9 @@
             <div class="col-sm-1">
                 @Html.DisplayNameFor(model => model.IsReviewed)
             </div>
-            <div class="col-sm-2">
+            @*<div class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Id)
-            </div>
+            </div>*@
             <div class="col-sm-1">
                 @Html.DisplayNameFor(model => model.DateReceived)
             </div>
@@ -54,9 +54,9 @@
                 <div class="col-sm-1">
                     @Html.DisplayFor(modelItem => item.IsReviewed)
                 </div>
-                <div class="col-sm-2">
+                @*<div class="col-sm-2">
                     @Html.DisplayFor(modelItem => item.Id)
-                </div>
+                </div>*@
                 <div class="col-sm-1">
                     @Html.DisplayFor(modelItem => item.DateReceived)
                 </div>
@@ -80,6 +80,9 @@
                 </div>
                 <div class="col-sm-1">
                     @Html.DisplayFor(modelItem => item.IsDeleted)
+                </div>
+                <div>
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
                 </div>
             </div>
         }

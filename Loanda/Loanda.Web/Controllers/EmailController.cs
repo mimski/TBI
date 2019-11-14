@@ -42,5 +42,24 @@ namespace Loanda.Web.Controllers
 
             return View(emailsViewModelList);
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var email = await this.emailService.FindByIdAsync(id);
+
+            var emailViewModel = this.emailMapper.Map(email);
+
+
+            // TODO Get the user processing the received email
+            //var loggedUser = User.Identity.Name;
+
+            //var user = await this.userService.GetUserByUsername(loggedUser);
+
+            //emailViewModel.UserId = user.Id;
+
+            return View(emailViewModel);
+        }
     }
 }
