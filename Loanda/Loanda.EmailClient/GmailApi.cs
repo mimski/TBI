@@ -18,19 +18,20 @@ namespace Loanda.EmailClient
 {
     public class GmailApi : IGmailApi
     {
-        // If modifying these scopes, delete your previously saved credentials
-        // at ~/.credentials/gmail-dotnet-quickstart.json
-        static string[] Scopes = { GmailService.Scope.GmailReadonly };
-        //static string ApplicationName = "Gmail API .NET Quickstart";
+        const string SERVICEACCOUNTEMAIL = "tbiloanda@gmail.com";
 
         private readonly IEmailService emailService;
 
         public GmailApi(IEmailService emailService)
         {
-            this.emailService = emailService;
+            this.emailService = emailService ?? throw new ArgumentNullException(nameof(emailService)); ;
         }
 
-        public async Task GetEmailsFromGmail()
+        // If modifying these scopes, delete your previously saved credentials
+        // at ~/.credentials/gmail-dotnet-quickstart.json
+        static string[] Scopes = { GmailService.Scope.GmailReadonly, GmailService.Scope.GmailModify };
+
+        public async Task GetEmailsFromGmailAsync()
         {
             UserCredential credential;
 
@@ -52,104 +53,114 @@ namespace Loanda.EmailClient
             // Create Gmail API service.
             var service = new GmailService(new BaseClientService.Initializer()
             {
-                HttpClientInitializer = credential,
-                //ApplicationName = ApplicationName,
+                HttpClientInitializer = credential
             });
-            
+
             // Define parameters of request.
             UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
 
-            var emailListRequest = service.Users.Messages.List("tbiloanda@gmail.com");
+            var emailListRequest = service.Users.Messages.List(SERVICEACCOUNTEMAIL);
 
-            var emailListRespons = emailListRequest.ExecuteAsync().Result;
+            // Get emails only form inbox
+            emailListRequest.LabelIds = "UNREAD";
+
+            var emailListRespons = await emailListRequest.ExecuteAsync();
 
             var subject = string.Empty;
             var body = string.Empty;
-            var receivedDate = string.Empty;
+            var receivedDate = DateTime.MaxValue;
+            var dateEmail = string.Empty;
             var senderEmail = string.Empty;
             var senderName = string.Empty;
-            var from = string.Empty;
             byte attachmentSize = 0;
             var countOfAttachments = 0;
             double? totalAttachmentsSize = 0;
 
-            foreach (var email in emailListRespons.Messages)
+            if (emailListRespons != null && emailListRespons.Messages != null && emailListRespons.Messages.Any())
             {
-                var emailInfoRequest = service.Users.Messages.Get("tbiloanda@gmail.com", email.Id);
-
-                var emailInfoResponse =  await emailInfoRequest.ExecuteAsync();
-
-                subject = emailInfoResponse.Payload.Headers.FirstOrDefault(e => e.Name.Equals("Subject")).Value;
-
-                from = emailInfoResponse.Payload.Headers
-                    .FirstOrDefault(e => e.Name.Equals("From"))
-                    .Value;
-
-                senderEmail = from
-                    .Split(new[] { '<', '>'}, StringSplitOptions.RemoveEmptyEntries)
-                    .ToList()
-                    .Last()
-                    .Trim();
-
-                senderName = from
-                    .Split('<')
-                    .ToList()
-                    .First()
-                    .Trim();
-
-
-                // TODO: the time zone calculations must be consider
-                //receivedDate = emailInfoResponse.Payload.Headers.FirstOrDefault(e => e.Name.Equals("Date")).Value.ToString().Split(';').ToList().Last().Trim();
-
-
-                // TODO: Check if take the correct date
-                receivedDate = emailInfoResponse.Payload.Headers.FirstOrDefault(e => e.Name.Equals("Date")).Value.ToString().Split(';').ToList().Last().Trim();
-
-                // Email do not have attachments
-                if (emailInfoResponse.Payload.Parts[0].MimeType.Contains("text/plain"))
+                foreach (var email in emailListRespons.Messages)
                 {
-                    var tuksam = string.Empty;
-                    body = emailInfoResponse.Payload.Parts.First().Body.Data;
 
-                    //TODO: Decode string
+                    var emailInfoRequest = service.Users.Messages.Get("tbiloanda@gmail.com", email.Id);
 
-                    var decodedBody = Base64Decode(body);
+                    var emailInfoResponse = await emailInfoRequest.ExecuteAsync();
 
-                }
-                else // Email have attachments
-                {
-                    body = emailInfoResponse.Payload.Parts.First().Parts.First().Body.Data;
+                    var gmailId = emailInfoResponse?.Id;
 
-                    var decodedBody = Base64Decode(body);
+                    var header = emailInfoResponse?.Payload?.Headers;
 
-                    //TODO: Decode string
+                    subject = header?.FirstOrDefault(e => e.Name.Equals("Subject"))?.Value ?? string.Empty;
 
-                    var attachments = emailInfoResponse.Payload.Parts.Skip(1).ToList();
+                    var from = header?.FirstOrDefault(e => e.Name.Equals("From"))
+                        ?.Value
+                        .Split(new[] { '<', '>' }, StringSplitOptions.RemoveEmptyEntries)
+                        .ToList();
 
-                    foreach (var attachment in attachments)
+                    senderEmail = from
+                        .Last()
+                        .Trim();
+
+                    senderName = from
+                        .First()
+                        .Trim();
+
+
+                    // TODO: the time zone calculations must be consider
+                    //receivedDate = emailInfoResponse.Payload.Headers.FirstOrDefault(e => e.Name.Equals("Date")).Value.ToString().Split(';').ToList().Last().Trim();
+
+
+                    // TODO: Check if take the correct date
+                    dateEmail = header?.FirstOrDefault(e => e.Name.Equals("Date"))?.Value.Split(new[] { '-' })[0].Trim();
+
+                    DateTime.TryParse(dateEmail, out receivedDate);
+
+                    //receivedDate = header?.FirstOrDefault(e => e.Name.Equals("Date"))?.Value.Split(';').ToList().Last().Trim();
+
+                    // Email do not have attachments
+                    if (emailInfoResponse.Payload.Parts[0].MimeType.Contains("text/plain"))
                     {
-                        totalAttachmentsSize += double.Parse(attachment.Body.Size.ToString());
+                        body = emailInfoResponse.Payload.Parts.First().Body.Data;
+
+                        //TODO: Decode string
+
+                        var decodedBody = Base64Decode(body);
+
                     }
-                    countOfAttachments = attachments.Count;
+                    else // Email have attachments
+                    {
+                        body = emailInfoResponse.Payload.Parts.First().Parts.First().Body.Data;
 
-                    totalAttachmentsSize /= 1024;
+                        var decodedBody = Base64Decode(body);
 
-                    var tuksam = string.Empty;
+                        //TODO: Decode string
+
+                        var attachments = emailInfoResponse.Payload.Parts.Skip(1).ToList();
+
+                        foreach (var attachment in attachments)
+                        {
+                            totalAttachmentsSize += double.Parse(attachment.Body.Size.ToString());
+                        }
+                        countOfAttachments = attachments.Count;
+
+                        totalAttachmentsSize /= 1024;
+                    }
+                    totalAttachmentsSize = 0;
+                    //attachments = emailInfoResponse.Payload.Parts..Headers.FirstOrDefault(e => e.Name.Equals("Subject")).Value;
+
+                    var emailDto = new EmailDTO
+                    {
+                        Subject = subject,
+                        Body = body,
+                        DateReceived = receivedDate,
+                        SenderName = senderName,
+                        SenderEmail = senderEmail
+                    };
+
+                    await this.emailService.CreateAsync(emailDto);
+
+                    var markAsReadRequest = new ModifyMessageRequest { RemoveLabelIds = new[] { "UNREAD" } };
+                    await service.Users.Messages.Modify(markAsReadRequest, SERVICEACCOUNTEMAIL, emailInfoResponse.Id).ExecuteAsync();
                 }
-                totalAttachmentsSize = 0;
-                //attachments = emailInfoResponse.Payload.Parts..Headers.FirstOrDefault(e => e.Name.Equals("Subject")).Value;
-                var tuk = string.Empty;
-
-                var emailDto = new EmailDTO
-                {
-                    Subject = subject,
-                    Body = body,
-                    //DateReceived = receivedDate,
-                    SenderName = senderName,
-                    SenderEmail = senderEmail
-                };
-
-                await this.emailService.CreateAsync(emailDto);
             }
         }
 

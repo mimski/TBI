@@ -1,5 +1,4 @@
 ﻿using Loanda.Entities;
-using Loanda.Services.DTOs;
 using Loanda.Web.Mappers.Contracts;
 using Loanda.Web.Models.Email;
 
