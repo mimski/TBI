@@ -40,5 +40,17 @@ namespace Loanda.Services
            
             return emails;
         }
+
+        public async Task<ReceivedEmail> FindByIdAsync(Guid id)
+        {
+            var email = await this.context.ReceivedEmails.FirstOrDefaultAsync(e => e.Id.Equals(id));
+
+            if (email == null)
+            {
+                throw new ArgumentException("There is no such email");
+            }
+
+            return email;
+        }
     }
 }

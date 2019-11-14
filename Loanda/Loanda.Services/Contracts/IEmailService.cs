@@ -12,5 +12,7 @@ namespace Loanda.Services.Contracts
         Task<bool> CreateAsync(EmailDTO emailDto);
 
         Task<ICollection<ReceivedEmail>> GetAllAsync();
+
+        Task<ReceivedEmail> FindByIdAsync(Guid id);
     }
 }
