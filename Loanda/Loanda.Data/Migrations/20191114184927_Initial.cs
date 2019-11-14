@@ -252,7 +252,8 @@ namespace Loanda.Data.Migrations
                     Body = table.Column<string>(nullable: true),
                     EmailStatusId = table.Column<int>(nullable: true),
                     ApplicantId = table.Column<Guid>(nullable: true),
-                    IsReviewed = table.Column<bool>(nullable: false, defaultValue: false)
+                    IsReviewed = table.Column<bool>(nullable: false, defaultValue: false),
+                    GmailEmailId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

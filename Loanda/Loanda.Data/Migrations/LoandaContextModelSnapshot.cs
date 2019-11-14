@@ -170,6 +170,8 @@ namespace Loanda.Data.Migrations
 
                     b.Property<int?>("EmailStatusId");
 
+                    b.Property<string>("GmailEmailId");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(false);

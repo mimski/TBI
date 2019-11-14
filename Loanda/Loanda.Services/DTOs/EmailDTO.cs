@@ -16,6 +16,8 @@ namespace Loanda.Services.DTOs
 
         public string Body { get; set; }
 
+        public string GmailEmailId { get; set; }
+
         public virtual ICollection<EmailAttachmentDTO> EmailAttachments { get; set; }
     }
 }

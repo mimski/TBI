@@ -29,5 +29,7 @@ namespace Loanda.Entities
         public Guid? ApplicantId { get; set; }
 
         public bool IsReviewed { get; set; }
+        
+        public string GmailEmailId { get; set; }
     }
 }

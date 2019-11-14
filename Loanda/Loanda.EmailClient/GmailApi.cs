@@ -153,7 +153,8 @@ namespace Loanda.EmailClient
                         Body = body,
                         DateReceived = receivedDate,
                         SenderName = senderName,
-                        SenderEmail = senderEmail
+                        SenderEmail = senderEmail,
+                        GmailEmailId = gmailId
                     };
 
                     await this.emailService.CreateAsync(emailDto);
