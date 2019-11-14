@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Loanda.Data.Migrations
 {
     [DbContext(typeof(LoandaContext))]
-    [Migration("20191113182337_Initial")]
+    [Migration("20191114184927_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -171,6 +171,8 @@ namespace Loanda.Data.Migrations
                         .HasColumnType("date");
 
                     b.Property<int?>("EmailStatusId");
+
+                    b.Property<string>("GmailEmailId");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()

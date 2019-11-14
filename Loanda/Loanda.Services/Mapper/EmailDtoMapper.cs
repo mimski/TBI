@@ -18,7 +18,8 @@ namespace Loanda.Services.Mapper
                 Subject = recievedEmail.Subject,
                 DateReceived = recievedEmail.DateReceived,
                 SenderEmail = recievedEmail.SenderEmail,
-                SenderName = recievedEmail.SenderName
+                SenderName = recievedEmail.SenderName,
+                GmailEmailId = recievedEmail.GmailEmailId
             };
         }
 
@@ -30,7 +31,8 @@ namespace Loanda.Services.Mapper
                 Subject = recievedEmail.Subject,
                 DateReceived = recievedEmail.DateReceived,
                 SenderEmail = recievedEmail.SenderEmail,
-                SenderName = recievedEmail.SenderName
+                SenderName = recievedEmail.SenderName,
+                GmailEmailId = recievedEmail.GmailEmailId,
             };
         }
 
