@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Loanda.Entities;
 using Loanda.Services.Contracts;
-using Loanda.Services.DTOs;
 using Loanda.Web.Mappers.Contracts;
+using Loanda.Web.Mappings;
 using Loanda.Web.Models.Email;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Loanda.Web.Controllers
 {
+    [Authorize]
     public class EmailController : Controller
     {
         private readonly IEmailService emailService;
-        private readonly IMapper<ReceivedEmail, EmailViewModel> emailMapper;
+        private readonly IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper;
 
-        public EmailController(IEmailService emailService, IMapper<ReceivedEmail, EmailViewModel> emailMapper)
+        public EmailController(IEmailService emailService, IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper)
         {
             this.emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
             this.emailMapper = emailMapper ?? throw new ArgumentNullException(nameof(emailMapper));
@@ -43,23 +44,38 @@ namespace Loanda.Web.Controllers
             return View(emailsViewModelList);
         }
 
-        [HttpGet]
+        //[HttpGet("/details")]
+        //[Authorize]
+        //public async Task<IActionResult> Details(Guid id)
+        //{
+        //    var email = await this.emailService.FindByIdAsync(id);
+
+        //    var emailViewModel = this.emailMapper.Map(email);
+
+
+        //    // TODO Get the user processing the received email
+        //    //var loggedUser = User.Identity.Name;
+
+        //    //var user = await this.userService.GetUserByUsername(loggedUser);
+
+        //    //emailViewModel.UserId = user.Id;
+
+        //    return View(emailViewModel);
+        //}
+
+        [HttpGet("/details")]
+        [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid id, CancellationToken ct)
         {
-            var email = await this.emailService.FindByIdAsync(id);
+            var email = await this.emailService.FindByIdAsync(id, ct);
 
-            var emailViewModel = this.emailMapper.Map(email);
+            if (email == null)
+            {
+                return NotFound();
+            }
 
-
-            // TODO Get the user processing the received email
-            //var loggedUser = User.Identity.Name;
-
-            //var user = await this.userService.GetUserByUsername(loggedUser);
-
-            //emailViewModel.UserId = user.Id;
-
-            return View(emailViewModel);
+            return View("Details", email.ToViewModel());
         }
     }
 }
