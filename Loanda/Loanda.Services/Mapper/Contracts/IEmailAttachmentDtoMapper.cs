@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Loanda.Services.Mapper.Contracts
 {
-    public interface IEmailAttachmentDtoMapper
-    {
-        EmailAttachmentDTO Map(EmailAttachment emailAttachment);
-        EmailAttachment Map(EmailAttachmentDTO emailAttachmentDto);
-    }
+    //public interface IEmailAttachmentDtoMapper
+    //{
+    //    EmailAttachmentDTO Map(EmailAttachmentEntity emailAttachment);
+    //    EmailAttachmentEntity Map(EmailAttachmentDTO emailAttachmentDto);
+    //}
 }
