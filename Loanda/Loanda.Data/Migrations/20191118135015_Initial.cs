@@ -8,8 +8,12 @@ namespace Loanda.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "public");
+
             migrationBuilder.CreateTable(
                 name: "Applicants",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -34,6 +38,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ApplicationStatuses",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -47,6 +52,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -61,6 +67,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -90,6 +97,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "EmailStatuses",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -103,6 +111,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "LoanApplications",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -111,7 +120,9 @@ namespace Loanda.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
                     DeletedOn = table.Column<DateTime>(type: "date", nullable: true),
                     ApplicantId = table.Column<Guid>(nullable: false),
-                    ApplicationStatusId = table.Column<int>(nullable: false)
+                    ApplicationStatusId = table.Column<int>(nullable: false),
+                    LoanAmount = table.Column<decimal>(nullable: false),
+                    IsApproved = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -119,12 +130,14 @@ namespace Loanda.Data.Migrations
                     table.ForeignKey(
                         name: "FK_LoanApplications_Applicants_ApplicantId",
                         column: x => x.ApplicantId,
+                        principalSchema: "public",
                         principalTable: "Applicants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LoanApplications_ApplicationStatuses_ApplicationStatusId",
                         column: x => x.ApplicationStatusId,
+                        principalSchema: "public",
                         principalTable: "ApplicationStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -132,6 +145,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -146,6 +160,7 @@ namespace Loanda.Data.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
+                        principalSchema: "public",
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -153,6 +168,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -167,6 +183,7 @@ namespace Loanda.Data.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -174,6 +191,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserLogins",
+                schema: "public",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(nullable: false),
@@ -187,6 +205,7 @@ namespace Loanda.Data.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -194,6 +213,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
+                schema: "public",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
@@ -205,12 +225,14 @@ namespace Loanda.Data.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
+                        principalSchema: "public",
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -218,6 +240,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
+                schema: "public",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
@@ -231,6 +254,7 @@ namespace Loanda.Data.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -238,6 +262,7 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ReceivedEmails",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -245,7 +270,7 @@ namespace Loanda.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(type: "date", nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
                     DeletedOn = table.Column<DateTime>(type: "date", nullable: true),
-                    SenderEmail = table.Column<string>(nullable: false),
+                    SenderEmail = table.Column<string>(nullable: true),
                     SenderName = table.Column<string>(nullable: true),
                     DateReceived = table.Column<DateTime>(nullable: false),
                     Subject = table.Column<string>(nullable: true),
@@ -253,7 +278,9 @@ namespace Loanda.Data.Migrations
                     EmailStatusId = table.Column<int>(nullable: true),
                     ApplicantId = table.Column<Guid>(nullable: true),
                     IsReviewed = table.Column<bool>(nullable: false, defaultValue: false),
-                    GmailEmailId = table.Column<string>(nullable: true)
+                    GmailEmailId = table.Column<string>(nullable: true),
+                    TotalAttachments = table.Column<int>(nullable: false),
+                    AttachmentsTotalSizeInMB = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -261,12 +288,14 @@ namespace Loanda.Data.Migrations
                     table.ForeignKey(
                         name: "FK_ReceivedEmails_Applicants_ApplicantId",
                         column: x => x.ApplicantId,
+                        principalSchema: "public",
                         principalTable: "Applicants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ReceivedEmails_EmailStatuses_EmailStatusId",
                         column: x => x.EmailStatusId,
+                        principalSchema: "public",
                         principalTable: "EmailStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -274,11 +303,12 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "EmailAttachments",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    FileSizeInMb = table.Column<long>(nullable: false),
+                    FileSizeInMb = table.Column<double>(nullable: false),
                     Content = table.Column<string>(nullable: false),
                     ReceivedEmailId = table.Column<Guid>(nullable: false)
                 },
@@ -288,12 +318,24 @@ namespace Loanda.Data.Migrations
                     table.ForeignKey(
                         name: "FK_EmailAttachments_ReceivedEmails_ReceivedEmailId",
                         column: x => x.ReceivedEmailId,
+                        principalSchema: "public",
                         principalTable: "ReceivedEmails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
+                schema: "public",
+                table: "ApplicationStatuses",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { -1, "Open" },
+                    { -2, "Closed" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "public",
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
@@ -303,6 +345,7 @@ namespace Loanda.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                schema: "public",
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedOn", "DeletedOn", "Email", "EmailConfirmed", "IsDeleted", "LockoutEnabled", "LockoutEnd", "ModifiedOn", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
@@ -312,6 +355,17 @@ namespace Loanda.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                schema: "public",
+                table: "EmailStatuses",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { -1, "Invalid" },
+                    { -2, "New" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "public",
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
                 values: new object[,]
@@ -322,63 +376,75 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
+                schema: "public",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
+                schema: "public",
                 table: "AspNetRoles",
                 column: "NormalizedName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
+                schema: "public",
                 table: "AspNetUserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserLogins_UserId",
+                schema: "public",
                 table: "AspNetUserLogins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserRoles_RoleId",
+                schema: "public",
                 table: "AspNetUserRoles",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
+                schema: "public",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
+                schema: "public",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmailAttachments_ReceivedEmailId",
+                schema: "public",
                 table: "EmailAttachments",
                 column: "ReceivedEmailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LoanApplications_ApplicantId",
+                schema: "public",
                 table: "LoanApplications",
                 column: "ApplicantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LoanApplications_ApplicationStatusId",
+                schema: "public",
                 table: "LoanApplications",
                 column: "ApplicationStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReceivedEmails_ApplicantId",
+                schema: "public",
                 table: "ReceivedEmails",
                 column: "ApplicantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReceivedEmails_EmailStatusId",
+                schema: "public",
                 table: "ReceivedEmails",
                 column: "EmailStatusId");
         }
@@ -386,43 +452,56 @@ namespace Loanda.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
+                name: "AspNetRoleClaims",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserClaims");
+                name: "AspNetUserClaims",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserLogins");
+                name: "AspNetUserLogins",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
+                name: "AspNetUserRoles",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserTokens");
+                name: "AspNetUserTokens",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "EmailAttachments");
+                name: "EmailAttachments",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "LoanApplications");
+                name: "LoanApplications",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "AspNetRoles",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetUsers",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "ReceivedEmails");
+                name: "ReceivedEmails",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "ApplicationStatuses");
+                name: "ApplicationStatuses",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "Applicants");
+                name: "Applicants",
+                schema: "public");
 
             migrationBuilder.DropTable(
-                name: "EmailStatuses");
+                name: "EmailStatuses",
+                schema: "public");
         }
     }
 }

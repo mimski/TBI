@@ -18,17 +18,17 @@ namespace Loanda.Data.Context
         public LoandaContext(DbContextOptions<LoandaContext> options)
           : base(options) { }
 
-        public virtual DbSet<Applicant> Applicants { get; set; }
+        public virtual DbSet<ApplicantEntity> Applicants { get; set; }
 
-        public virtual DbSet<LoanApplication> LoanApplications { get; set; }
+        public virtual DbSet<LoanApplicationEntity> LoanApplications { get; set; }
 
-        public virtual DbSet<ReceivedEmail> ReceivedEmails { get; set; }
+        public virtual DbSet<ReceivedEmailEntity> ReceivedEmails { get; set; }
 
-        public virtual DbSet<ApplicationStatus> ApplicationStatuses { get; set; }
+        public virtual DbSet<ApplicationStatusEntity> ApplicationStatuses { get; set; }
 
-        public virtual DbSet<EmailAttachment> EmailAttachments { get; set; }
+        public virtual DbSet<EmailAttachmentEntity> EmailAttachments { get; set; }
 
-        public virtual DbSet<EmailStatus> EmailStatuses { get; set; }
+        public virtual DbSet<EmailStatusEntity> EmailStatuses { get; set; }
 
         private void LoadJsonDataInDatabase(ModelBuilder modelBuilder)
         {
@@ -48,6 +48,8 @@ namespace Loanda.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("public");
+
             LoadJsonDataInDatabase(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
