@@ -1,13 +1,11 @@
 ﻿using Loanda.Entities.Base;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Loanda.Entities
 {
-    public class ReceivedEmail : BaseEntity
+    public class ReceivedEmailEntity : BaseEntity
     {
-        [Required]
         public string SenderEmail { get; set; }
 
         public string SenderName { get; set; }
@@ -18,18 +16,22 @@ namespace Loanda.Entities
 
         public string Body { get; set; }
 
-        public virtual ICollection<EmailAttachment> EmailAttachments { get; set; }
+        public virtual ICollection<EmailAttachmentEntity> EmailAttachments { get; set; }
 
-        public virtual EmailStatus EmailStatus { get; set; }
+        public virtual EmailStatusEntity EmailStatus { get; set; }
 
         public int? EmailStatusId { get; set; }
 
-        public virtual Applicant Applicant { get; set; }
+        public virtual ApplicantEntity Applicant { get; set; }
 
         public Guid? ApplicantId { get; set; }
 
         public bool IsReviewed { get; set; }
         
         public string GmailEmailId { get; set; }
+
+        public int TotalAttachments { get; set; }
+
+        public double AttachmentsTotalSizeInMB { get; set; }
     }
 }
