@@ -12,8 +12,8 @@ namespace Loanda.Services.Contracts
     {
         Task<bool> CreateAsync(EmailDTO emailDto);
 
-        Task<IReadOnlyCollection<ReceivedEmail>> GetAllAsync(CancellationToken ct);
+        Task<IReadOnlyCollection<ReceivedEmail>> GetAllAsync(CancellationToken cancellationToken);
 
-        Task<ReceivedEmail> FindByIdAsync(Guid id, CancellationToken ct);
+        Task<ReceivedEmail> FindByIdAsync(Guid id, CancellationToken cancellationToken);
     }
 }

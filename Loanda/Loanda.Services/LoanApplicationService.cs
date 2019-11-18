@@ -21,22 +21,22 @@ namespace Loanda.Services
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<LoanApplication> AddAsync(LoanApplication loanApplication, CancellationToken ct)
+        public async Task<LoanApplication> AddAsync(LoanApplication loanApplication, CancellationToken cancellationToken)
         {
             var addedLoanApplicationEntry = this.context.LoanApplications.Add(loanApplication.ToEntity());
-            await this.context.SaveChangesAsync(ct);
+            await this.context.SaveChangesAsync(cancellationToken);
             return addedLoanApplicationEntry.Entity.ToService();
         }
 
-        public async Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(CancellationToken ct)
+        public async Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var loanApplications = await this.context.LoanApplications.AsNoTracking().OrderByDescending(application => application.LoanAmount).ToListAsync(ct);
+            var loanApplications = await this.context.LoanApplications.AsNoTracking().OrderByDescending(application => application.LoanAmount).ToListAsync(cancellationToken);
             return loanApplications.ToService();
         }
 
-        public async Task<LoanApplication> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<LoanApplication> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var loanApplication = await this.context.LoanApplications.AsNoTracking().SingleOrDefaultAsync(application => application.Id.Equals(id), ct);
+            var loanApplication = await this.context.LoanApplications.AsNoTracking().SingleOrDefaultAsync(application => application.Id.Equals(id), cancellationToken);
             return loanApplication.ToService();
         }
 
@@ -47,25 +47,25 @@ namespace Loanda.Services
         //    return updatedLoanApplicationEntry.Entity.ToService();
         //}
 
-        public async Task<LoanApplication> UpdateAsync(LoanApplication loanApplication, CancellationToken ct)
+        public async Task<LoanApplication> UpdateAsync(LoanApplication loanApplication, CancellationToken cancellationToken)
         {
-            var existingLoanApplication = await this.context.LoanApplications.SingleOrDefaultAsync(application => application.Id.Equals(loanApplication.Id), ct);
+            var existingLoanApplication = await this.context.LoanApplications.SingleOrDefaultAsync(application => application.Id.Equals(loanApplication.Id), cancellationToken);
             this.context.Entry(existingLoanApplication).CurrentValues.SetValues(loanApplication.ToEntity());
             await this.context.SaveChangesAsync();
 
             return existingLoanApplication.ToService();
         }
 
-        public async Task<LoanApplication> MarkAsDeletedAsync(Guid id, CancellationToken ct)
+        public async Task<LoanApplication> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken)
         {
-            var loanApplication = await this.context.LoanApplications.SingleOrDefaultAsync(application => application.Id.Equals(id), ct);
+            var loanApplication = await this.context.LoanApplications.SingleOrDefaultAsync(application => application.Id.Equals(id), cancellationToken);
             if (loanApplication != null)
             {
                 loanApplication.IsDeleted = true;
                 loanApplication.DeletedOn = DateTime.UtcNow.AddHours(2);
 
                 this.context.LoanApplications.Update(loanApplication);
-                await this.context.SaveChangesAsync(ct);
+                await this.context.SaveChangesAsync(cancellationToken);
                 return loanApplication.ToService();
             }
             else
@@ -74,13 +74,13 @@ namespace Loanda.Services
             }
         }
 
-        public async Task RemoveAsync(Guid id, CancellationToken ct)
+        public async Task RemoveAsync(Guid id, CancellationToken cancellationToken)
         {
-            var loanApplication = await this.context.LoanApplications.SingleOrDefaultAsync(application => application.Id.Equals(id), ct);
+            var loanApplication = await this.context.LoanApplications.SingleOrDefaultAsync(application => application.Id.Equals(id), cancellationToken);
             if (loanApplication != null)
             {
                 this.context.Remove(loanApplication);
-                await this.context.SaveChangesAsync(ct);
+                await this.context.SaveChangesAsync(cancellationToken);
             }
         }
     }

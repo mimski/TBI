@@ -15,16 +15,16 @@ namespace Loanda.Services.Contracts
 
         //Task<bool> ExistsAsync(Guid id);
 
-        Task<Applicant> AddAsync(Applicant applicant, CancellationToken ct);
+        Task<Applicant> AddAsync(Applicant applicant, CancellationToken cancellationToken);
 
-        Task<IReadOnlyCollection<Applicant>> GetAllAsync(CancellationToken ct);
+        Task<IReadOnlyCollection<Applicant>> GetAllAsync(CancellationToken cancellationToken);
 
-        Task<Applicant> GetByIdAsync(Guid id, CancellationToken ct);
+        Task<Applicant> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
-        Task<Applicant> UpdateAsync(Applicant applicant, CancellationToken ct);
+        Task<Applicant> UpdateAsync(Applicant applicant, CancellationToken cancellationToken);
 
-        Task<Applicant> MarkAsDeletedAsync(Guid id, CancellationToken ct);
+        Task<Applicant> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken);
 
-        Task RemoveAsync(Guid id, CancellationToken ct);
+        Task RemoveAsync(Guid id, CancellationToken cancellationToken);
     }
 }

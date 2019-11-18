@@ -19,44 +19,44 @@ namespace Loanda.Services
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<Applicant> AddAsync(Applicant applicant, CancellationToken ct)
+        public async Task<Applicant> AddAsync(Applicant applicant, CancellationToken cancellationToken)
         {
             var addedApplicantEntry = this.context.Applicants.Add(applicant.ToEntity());
-            await this.context.SaveChangesAsync(ct);
+            await this.context.SaveChangesAsync(cancellationToken);
             return addedApplicantEntry.Entity.ToService();
         }
 
-        public async Task<IReadOnlyCollection<Applicant>> GetAllAsync(CancellationToken ct)
+        public async Task<IReadOnlyCollection<Applicant>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var applicants = await this.context.Applicants.AsNoTracking().ToListAsync(ct);
+            var applicants = await this.context.Applicants.AsNoTracking().ToListAsync(cancellationToken);
             return applicants.ToService();
         }
 
-        public async Task<Applicant> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<Applicant> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var applicant = await this.context.Applicants.AsNoTracking().SingleOrDefaultAsync(a => a.Id.Equals(id), ct);
+            var applicant = await this.context.Applicants.AsNoTracking().SingleOrDefaultAsync(a => a.Id.Equals(id), cancellationToken);
             return applicant.ToService();
         }
 
-        public async Task<Applicant> UpdateAsync(Applicant applicant, CancellationToken ct)
+        public async Task<Applicant> UpdateAsync(Applicant applicant, CancellationToken cancellationToken)
         {
-            var existingApplicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(applicant.Id), ct);
+            var existingApplicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(applicant.Id), cancellationToken);
             this.context.Entry(existingApplicant).CurrentValues.SetValues(applicant.ToEntity());
             await this.context.SaveChangesAsync();
 
             return existingApplicant.ToService();
         }
 
-        public async Task<Applicant> MarkAsDeletedAsync(Guid id, CancellationToken ct)
+        public async Task<Applicant> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken)
         {
-            var applicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(id), ct);
+            var applicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(id), cancellationToken);
             if (applicant != null)
             {
                 applicant.IsDeleted = true;
                 applicant.DeletedOn = DateTime.UtcNow.AddHours(2);
 
                 this.context.Applicants.Update(applicant);
-                await this.context.SaveChangesAsync(ct);
+                await this.context.SaveChangesAsync(cancellationToken);
                 return applicant.ToService();
             }
             else
@@ -65,13 +65,13 @@ namespace Loanda.Services
             }
         }
 
-        public async Task RemoveAsync(Guid id, CancellationToken ct)
+        public async Task RemoveAsync(Guid id, CancellationToken cancellationToken)
         {
-            var applicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(id), ct);
+            var applicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(id), cancellationToken);
             if (applicant != null)
             {
                 this.context.Remove(applicant);
-                await this.context.SaveChangesAsync(ct);
+                await this.context.SaveChangesAsync(cancellationToken);
             }
         }
 

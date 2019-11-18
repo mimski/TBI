@@ -49,16 +49,16 @@ namespace Loanda.Services
             return email.ToService();
         }
 
-        public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllAsync(CancellationToken ct)
+        public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var emails = await this.context.ReceivedEmails.AsNoTracking().ToListAsync(ct);
+            var emails = await this.context.ReceivedEmails.AsNoTracking().ToListAsync(cancellationToken);
 
             return emails.ToService();
         }
 
-        public async Task<ReceivedEmail> FindByIdAsync(Guid id, CancellationToken ct)
+        public async Task<ReceivedEmail> FindByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var email = await this.context.ReceivedEmails.AsNoTracking().SingleOrDefaultAsync(e => e.Id.Equals(id), ct);
+            var email = await this.context.ReceivedEmails.AsNoTracking().SingleOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
 
             Base64Decode(email.Body);
 

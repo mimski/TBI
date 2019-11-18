@@ -22,17 +22,17 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(CancellationToken ct)
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var result = await this.loanApplicationService.GetAllAsync(ct);
+            var result = await this.loanApplicationService.GetAllAsync(cancellationToken);
             return View("Index", result.ToViewModel());
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var loanApplication = await this.loanApplicationService.GetByIdAsync(id, ct);
+            var loanApplication = await this.loanApplicationService.GetByIdAsync(id, cancellationToken);
 
             if (loanApplication == null)
             {
@@ -45,10 +45,10 @@ namespace Loanda.Web.Controllers
         [HttpPost]
         [Route("{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateAsync(Guid id, LoanApplicationViewModel model, CancellationToken ct)
+        public async Task<IActionResult> UpdateAsync(Guid id, LoanApplicationViewModel model, CancellationToken cancellationToken)
         {
             model.Id = id; 
-            var loanApplication = await this.loanApplicationService.UpdateAsync(model.ToServiceModel(), ct);
+            var loanApplication = await this.loanApplicationService.UpdateAsync(model.ToServiceModel(), cancellationToken);
 
             if (loanApplication is null)
             {
@@ -70,9 +70,9 @@ namespace Loanda.Web.Controllers
         [HttpPost]
         [Route("")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(LoanApplicationViewModel model, CancellationToken ct)
+        public async Task<IActionResult> Create(LoanApplicationViewModel model, CancellationToken cancellationToken)
         {
-           /* var loanApplication = */await this.loanApplicationService.AddAsync(model.ToServiceModel(), ct);
+           /* var loanApplication = */await this.loanApplicationService.AddAsync(model.ToServiceModel(), cancellationToken);
 
             //return CreatedAtAction(nameof(GetByIdAsync), new { id = loanApplication.Id }, loanApplication.ToViewModel());
 
@@ -81,17 +81,17 @@ namespace Loanda.Web.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> RemoveAsync(Guid id, CancellationToken ct)
+        public async Task<IActionResult> RemoveAsync(Guid id, CancellationToken cancellationToken)
         {
-            await this.loanApplicationService.RemoveAsync(id, ct);
+            await this.loanApplicationService.RemoveAsync(id, cancellationToken);
 
             return NoContent();
         }
 
         [Route("{id}")]
-        public async Task<IActionResult> MarkAsDeletedAsync(Guid id, CancellationToken ct)
+        public async Task<IActionResult> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken)
         {
-            await this.loanApplicationService.MarkAsDeletedAsync(id, ct);
+            await this.loanApplicationService.MarkAsDeletedAsync(id, cancellationToken);
 
             return NoContent();
         }

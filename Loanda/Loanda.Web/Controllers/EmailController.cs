@@ -25,9 +25,9 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(CancellationToken ct)
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var result = await this.emailService.GetAllAsync(ct);
+            var result = await this.emailService.GetAllAsync(cancellationToken);
             return View("Index", result.ToViewModel());
         }
 
@@ -74,9 +74,9 @@ namespace Loanda.Web.Controllers
         [HttpGet("/details")]
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Details(Guid id, CancellationToken ct)
+        public async Task<IActionResult> Details(Guid id, CancellationToken cancellationToken)
         {
-            var email = await this.emailService.FindByIdAsync(id, ct);
+            var email = await this.emailService.FindByIdAsync(id, cancellationToken);
 
             if (email == null)
             {
