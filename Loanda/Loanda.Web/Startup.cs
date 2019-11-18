@@ -17,8 +17,8 @@ using Loanda.Services;
 using Loanda.Web.Mappers.Contracts;
 using Loanda.EmailClient;
 using Loanda.EmailClient.Contracts;
-using Loanda.Services.Mapper.Contracts;
-using Loanda.Services.Mapper;
+//using Loanda.Services.Mapper.Contracts;
+//using Loanda.Services.Mapper;
 using Loanda.Web.Mappers;
 using Loanda.Web.Models.Email;
 using Loanda.Services.DTOs;
@@ -54,26 +54,22 @@ namespace Loanda.Web
             services.AddScoped(typeof(IUserManager<>), typeof(UserManagerWrapper<>));
 
             #region Register all services from the service layer
-
-            services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IApplicantService, ApplicantService>();
-            services.AddScoped<IEmailAttachmentService, EmailAttachmentService>();
+            services.AddBusiness();
 
             //services.Scan(x => x.FromAssemblies(Assembly.Load("Loanda.Service"))
             //    .AddClasses(classes => classes.Where(type => type.Name.EndWith("Service"))))
             //    .AsImplementedInterfaces()
             //    .WithScopedLifetime();
-
             #endregion
 
             #region Register all mappers
 
             //services.AddSingleton<IMapper<BookViewModel, Book>, BookMapper>();
 
-            services.AddSingleton<IEmailDtoMapper, EmailDtoMapper>();
+            //services.AddSingleton<IEmailDtoMapper, EmailDtoMapper>();
 
 
-            services.AddSingleton<IMapper<ReceivedEmail, EmailViewModel>, EmailViewModelMapper>();
+            services.AddSingleton<IMapper<ReceivedEmailEntity, EmailViewModel>, EmailViewModelMapper>();
 
 
             #endregion
