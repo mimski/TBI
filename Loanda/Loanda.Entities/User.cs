@@ -1,6 +1,7 @@
 ﻿using Loanda.Entities.Base.Contracts;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace Loanda.Entities
 {
@@ -13,5 +14,11 @@ namespace Loanda.Entities
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public virtual ICollection<LoanApplicationEntity> OpenLoanApplications { get; set; }
+
+        public virtual ICollection<LoanApplicationEntity> ClosedLoanApplication { get; set; }
+
+        public virtual ICollection<ReceivedEmailEntity> ProcessedEmails { get; set; }
     }
 }
