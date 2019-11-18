@@ -5,9 +5,9 @@ using static Loanda.Data.Context.Constants.DataValidationConstants.Applicant;
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
-    internal class ApplicantConfiguration : IEntityTypeConfiguration<Applicant>
+    internal class ApplicantConfiguration : IEntityTypeConfiguration<ApplicantEntity>
     {
-        public void Configure(EntityTypeBuilder<Applicant> builder)
+        public void Configure(EntityTypeBuilder<ApplicantEntity> builder)
         {
             builder.ToTable("Applicants");
 

@@ -5,9 +5,9 @@ using static Loanda.Data.Context.Constants.DataValidationConstants.EmailStatus;
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
-    internal class EmailStatusConfiguration : IEntityTypeConfiguration<EmailStatus>
+    internal class EmailStatusConfiguration : IEntityTypeConfiguration<EmailStatusEntity>
     {
-        public void Configure(EntityTypeBuilder<EmailStatus> builder)
+        public void Configure(EntityTypeBuilder<EmailStatusEntity> builder)
         {
             builder.ToTable("EmailStatuses");
 
@@ -16,6 +16,18 @@ namespace Loanda.Data.Context.EntityConfigurations
             builder.Property(emailStatuses => emailStatuses.Name)
                 .HasMaxLength(MaxNameLenght)
                 .IsRequired();
+
+            builder.HasData(
+                    new EmailStatusEntity
+                    {
+                        Id = -1,
+                        Name = "Invalid"
+                    },
+                    new EmailStatusEntity
+                    {
+                        Id = -2,
+                        Name = "New"
+                    });
         }
     }
 }
