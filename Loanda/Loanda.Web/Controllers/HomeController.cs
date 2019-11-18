@@ -16,20 +16,20 @@ namespace Loanda.Web.Controllers
     {
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
-        private readonly IGmailApi gmailApi;
+        //private readonly IGmailApi gmailApi;
 
-        public HomeController(SignInManager<User> signInManager, UserManager<User> userManager, IGmailApi gmailApi)
+        public HomeController(SignInManager<User> signInManager, UserManager<User> userManager/*, IGmailApi gmailApi*/)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
-            this.gmailApi = gmailApi;
+            //this.gmailApi = gmailApi;
         }
 
-        public async Task <IActionResult> Index()
+        public /*async Task <*/IActionResult/*>*/ Index()
         {
             if(User.Identity.IsAuthenticated)
             {
-                await this.gmailApi.GetEmailsFromGmailAsync();
+                //await this.gmailApi.GetEmailsFromGmailAsync();
                 return View("Privacy");
             }
 
