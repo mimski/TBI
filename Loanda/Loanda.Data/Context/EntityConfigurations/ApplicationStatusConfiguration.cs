@@ -5,9 +5,9 @@ using static Loanda.Data.Context.Constants.DataValidationConstants.ApplicationSt
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
-    internal class ApplicationStatusConfiguration : IEntityTypeConfiguration<ApplicationStatus>
+    internal class ApplicationStatusConfiguration : IEntityTypeConfiguration<ApplicationStatusEntity>
     {
-        public void Configure(EntityTypeBuilder<ApplicationStatus> builder)
+        public void Configure(EntityTypeBuilder<ApplicationStatusEntity> builder)
         {
             builder.ToTable("ApplicationStatuses");
 
@@ -16,6 +16,18 @@ namespace Loanda.Data.Context.EntityConfigurations
             builder.Property(applicationStatus => applicationStatus.Name)
                 .HasMaxLength(MaxNameLenght)
                 .IsRequired();
+
+            builder.HasData(
+                new ApplicationStatusEntity
+                {
+                    Id = -1,
+                    Name = "Open"
+                },
+                new ApplicationStatusEntity
+                {
+                    Id = -2,
+                    Name = "Closed"
+                });
         }
     }
 }

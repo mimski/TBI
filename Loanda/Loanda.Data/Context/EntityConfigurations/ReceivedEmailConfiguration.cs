@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
-    internal class ReceivedEmailConfiguration : IEntityTypeConfiguration<ReceivedEmail>
+    internal class ReceivedEmailConfiguration : IEntityTypeConfiguration<ReceivedEmailEntity>
     {
-        public void Configure(EntityTypeBuilder<ReceivedEmail> builder)
+        public void Configure(EntityTypeBuilder<ReceivedEmailEntity> builder)
         {
             builder.ToTable("ReceivedEmails");
 

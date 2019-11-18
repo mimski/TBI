@@ -23,11 +23,13 @@ namespace Loanda.Web.Models.Email
 
         //public EmailStatus EmailStatus { get; set; }
 
-        //public int? EmailStatusId { get; set; }
+        public int? EmailStatusId { get; set; }
 
         //public virtual Applicant Applicant { get; set; }
 
-        //public Guid? ApplicantId { get; set; }
+        public Guid? ApplicantId { get; set; }
+
+        public string GmailEmailId { get; set; }
 
         public bool IsReviewed { get; set; }
 

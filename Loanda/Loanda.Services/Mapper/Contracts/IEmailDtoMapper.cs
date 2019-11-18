@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Loanda.Services.Mapper.Contracts
 {
-    public interface IEmailDtoMapper
-    {
-        EmailDTO Map(ReceivedEmail recievedEmail);
-        ReceivedEmail Map(EmailDTO recievedEmail);
-        ICollection<ReceivedEmail> Map(ICollection<EmailDTO> emailDtos);
-        ICollection<EmailDTO> Map(ICollection<ReceivedEmail> emailDtos);
-      
-    }
+    //public interface IEmailDtoMapper
+    //{
+    //    EmailDTO Map(ReceivedEmailEntity recievedEmail);
+    //    //ReceivedEmailEntity Map(EmailDTO recievedEmail);
+    //    //IReadOnlyCollection<ReceivedEmailEntity> Map(IReadOnlyCollection<EmailDTO> emailDtos);
+    //    //IReadOnlyCollection<EmailDTO> Map(IReadOnlyCollection<ReceivedEmailEntity> emailDtos);
+
+    //}
 }

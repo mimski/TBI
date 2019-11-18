@@ -6,34 +6,34 @@ using System.Linq;
 
 namespace Loanda.Services.Mapper
 {
-    public class EmailAttachmentDtoMapper : IEmailAttachmentDtoMapper
-    {
-        public EmailAttachmentDTO Map(EmailAttachment emailAttachment)
-        {
-            return new EmailAttachmentDTO
-            {
-                Content = emailAttachment.Content,
-                FileSizeInMb = emailAttachment.FileSizeInMb
-            };
-        }
+    //public class EmailAttachmentDtoMapper : IEmailAttachmentDtoMapper
+    //{
+    //    public EmailAttachmentDTO Map(EmailAttachmentEntity emailAttachment)
+    //    {
+    //        return new EmailAttachmentDTO
+    //        {
+    //            Content = emailAttachment.Content,
+    //            FileSizeInMb = emailAttachment.FileSizeInMb
+    //        };
+    //    }
 
-        public EmailAttachment Map(EmailAttachmentDTO emailAttachmentDto)
-        {
-            return new EmailAttachment
-            {
-                Content = emailAttachmentDto.Content,
-                FileSizeInMb = emailAttachmentDto.FileSizeInMb
-            };
-        }
+    //    public EmailAttachmentEntity Map(EmailAttachmentDTO emailAttachmentDto)
+    //    {
+    //        return new EmailAttachmentEntity
+    //        {
+    //            Content = emailAttachmentDto.Content,
+    //            FileSizeInMb = emailAttachmentDto.FileSizeInMb
+    //        };
+    //    }
 
-        public ICollection<EmailAttachment> Map(ICollection<EmailAttachmentDTO> emailAttachmentDto)
-        {
-            return emailAttachmentDto.Select(this.Map).ToList();
-        }
+    //    public IReadOnlyCollection<EmailAttachmentEntity> Map(IReadOnlyCollection<EmailAttachmentDTO> emailAttachmentDto)
+    //    {
+    //        return emailAttachmentDto.Select(this.Map).ToList();
+    //    }
 
-        public ICollection<EmailAttachmentDTO> Map(ICollection<EmailAttachment> emailAttachmentDto)
-        {
-            return emailAttachmentDto.Select(this.Map).ToList();
-        }
-    }
+    //    public IReadOnlyCollection<EmailAttachmentDTO> Map(IReadOnlyCollection<EmailAttachmentEntity> emailAttachmentDto)
+    //    {
+    //        return emailAttachmentDto.Select(this.Map).ToList();
+    //    }
+    //}
 }

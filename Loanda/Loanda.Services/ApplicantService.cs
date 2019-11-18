@@ -1,10 +1,11 @@
 ﻿using Loanda.Data.Context;
-using Loanda.Entities;
 using Loanda.Services.Contracts;
+using Loanda.Services.Mappings;
+using Loanda.Services.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Loanda.Services
@@ -18,53 +19,109 @@ namespace Loanda.Services
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<Guid> CreateAsync(string firstName, string middleName, string lastName, string egn, string phoneNumber, string adress, string city)
+        public async Task<Applicant> AddAsync(Applicant applicant, CancellationToken ct)
         {
-            var applicant = new Applicant
-            {
-                FirstName = firstName,
-                MiddleName = middleName,
-                LastName = lastName,
-                EGN = egn,
-                PhoneNumber = phoneNumber,
-                Address = adress,
-                City = city
-            };
-
-            this.context.Add(applicant);
-
-            await this.context.SaveChangesAsync();
-
-            return applicant.Id;
+            var addedApplicantEntry = this.context.Applicants.Add(applicant.ToEntity());
+            await this.context.SaveChangesAsync(ct);
+            return addedApplicantEntry.Entity.ToService();
         }
 
-        public async Task<bool> EditAsync(Guid id, string firstName, string middleName, string lastName, string egn, string phoneNumber, string adress, string city)
+        public async Task<IReadOnlyCollection<Applicant>> GetAllAsync(CancellationToken ct)
         {
-            var applicant = await this.context.Applicants.FindAsync(id);
+            var applicants = await this.context.Applicants.AsNoTracking().ToListAsync(ct);
+            return applicants.ToService();
+        }
 
-            if (applicant == null)
+        public async Task<Applicant> GetByIdAsync(Guid id, CancellationToken ct)
+        {
+            var applicant = await this.context.Applicants.AsNoTracking().SingleOrDefaultAsync(a => a.Id.Equals(id), ct);
+            return applicant.ToService();
+        }
+
+        public async Task<Applicant> UpdateAsync(Applicant applicant, CancellationToken ct)
+        {
+            var existingApplicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(applicant.Id), ct);
+            this.context.Entry(existingApplicant).CurrentValues.SetValues(applicant.ToEntity());
+            await this.context.SaveChangesAsync();
+
+            return existingApplicant.ToService();
+        }
+
+        public async Task<Applicant> MarkAsDeletedAsync(Guid id, CancellationToken ct)
+        {
+            var applicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(id), ct);
+            if (applicant != null)
             {
-                return false;
+                applicant.IsDeleted = true;
+                applicant.DeletedOn = DateTime.UtcNow.AddHours(2);
+
+                this.context.Applicants.Update(applicant);
+                await this.context.SaveChangesAsync(ct);
+                return applicant.ToService();
             }
-
-            applicant.FirstName = firstName;
-            applicant.MiddleName = middleName;
-            applicant.LastName = lastName;
-            applicant.EGN = egn;
-            applicant.PhoneNumber = phoneNumber;
-            applicant.Address = adress;
-            applicant.City = city;
-
-            this.context.Applicants.Update(applicant);
-
-            await this.context.SaveChangesAsync();
-
-            return true;
+            else
+            {
+                return null;
+            }
         }
 
-        public async Task<bool> ExistsAsync(Guid id)
+        public async Task RemoveAsync(Guid id, CancellationToken ct)
         {
-            return await this.context.Applicants.AnyAsync(applicant => applicant.Equals(id));
+            var applicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(id), ct);
+            if (applicant != null)
+            {
+                this.context.Remove(applicant);
+                await this.context.SaveChangesAsync(ct);
+            }
         }
+
+        //public async Task<Guid> CreateAsync(string firstName, string middleName, string lastName, string egn, string phoneNumber, string adress, string city)
+        //{
+        //    var applicant = new ApplicantEntity
+        //    {
+        //        FirstName = firstName,
+        //        MiddleName = middleName,
+        //        LastName = lastName,
+        //        EGN = egn,
+        //        PhoneNumber = phoneNumber,
+        //        Address = adress,
+        //        City = city
+        //    };
+
+        //    this.context.Add(applicant);
+
+        //    await this.context.SaveChangesAsync();
+
+        //    return applicant.Id;
+        //}
+
+        //public async Task<bool> EditAsync(Guid id, string firstName, string middleName, string lastName, string egn, string phoneNumber, string adress, string city)
+        //{
+        //    var applicant = await this.context.Applicants.FindAsync(id);
+
+        //    if (applicant == null)
+        //    {
+        //        return false;
+        //    }
+
+        //    applicant.FirstName = firstName;
+        //    applicant.MiddleName = middleName;
+        //    applicant.LastName = lastName;
+        //    applicant.EGN = egn;
+        //    applicant.PhoneNumber = phoneNumber;
+        //    applicant.Address = adress;
+        //    applicant.City = city;
+
+        //    this.context.Applicants.Update(applicant);
+
+        //    await this.context.SaveChangesAsync();
+
+        //    return true;
+        //}
+
+        //public async Task<bool> ExistsAsync(Guid id)
+        //{
+        //    return await this.context.Applicants.AnyAsync(applicant => applicant.Equals(id));
+        //}
     }
 }

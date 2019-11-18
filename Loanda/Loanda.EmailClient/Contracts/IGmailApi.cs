@@ -4,6 +4,6 @@ namespace Loanda.EmailClient.Contracts
 {
     public interface IGmailApi
     {
-        Task GetEmailsFromGmailAsync();
+        Task GetUnreadEmailsFromGmailAsync();
     }
 }

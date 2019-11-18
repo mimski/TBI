@@ -8,6 +8,6 @@ namespace Loanda.Services.Contracts
 {
     public interface IEmailAttachmentService
     {
-        Task<EmailAttachment> AddAttachmentAsync(Guid emailId, string content, long size);
+        Task<EmailAttachmentEntity> AddAttachmentAsync(Guid emailId, string content, long size);
     }
 }

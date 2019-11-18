@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Loanda.Entities
 {
-    public class Applicant : BaseEntity
+    public class ApplicantEntity : BaseEntity
     {
         public string EGN { get; set; }
 
@@ -24,6 +24,6 @@ namespace Loanda.Entities
 
         public string EmailAddress { get; set; }
 
-        public virtual ICollection<LoanApplication> LoanApplication { get; set; }
+        public virtual ICollection<LoanApplicationEntity> LoanApplication { get; set; }
     }
 }

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
-    internal class LoanApplicationConfiguration : IEntityTypeConfiguration<LoanApplication>
+    internal class LoanApplicationConfiguration : IEntityTypeConfiguration<LoanApplicationEntity>
     {
-        public void Configure(EntityTypeBuilder<LoanApplication> builder)
+        public void Configure(EntityTypeBuilder<LoanApplicationEntity> builder)
         {
             builder.ToTable("LoanApplications");
 
@@ -26,6 +26,9 @@ namespace Loanda.Data.Context.EntityConfigurations
 
             builder.Property(loanApplication => loanApplication.IsDeleted)
                 .HasDefaultValue(false);
+
+            builder.Property(loanApplication => loanApplication.IsApproved)
+                .HasDefaultValue(null);
         }
     }
 }

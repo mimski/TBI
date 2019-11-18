@@ -2,12 +2,12 @@
 
 namespace Loanda.Entities
 {
-   public class ApplicationStatus
+   public class ApplicationStatusEntity
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public virtual ICollection<LoanApplication> LoanApplications { get; set; }
+        public virtual ICollection<LoanApplicationEntity> LoanApplications { get; set; }
     }
 }

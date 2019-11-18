@@ -10,18 +10,19 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Loanda.Data.Migrations
 {
     [DbContext(typeof(LoandaContext))]
-    [Migration("20191114184927_Initial")]
+    [Migration("20191118135015_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("public")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Loanda.Entities.Applicant", b =>
+            modelBuilder.Entity("Loanda.Entities.ApplicantEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -75,7 +76,7 @@ namespace Loanda.Data.Migrations
                     b.ToTable("Applicants");
                 });
 
-            modelBuilder.Entity("Loanda.Entities.ApplicationStatus", b =>
+            modelBuilder.Entity("Loanda.Entities.ApplicationStatusEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -87,9 +88,21 @@ namespace Loanda.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ApplicationStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Name = "Open"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Name = "Closed"
+                        });
                 });
 
-            modelBuilder.Entity("Loanda.Entities.EmailAttachment", b =>
+            modelBuilder.Entity("Loanda.Entities.EmailAttachmentEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -97,7 +110,7 @@ namespace Loanda.Data.Migrations
                     b.Property<string>("Content")
                         .IsRequired();
 
-                    b.Property<long>("FileSizeInMb");
+                    b.Property<double>("FileSizeInMb");
 
                     b.Property<Guid>("ReceivedEmailId");
 
@@ -108,7 +121,7 @@ namespace Loanda.Data.Migrations
                     b.ToTable("EmailAttachments");
                 });
 
-            modelBuilder.Entity("Loanda.Entities.EmailStatus", b =>
+            modelBuilder.Entity("Loanda.Entities.EmailStatusEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -120,9 +133,21 @@ namespace Loanda.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EmailStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Name = "Invalid"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Name = "New"
+                        });
                 });
 
-            modelBuilder.Entity("Loanda.Entities.LoanApplication", b =>
+            modelBuilder.Entity("Loanda.Entities.LoanApplicationEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -137,9 +162,15 @@ namespace Loanda.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("date");
 
+                    b.Property<bool?>("IsApproved")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(null);
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(false);
+
+                    b.Property<decimal>("LoanAmount");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("date");
@@ -153,12 +184,14 @@ namespace Loanda.Data.Migrations
                     b.ToTable("LoanApplications");
                 });
 
-            modelBuilder.Entity("Loanda.Entities.ReceivedEmail", b =>
+            modelBuilder.Entity("Loanda.Entities.ReceivedEmailEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<Guid?>("ApplicantId");
+
+                    b.Property<double>("AttachmentsTotalSizeInMB");
 
                     b.Property<string>("Body");
 
@@ -185,12 +218,13 @@ namespace Loanda.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("date");
 
-                    b.Property<string>("SenderEmail")
-                        .IsRequired();
+                    b.Property<string>("SenderEmail");
 
                     b.Property<string>("SenderName");
 
                     b.Property<string>("Subject");
+
+                    b.Property<int>("TotalAttachments");
 
                     b.HasKey("Id");
 
@@ -430,34 +464,34 @@ namespace Loanda.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Loanda.Entities.EmailAttachment", b =>
+            modelBuilder.Entity("Loanda.Entities.EmailAttachmentEntity", b =>
                 {
-                    b.HasOne("Loanda.Entities.ReceivedEmail", "ReceivedEmail")
+                    b.HasOne("Loanda.Entities.ReceivedEmailEntity", "ReceivedEmail")
                         .WithMany("EmailAttachments")
                         .HasForeignKey("ReceivedEmailId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Loanda.Entities.LoanApplication", b =>
+            modelBuilder.Entity("Loanda.Entities.LoanApplicationEntity", b =>
                 {
-                    b.HasOne("Loanda.Entities.Applicant", "Applicant")
+                    b.HasOne("Loanda.Entities.ApplicantEntity", "Applicant")
                         .WithMany("LoanApplication")
                         .HasForeignKey("ApplicantId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Loanda.Entities.ApplicationStatus", "ApplicationStatus")
+                    b.HasOne("Loanda.Entities.ApplicationStatusEntity", "ApplicationStatus")
                         .WithMany("LoanApplications")
                         .HasForeignKey("ApplicationStatusId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Loanda.Entities.ReceivedEmail", b =>
+            modelBuilder.Entity("Loanda.Entities.ReceivedEmailEntity", b =>
                 {
-                    b.HasOne("Loanda.Entities.Applicant", "Applicant")
+                    b.HasOne("Loanda.Entities.ApplicantEntity", "Applicant")
                         .WithMany()
                         .HasForeignKey("ApplicantId");
 
-                    b.HasOne("Loanda.Entities.EmailStatus", "EmailStatus")
+                    b.HasOne("Loanda.Entities.EmailStatusEntity", "EmailStatus")
                         .WithMany()
                         .HasForeignKey("EmailStatusId");
                 });
