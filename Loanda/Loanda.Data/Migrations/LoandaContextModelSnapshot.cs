@@ -154,6 +154,8 @@ namespace Loanda.Data.Migrations
 
                     b.Property<int>("ApplicationStatusId");
 
+                    b.Property<string>("ClosedById");
+
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("date");
 
@@ -173,11 +175,17 @@ namespace Loanda.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("date");
 
+                    b.Property<string>("OpenedById");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicantId");
 
                     b.HasIndex("ApplicationStatusId");
+
+                    b.HasIndex("ClosedById");
+
+                    b.HasIndex("OpenedById");
 
                     b.ToTable("LoanApplications");
                 });
@@ -216,6 +224,8 @@ namespace Loanda.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("date");
 
+                    b.Property<string>("ProcessedById");
+
                     b.Property<string>("SenderEmail");
 
                     b.Property<string>("SenderName");
@@ -229,6 +239,8 @@ namespace Loanda.Data.Migrations
                     b.HasIndex("ApplicantId");
 
                     b.HasIndex("EmailStatusId");
+
+                    b.HasIndex("ProcessedById");
 
                     b.ToTable("ReceivedEmails");
                 });
@@ -481,6 +493,16 @@ namespace Loanda.Data.Migrations
                         .WithMany("LoanApplications")
                         .HasForeignKey("ApplicationStatusId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Loanda.Entities.User", "ClosedBy")
+                        .WithMany("ClosedLoanApplication")
+                        .HasForeignKey("ClosedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Loanda.Entities.User", "OpenedBy")
+                        .WithMany("OpenLoanApplications")
+                        .HasForeignKey("OpenedById")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Loanda.Entities.ReceivedEmailEntity", b =>
@@ -492,6 +514,11 @@ namespace Loanda.Data.Migrations
                     b.HasOne("Loanda.Entities.EmailStatusEntity", "EmailStatus")
                         .WithMany()
                         .HasForeignKey("EmailStatusId");
+
+                    b.HasOne("Loanda.Entities.User", "ProcessedBy")
+                        .WithMany("ProcessedEmails")
+                        .HasForeignKey("ProcessedById")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

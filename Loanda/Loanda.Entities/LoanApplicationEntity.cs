@@ -16,5 +16,13 @@ namespace Loanda.Entities
         public decimal LoanAmount { get; set; }
 
         public bool? IsApproved { get; set; }
+
+        public string OpenedById { get; set; }
+
+        public virtual User OpenedBy { get; set; }
+
+        public string ClosedById { get; set; }
+
+        public virtual User ClosedBy { get; set; }
     }
 }

@@ -33,5 +33,9 @@ namespace Loanda.Entities
         public int TotalAttachments { get; set; }
 
         public double AttachmentsTotalSizeInMB { get; set; }
+
+        public string ProcessedById { get; set; }
+
+        public virtual User ProcessedBy { get; set; }
     }
 }
