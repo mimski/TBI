@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
-    internal class LoanApplicationConfiguration : IEntityTypeConfiguration<LoanApplicationEntity>
+    internal class LoanApplicationEntityConfiguration : IEntityTypeConfiguration<LoanApplicationEntity>
     {
         public void Configure(EntityTypeBuilder<LoanApplicationEntity> builder)
         {

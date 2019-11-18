@@ -5,7 +5,7 @@ using static Loanda.Data.Context.Constants.DataValidationConstants.EmailStatus;
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
-    internal class EmailStatusConfiguration : IEntityTypeConfiguration<EmailStatusEntity>
+    internal class EmailStatusEntityConfiguration : IEntityTypeConfiguration<EmailStatusEntity>
     {
         public void Configure(EntityTypeBuilder<EmailStatusEntity> builder)
         {

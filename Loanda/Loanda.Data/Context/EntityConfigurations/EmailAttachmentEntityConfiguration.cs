@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
-    internal class EmailAttachmentConfiguration : IEntityTypeConfiguration<EmailAttachmentEntity>
+    internal class EmailAttachmentEntityConfiguration : IEntityTypeConfiguration<EmailAttachmentEntity>
     {
         public void Configure(EntityTypeBuilder<EmailAttachmentEntity> builder)
         {

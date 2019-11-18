@@ -5,7 +5,7 @@ using static Loanda.Data.Context.Constants.DataValidationConstants.ApplicationSt
 
 namespace Loanda.Data.Context.EntityConfigurations
 {
-    internal class ApplicationStatusConfiguration : IEntityTypeConfiguration<ApplicationStatusEntity>
+    internal class ApplicationStatusEntityConfiguration : IEntityTypeConfiguration<ApplicationStatusEntity>
     {
         public void Configure(EntityTypeBuilder<ApplicationStatusEntity> builder)
         {

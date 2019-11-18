@@ -110,40 +110,6 @@ namespace Loanda.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LoanApplications",
-                schema: "public",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "date", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "date", nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
-                    DeletedOn = table.Column<DateTime>(type: "date", nullable: true),
-                    ApplicantId = table.Column<Guid>(nullable: false),
-                    ApplicationStatusId = table.Column<int>(nullable: false),
-                    LoanAmount = table.Column<decimal>(nullable: false),
-                    IsApproved = table.Column<bool>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LoanApplications", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LoanApplications_Applicants_ApplicantId",
-                        column: x => x.ApplicantId,
-                        principalSchema: "public",
-                        principalTable: "Applicants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LoanApplications_ApplicationStatuses_ApplicationStatusId",
-                        column: x => x.ApplicationStatusId,
-                        principalSchema: "public",
-                        principalTable: "ApplicationStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 schema: "public",
                 columns: table => new
@@ -261,6 +227,56 @@ namespace Loanda.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "LoanApplications",
+                schema: "public",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeletedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    ApplicantId = table.Column<Guid>(nullable: false),
+                    ApplicationStatusId = table.Column<int>(nullable: false),
+                    LoanAmount = table.Column<decimal>(nullable: false),
+                    IsApproved = table.Column<bool>(nullable: true),
+                    OpenedById = table.Column<string>(nullable: true),
+                    ClosedById = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoanApplications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_Applicants_ApplicantId",
+                        column: x => x.ApplicantId,
+                        principalSchema: "public",
+                        principalTable: "Applicants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_ApplicationStatuses_ApplicationStatusId",
+                        column: x => x.ApplicationStatusId,
+                        principalSchema: "public",
+                        principalTable: "ApplicationStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_AspNetUsers_ClosedById",
+                        column: x => x.ClosedById,
+                        principalSchema: "public",
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_AspNetUsers_OpenedById",
+                        column: x => x.OpenedById,
+                        principalSchema: "public",
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ReceivedEmails",
                 schema: "public",
                 columns: table => new
@@ -280,7 +296,8 @@ namespace Loanda.Data.Migrations
                     IsReviewed = table.Column<bool>(nullable: false, defaultValue: false),
                     GmailEmailId = table.Column<string>(nullable: true),
                     TotalAttachments = table.Column<int>(nullable: false),
-                    AttachmentsTotalSizeInMB = table.Column<double>(nullable: false)
+                    AttachmentsTotalSizeInMB = table.Column<double>(nullable: false),
+                    ProcessedById = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -297,6 +314,13 @@ namespace Loanda.Data.Migrations
                         column: x => x.EmailStatusId,
                         principalSchema: "public",
                         principalTable: "EmailStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ReceivedEmails_AspNetUsers_ProcessedById",
+                        column: x => x.ProcessedById,
+                        principalSchema: "public",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -437,6 +461,18 @@ namespace Loanda.Data.Migrations
                 column: "ApplicationStatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LoanApplications_ClosedById",
+                schema: "public",
+                table: "LoanApplications",
+                column: "ClosedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoanApplications_OpenedById",
+                schema: "public",
+                table: "LoanApplications",
+                column: "OpenedById");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ReceivedEmails_ApplicantId",
                 schema: "public",
                 table: "ReceivedEmails",
@@ -447,6 +483,12 @@ namespace Loanda.Data.Migrations
                 schema: "public",
                 table: "ReceivedEmails",
                 column: "EmailStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReceivedEmails_ProcessedById",
+                schema: "public",
+                table: "ReceivedEmails",
+                column: "ProcessedById");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -484,10 +526,6 @@ namespace Loanda.Data.Migrations
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers",
-                schema: "public");
-
-            migrationBuilder.DropTable(
                 name: "ReceivedEmails",
                 schema: "public");
 
@@ -501,6 +539,10 @@ namespace Loanda.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "EmailStatuses",
+                schema: "public");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers",
                 schema: "public");
         }
     }
