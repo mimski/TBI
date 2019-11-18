@@ -8,42 +8,44 @@ using System.Text;
 
 namespace Loanda.Services.Mapper
 {
-    public class EmailDtoMapper : IEmailDtoMapper
-    {
-        public EmailDTO Map(ReceivedEmail recievedEmail)
-        {
-            return new EmailDTO
-            {
-                Body = recievedEmail.Body,
-                Subject = recievedEmail.Subject,
-                DateReceived = recievedEmail.DateReceived,
-                SenderEmail = recievedEmail.SenderEmail,
-                SenderName = recievedEmail.SenderName,
-                GmailEmailId = recievedEmail.GmailEmailId
-            };
-        }
+    //public class EmailDtoMapper : IEmailDtoMapper
+    //{
+    //    public EmailDTO Map(ReceivedEmailEntity recievedEmail)
+    //    {
+    //        return new EmailDTO
+    //        {
+    //            Body = recievedEmail.Body,
+    //            Subject = recievedEmail.Subject,
 
-        public ReceivedEmail Map(EmailDTO recievedEmail)
-        {
-            return new ReceivedEmail
-            {
-                Body = recievedEmail.Body,
-                Subject = recievedEmail.Subject,
-                DateReceived = recievedEmail.DateReceived,
-                SenderEmail = recievedEmail.SenderEmail,
-                SenderName = recievedEmail.SenderName,
-                GmailEmailId = recievedEmail.GmailEmailId,
-            };
-        }
+    //            //DateReceived = recievedEmail.DateReceived,
+    //            //SenderEmail = recievedEmail.SenderEmail,
+    //            //SenderName = recievedEmail.SenderName,
+    //            GmailEmailId = recievedEmail.GmailEmailId
+    //        };
+    //    }
 
-        public ICollection<ReceivedEmail> Map(ICollection<EmailDTO> emailDtos)
-        {
-            return emailDtos.Select(this.Map).ToList();
-        }
+    //    //public ReceivedEmailEntity Map(EmailDTO recievedEmail)
+    //    //{
+    //    //    return new ReceivedEmailEntity
+    //    //    {
+    //    //        Body = recievedEmail.Body,
+    //    //        Subject = recievedEmail.Subject,
+    //    //        From = recievedEmail.From,
+    //    //        //DateReceived = recievedEmail.DateReceived,
+    //    //        //SenderEmail = recievedEmail.SenderEmail,
+    //    //        //SenderName = recievedEmail.SenderName,
+    //    //        GmailEmailId = recievedEmail.GmailEmailId,
+    //    //    };
+    //    //}
 
-        public ICollection<EmailDTO> Map(ICollection<ReceivedEmail> emailDtos)
-        {
-            return emailDtos.Select(this.Map).ToList();
-        }
-    }
+    //    //public IReadOnlyCollection<ReceivedEmailEntity> Map(IReadOnlyCollection<EmailDTO> emailDtos)
+    //    //{
+    //    //    return emailDtos.Select(this.Map).ToList();
+    //    //}
+
+    //    //public IReadOnlyCollection<EmailDTO> Map(IReadOnlyCollection<ReceivedEmailEntity> emailDtos)
+    //    //{
+    //    //    return emailDtos.Select(this.Map).ToList();
+    //    //}
+    //}
 }

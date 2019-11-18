@@ -4,9 +4,9 @@ using Loanda.Web.Models.Email;
 
 namespace Loanda.Web.Mappers
 {
-    public class EmailViewModelMapper : IMapper<ReceivedEmail, EmailViewModel>
+    public class EmailViewModelMapper : IMapper<ReceivedEmailEntity, EmailViewModel>
     {
-        public EmailViewModel Map(ReceivedEmail entity)
+        public EmailViewModel Map(ReceivedEmailEntity entity)
         {
             var emailViewModel = new EmailViewModel
             {
