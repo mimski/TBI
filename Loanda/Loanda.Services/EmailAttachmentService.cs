@@ -17,9 +17,9 @@ namespace Loanda.Services
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<EmailAttachment> AddAttachmentAsync(Guid emailId, string content, long size)
+        public async Task<EmailAttachmentEntity> AddAttachmentAsync(Guid emailId, string content, long size)
         {
-            var attachment = new EmailAttachment
+            var attachment = new EmailAttachmentEntity
             {
                 Content = content,
                 FileSizeInMb = size,
