@@ -1,7 +1,7 @@
 ﻿
 namespace Loanda.Entities
 {
-    public class EmailStatus
+    public class EmailStatusEntity
     {
         public int Id { get; set; }
 
