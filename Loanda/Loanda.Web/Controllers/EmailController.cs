@@ -25,24 +25,32 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken ct)
         {
-            var emails = await this.emailService.GetAllAsync();
-
-            //if (authors.Count() == 0)
-            //{
-            //    return View("Empty");
-            //}
-
-            var emailsViewModelList = new List<EmailViewModel>();
-            foreach (var email in emails)
-            {
-                emailsViewModelList.Add(this.emailMapper.Map(email));
-            }
-
-            return View(emailsViewModelList);
+            var result = await this.emailService.GetAllAsync(ct);
+            return View("Index", result.ToViewModel());
         }
+
+
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<IActionResult> Index(CancellationToken ct)
+        //{
+        //    var emails = await this.emailService.GetAllAsync();
+
+        //    //if (authors.Count() == 0)
+        //    //{
+        //    //    return View("Empty");
+        //    //}
+
+        //    var emailsViewModelList = new List<EmailViewModel>();
+        //    foreach (var email in emails)
+        //    {
+        //        emailsViewModelList.Add(this.emailMapper.Map(email));
+        //    }
+
+        //    return View(emailsViewModelList);
+        //}
 
         //[HttpGet("/details")]
         //[Authorize]
