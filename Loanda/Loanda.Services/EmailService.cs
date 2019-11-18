@@ -1,9 +1,6 @@
 ﻿using Loanda.Data.Context;
-using Loanda.Entities;
 using Loanda.Services.Contracts;
 using Loanda.Services.DTOs;
-using Loanda.Services.Mapper;
-using Loanda.Services.Mapper.Contracts;
 using Loanda.Services.Mappings;
 using Loanda.Services.Models;
 using Microsoft.EntityFrameworkCore;
@@ -18,24 +15,11 @@ namespace Loanda.Services
     public class EmailService : IEmailService
     {
         private readonly LoandaContext context;
-        //private readonly IEmailDtoMapper dtoMapper;
 
-        public EmailService(LoandaContext context/*, IEmailDtoMapper dtoMapper*/)
+        public EmailService(LoandaContext context)
         {
-            this.context = context;
-            //this.dtoMapper = dtoMapper;
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
-
-        //public async Task<bool> CreateAsync(EmailDTO emailDto)
-        //{
-        //    var email = dtoMapper.Map(emailDto);
-
-        //    this.context.Add(email);
-
-        //    await this.context.SaveChangesAsync();
-
-        //    return true;
-        //}
 
         public async Task<bool> CreateAsync(EmailDTO emailDto)
         {
@@ -65,36 +49,30 @@ namespace Loanda.Services
             return email.ToService();
         }
 
-
-        public async Task<IReadOnlyCollection<ReceivedEmailEntity>> GetAllAsync()
+        public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllAsync(CancellationToken ct)
         {
-            var emails = await this.context.ReceivedEmails.ToListAsync();
+            var emails = await this.context.ReceivedEmails.AsNoTracking().ToListAsync(ct);
 
-            return emails;
+            return emails.ToService();
         }
 
         public async Task<ReceivedEmail> FindByIdAsync(Guid id, CancellationToken ct)
         {
             var email = await this.context.ReceivedEmails.AsNoTracking().SingleOrDefaultAsync(e => e.Id.Equals(id), ct);
+
+            Base64Decode(email.Body);
+
+            email.Body = Base64Decode(email.Body);
+
             return email.ToService();
-
-            //var email = await this.context.ReceivedEmails.FirstOrDefaultAsync(e => e.Id.Equals(id));
-
-            //if (email == null)
-            //{
-            //    throw new ArgumentException("There is no such email");
-            //}
-
-            //return email;
         }
 
-        public static string Base64Decode(string base64EncodedData)
+        private string Base64Decode(string base64EncodedData)
         {
             base64EncodedData = base64EncodedData.Replace('-', '+');
             base64EncodedData = base64EncodedData.Replace('_', '/');
             byte[] encode = Convert.FromBase64String(base64EncodedData);
             return Encoding.UTF8.GetString(encode);
         }
-
     }
 }
