@@ -1,10 +1,9 @@
 ﻿using Loanda.Data.Context;
-using Loanda.Entities;
 using Loanda.Services.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using Loanda.Services.Mappings;
+using Loanda.Services.DTOs;
 
 namespace Loanda.Services
 {
@@ -17,20 +16,12 @@ namespace Loanda.Services
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<EmailAttachmentEntity> AddAttachmentAsync(Guid emailId, string content, long size)
+        public async Task<bool> AddAttachmentAsync(EmailAttachmentDTO emailAttachmentDto)
         {
-            var attachment = new EmailAttachmentEntity
-            {
-                Content = content,
-                FileSizeInMb = size,
-                ReceivedEmailId = emailId
-            };
-
-            this.context.EmailAttachments.Add(attachment);
-
+            this.context.EmailAttachments.Add(emailAttachmentDto.ToEntity());
             await this.context.SaveChangesAsync();
 
-            return attachment;
+            return true;
         }
     }
 }
