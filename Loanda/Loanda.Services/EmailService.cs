@@ -24,7 +24,6 @@ namespace Loanda.Services
         public async Task<long> CreateAsync(EmailDTO emailDto)
         {
             var email = emailDto.ToEntity();
-
             this.context.ReceivedEmails.Add(email);
             await this.context.SaveChangesAsync();
 
@@ -58,7 +57,7 @@ namespace Loanda.Services
             return emails.ToService();
         }
 
-        public async Task<ReceivedEmail> FindByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<ReceivedEmail> FindByIdAsync(long id, CancellationToken cancellationToken)
         {
             var email = await this.context.ReceivedEmails.AsNoTracking().SingleOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
 

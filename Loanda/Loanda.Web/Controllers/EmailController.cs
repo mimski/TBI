@@ -74,7 +74,7 @@ namespace Loanda.Web.Controllers
         [HttpGet("/details")]
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Details(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Details(long id, CancellationToken cancellationToken)
         {
             var email = await this.emailService.FindByIdAsync(id, cancellationToken);
 
