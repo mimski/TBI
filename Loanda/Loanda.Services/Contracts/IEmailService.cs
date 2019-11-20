@@ -10,7 +10,7 @@ namespace Loanda.Services.Contracts
 {
     public interface IEmailService
     {
-        Task<bool> CreateAsync(EmailDTO emailDto);
+        Task<long> CreateAsync(EmailDTO emailDto);
 
         Task<IReadOnlyCollection<ReceivedEmail>> GetAllAsync(CancellationToken cancellationToken);
 
