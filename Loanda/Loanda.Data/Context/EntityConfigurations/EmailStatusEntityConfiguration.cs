@@ -21,12 +21,17 @@ namespace Loanda.Data.Context.EntityConfigurations
                     new EmailStatusEntity
                     {
                         Id = -1,
-                        Name = "Invalid"
+                        Name = "Not Reviewed"
                     },
                     new EmailStatusEntity
                     {
                         Id = -2,
                         Name = "New"
+                    },
+                    new EmailStatusEntity
+                    {
+                        Id = -3,
+                        Name = "Invalid"
                     });
         }
     }
