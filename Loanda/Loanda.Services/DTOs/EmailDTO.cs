@@ -23,7 +23,7 @@ namespace Loanda.Services.DTOs
 
         public int TotalAttachments { get; set; }
 
-        public double? AttachmentsTotalSizeInMB { get; set; }
+        public double AttachmentsTotalSizeInMB { get; set; }
 
         public virtual ICollection<EmailAttachmentDTO> EmailAttachments { get; set; }
     }
