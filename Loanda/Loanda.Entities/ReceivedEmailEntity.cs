@@ -1,16 +1,18 @@
-﻿using Loanda.Entities.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Loanda.Entities.Base.Contracts;
 
 namespace Loanda.Entities
 {
-    public class ReceivedEmailEntity : BaseEntity
+    public class ReceivedEmailEntity : IAuditable, IDeletable
     {
+        public long Id { get; set; }
+
         public string SenderEmail { get; set; }
 
         public string SenderName { get; set; }
 
-        public DateTime DateReceived { get; set; }
+        public string DateReceived { get; set; }
 
         public string Subject { get; set; }
 
@@ -26,8 +28,6 @@ namespace Loanda.Entities
 
         public Guid? ApplicantId { get; set; }
 
-        public bool IsReviewed { get; set; }
-        
         public string GmailEmailId { get; set; }
 
         public int TotalAttachments { get; set; }
@@ -37,5 +37,13 @@ namespace Loanda.Entities
         public string ProcessedById { get; set; }
 
         public virtual User ProcessedBy { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
     }
 }

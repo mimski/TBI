@@ -10,7 +10,6 @@ namespace Loanda.Web.Mappers
         {
             var emailViewModel = new EmailViewModel
             {
-                IsReviewed = entity.IsReviewed,
                 Id = entity.Id,
                 Subject = entity.Subject,
                 Body = entity.Body,

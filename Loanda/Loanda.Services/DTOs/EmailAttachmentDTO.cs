@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Loanda.Services.DTOs
 {
     public class EmailAttachmentDTO
     {
-        public double? FileSizeInMb { get; set; }
+        public double FileSizeInMb { get; set; }
 
-        public string Content { get; set; }
+        public string AttachmentName { get; set; }
+
+        public long ReceivedEmailId { get; set; }
     }
 }

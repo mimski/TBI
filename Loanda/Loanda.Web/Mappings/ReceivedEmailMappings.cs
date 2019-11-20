@@ -23,7 +23,10 @@ namespace Loanda.Web.Mappings
                 DateReceived = entity.DateReceived,
                 ApplicantId = entity.ApplicantId,
                 EmailStatusId = entity.EmailStatusId,
-                IsReviewed = entity.IsReviewed
+                CreatedOn = entity.CreatedOn,
+                ModifiedOn = entity.ModifiedOn,
+                DeletedOn = entity.DeletedOn,
+                IsDeleted = entity.IsDeleted,
             } : null;
         }
 
@@ -40,7 +43,10 @@ namespace Loanda.Web.Mappings
                 DateReceived = viewModel.DateReceived,
                 ApplicantId = viewModel.ApplicantId,
                 EmailStatusId = viewModel.EmailStatusId,
-                IsReviewed = viewModel.IsReviewed
+                CreatedOn = viewModel.CreatedOn,
+                ModifiedOn = viewModel.ModifiedOn,
+                DeletedOn = viewModel.DeletedOn,
+                IsDeleted = viewModel.IsDeleted,
             } : null;
         }
 

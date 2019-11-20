@@ -1,4 +1,5 @@
 ﻿using Loanda.Entities;
+using Loanda.Services.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Loanda.Services.Contracts
 {
     public interface IEmailAttachmentService
     {
-        Task<EmailAttachmentEntity> AddAttachmentAsync(Guid emailId, string content, long size);
+        Task<bool> AddAttachmentAsync(EmailAttachmentDTO emailAttachmentDto);
     }
 }

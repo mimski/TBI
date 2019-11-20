@@ -281,23 +281,23 @@ namespace Loanda.Data.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "date", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "date", nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
-                    DeletedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     SenderEmail = table.Column<string>(nullable: true),
                     SenderName = table.Column<string>(nullable: true),
-                    DateReceived = table.Column<DateTime>(nullable: false),
+                    DateReceived = table.Column<string>(nullable: true),
                     Subject = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true),
                     EmailStatusId = table.Column<int>(nullable: true),
                     ApplicantId = table.Column<Guid>(nullable: true),
-                    IsReviewed = table.Column<bool>(nullable: false, defaultValue: false),
                     GmailEmailId = table.Column<string>(nullable: true),
                     TotalAttachments = table.Column<int>(nullable: false),
                     AttachmentsTotalSizeInMB = table.Column<double>(nullable: false),
-                    ProcessedById = table.Column<string>(nullable: true)
+                    ProcessedById = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeletedOn = table.Column<DateTime>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -333,8 +333,8 @@ namespace Loanda.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     FileSizeInMb = table.Column<double>(nullable: false),
-                    Content = table.Column<string>(nullable: false),
-                    ReceivedEmailId = table.Column<Guid>(nullable: false)
+                    AttachmentName = table.Column<string>(nullable: false),
+                    ReceivedEmailId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -384,8 +384,9 @@ namespace Loanda.Data.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { -1, "Invalid" },
-                    { -2, "New" }
+                    { -1, "Not Reviewed" },
+                    { -2, "New" },
+                    { -3, "Invalid" }
                 });
 
             migrationBuilder.InsertData(

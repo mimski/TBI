@@ -21,11 +21,14 @@ namespace Loanda.Services
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<bool> CreateAsync(EmailDTO emailDto)
+        public async Task<long> CreateAsync(EmailDTO emailDto)
         {
-            this.context.ReceivedEmails.Add(emailDto.ToEntity());
+            var email = emailDto.ToEntity();
+
+            this.context.ReceivedEmails.Add(email);
             await this.context.SaveChangesAsync();
-            return true;
+
+            return email.Id;
         }
 
         public async Task<ReceivedEmail> AddEmailData(EmailDTO emailDto)
@@ -42,7 +45,6 @@ namespace Loanda.Services
             email.Body = emailDto.Body;
             email.AttachmentsTotalSizeInMB = (double)emailDto.AttachmentsTotalSizeInMB;
             email.TotalAttachments = emailDto.TotalAttachments;
-            email.IsReviewed = true;
           
             this.context.ReceivedEmails.Update(email);
             await this.context.SaveChangesAsync();

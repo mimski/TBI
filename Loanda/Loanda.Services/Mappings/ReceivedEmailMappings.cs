@@ -24,7 +24,10 @@ namespace Loanda.Services.Mappings
                     DateReceived = entity.DateReceived,
                     ApplicantId = entity.ApplicantId,
                     EmailStatusId = entity.EmailStatusId,
-                    IsReviewed = entity.IsReviewed
+                    CreatedOn = entity.CreatedOn,
+                    ModifiedOn = entity.ModifiedOn,
+                    DeletedOn = entity.DeletedOn,
+                    IsDeleted = entity.IsDeleted
                 }
                 : null;
         }
@@ -36,12 +39,12 @@ namespace Loanda.Services.Mappings
                 {
                     Body = dto.Body,
                     Subject = dto.Subject,
-                    //SenderEmail = "emailaat",
-                    //SenderName = "sendernamaat",
-                    //DateReceived = recievedEmail.DateReceived,
+                    DateReceived = dto.DateReceived,
                     SenderEmail = dto.From.Split(new[] { '<', '>' }, StringSplitOptions.RemoveEmptyEntries).ToList().Last().Trim(),
                     SenderName = dto.From.Split(new[] { '<', '>' }, StringSplitOptions.RemoveEmptyEntries).ToList().First().Trim(),
                     GmailEmailId = dto.GmailEmailId,
+                    TotalAttachments = dto.TotalAttachments,
+                    AttachmentsTotalSizeInMB = dto.AttachmentsTotalSizeInMB,
                 }
                 : null;
         }

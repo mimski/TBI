@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Loanda.Data.Migrations
 {
     [DbContext(typeof(LoandaContext))]
-    [Migration("20191118214324_Initial")]
+    [Migration("20191120193728_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,12 +107,12 @@ namespace Loanda.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Content")
+                    b.Property<string>("AttachmentName")
                         .IsRequired();
 
                     b.Property<double>("FileSizeInMb");
 
-                    b.Property<Guid>("ReceivedEmailId");
+                    b.Property<long>("ReceivedEmailId");
 
                     b.HasKey("Id");
 
@@ -138,12 +138,17 @@ namespace Loanda.Data.Migrations
                         new
                         {
                             Id = -1,
-                            Name = "Invalid"
+                            Name = "Not Reviewed"
                         },
                         new
                         {
                             Id = -2,
                             Name = "New"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            Name = "Invalid"
                         });
                 });
 
@@ -194,7 +199,7 @@ namespace Loanda.Data.Migrations
 
             modelBuilder.Entity("Loanda.Entities.ReceivedEmailEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<Guid?>("ApplicantId");
@@ -206,7 +211,7 @@ namespace Loanda.Data.Migrations
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("DateReceived");
+                    b.Property<string>("DateReceived");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("date");
@@ -216,10 +221,6 @@ namespace Loanda.Data.Migrations
                     b.Property<string>("GmailEmailId");
 
                     b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsReviewed")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(false);
 

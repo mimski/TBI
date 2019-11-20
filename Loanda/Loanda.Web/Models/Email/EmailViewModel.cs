@@ -7,13 +7,13 @@ namespace Loanda.Web.Models.Email
 {
     public class EmailViewModel
     {
-        public Guid Id { get; set; }
+        public long Id { get; set; }
 
         public string SenderEmail { get; set; }
 
         public string SenderName { get; set; }
 
-        public DateTime DateReceived { get; set; }
+        public string DateReceived { get; set; }
 
         public string Subject { get; set; }
 
@@ -31,11 +31,12 @@ namespace Loanda.Web.Models.Email
 
         public string GmailEmailId { get; set; }
 
-        public bool IsReviewed { get; set; }
-
         public DateTime? CreatedOn { get; set; }
+
         public DateTime? ModifiedOn { get; set; }
+
         public DateTime? DeletedOn { get; set; }
+
         public bool IsDeleted { get; set; }
     }
 }
