@@ -12,9 +12,6 @@ namespace Loanda.Data.Context.EntityConfigurations
 
             builder.HasKey(receivedEmail => receivedEmail.Id);
 
-            builder.Property(receivedEmail => receivedEmail.IsReviewed)
-                .HasDefaultValue(false);
-
             builder.Property(loanApplication => loanApplication.CreatedOn)
               .HasColumnType("date")
             .IsRequired(false);

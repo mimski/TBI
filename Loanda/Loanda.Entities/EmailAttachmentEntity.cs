@@ -8,10 +8,10 @@ namespace Loanda.Entities
 
         public double FileSizeInMb { get; set; }
 
-        public string Content { get; set; }
+        public string AttachmentName { get; set; }
 
         public virtual ReceivedEmailEntity ReceivedEmail { get; set; }
 
-        public Guid ReceivedEmailId { get; set; }
+        public long ReceivedEmailId { get; set; }
     }
 }

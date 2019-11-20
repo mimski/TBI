@@ -15,7 +15,7 @@ namespace Loanda.Data.Context.EntityConfigurations
             builder.Property(emailAttachment => emailAttachment.FileSizeInMb)
                 .IsRequired();
 
-            builder.Property(emailAttachment => emailAttachment.Content)
+            builder.Property(emailAttachment => emailAttachment.AttachmentName)
                 .IsRequired();
         }
     }

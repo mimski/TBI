@@ -12,6 +12,10 @@ namespace Loanda.Data.Context.EntityConfigurations
 
             builder.HasKey(loanApplication => loanApplication.Id);
 
+            builder.Property(loanApplication => loanApplication.LoanAmount)
+                .IsRequired()
+                /*.HasColumnType("decimal(5,2)")*/;
+
             builder.Property(loanApplication => loanApplication.CreatedOn)
                 .HasColumnType("date")
               .IsRequired(false);

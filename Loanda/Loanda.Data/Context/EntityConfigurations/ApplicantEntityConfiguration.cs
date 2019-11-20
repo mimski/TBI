@@ -13,6 +13,9 @@ namespace Loanda.Data.Context.EntityConfigurations
 
             builder.HasKey(applicant => applicant.Id);
 
+            //builder.HasIndex(b => b.EGN)
+            //        .IsUnique(); 
+
             builder.Property(applicant => applicant.EGN)
                .IsRequired();
 
