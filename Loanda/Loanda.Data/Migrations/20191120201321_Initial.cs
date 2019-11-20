@@ -288,7 +288,7 @@ namespace Loanda.Data.Migrations
                     DateReceived = table.Column<string>(nullable: true),
                     Subject = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true),
-                    EmailStatusId = table.Column<int>(nullable: true),
+                    EmailStatusId = table.Column<int>(nullable: true, defaultValue: -1),
                     ApplicantId = table.Column<Guid>(nullable: true),
                     GmailEmailId = table.Column<string>(nullable: true),
                     TotalAttachments = table.Column<int>(nullable: false),

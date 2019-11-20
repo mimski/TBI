@@ -214,7 +214,9 @@ namespace Loanda.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("date");
 
-                    b.Property<int?>("EmailStatusId");
+                    b.Property<int?>("EmailStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(-1);
 
                     b.Property<string>("GmailEmailId");
 
