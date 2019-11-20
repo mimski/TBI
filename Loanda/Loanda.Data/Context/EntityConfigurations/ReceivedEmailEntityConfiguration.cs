@@ -26,6 +26,9 @@ namespace Loanda.Data.Context.EntityConfigurations
 
             builder.Property(loanApplication => loanApplication.IsDeleted)
                 .HasDefaultValue(false);
+
+            builder.Property(loanApplication => loanApplication.EmailStatusId)
+                .HasDefaultValue(-1);
         }
     }
 }
