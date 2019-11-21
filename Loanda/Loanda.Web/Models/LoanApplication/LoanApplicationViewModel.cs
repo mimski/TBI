@@ -15,5 +15,14 @@ namespace Loanda.Web.Models.LoanApplication
 
         public int ApplicationStatusId { get; set; }
 
+        public bool? IsApproved { get; set; }
+
+        public string OpenedById { get; set; }
+
+        public string OpenedBy { get; set; }
+
+        public string ClosedById { get; set; }
+
+        public string ClosedBy { get; set; }
     }
 }

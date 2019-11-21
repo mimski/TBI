@@ -14,7 +14,11 @@ namespace Loanda.Services.Mappings
                     Id = entity.Id,
                     LoanAmount = entity.LoanAmount,
                     ApplicantId = entity.ApplicantId,
-                    ApplicationStatusId = entity.ApplicationStatusId
+                    ApplicationStatusId = entity.ApplicationStatusId,
+                    ClosedBy = entity.ClosedBy.UserName,
+                    OpenedBy = entity.OpenedBy.UserName,
+                    ClosedById = entity.ClosedById,
+                    OpenedById = entity.OpenedById
                 }
                 : null;
         }
@@ -27,7 +31,9 @@ namespace Loanda.Services.Mappings
                     Id = model.Id, 
                     LoanAmount = model.LoanAmount,
                     ApplicantId = model.ApplicantId,
-                    ApplicationStatusId = model.ApplicationStatusId
+                    ApplicationStatusId = model.ApplicationStatusId,
+                    OpenedById = model.OpenedById,
+                    ClosedById = model.ClosedById
                 }
                 : null;
         }
