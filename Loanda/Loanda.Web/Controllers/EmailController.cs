@@ -85,5 +85,15 @@ namespace Loanda.Web.Controllers
 
             return View("Details", email.ToViewModel());
         }
+
+
+
+
+
+
+        public async Task<IActionResult> Edit()
+        {
+            return PartialView("_EmailDetails");
+        }
     }
 }

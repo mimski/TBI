@@ -4,18 +4,6 @@
 *@
 @{
 }
-<!-- Large modal -->
-@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
-
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            ...
-        </div>
-    </div>
-</div>*@
-
-
 
 <div id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="bd-example-modal-lg modal-dialog modal-lg" role="document">
@@ -30,14 +18,14 @@
                 <form asp-controller="Email" asp-action="Details" method="post">
                     THIS IS THE MODAL BODY
                     @*@Html.DisplayNameFor(model => @Model.Subject)
-        <p> @Html.DisplayFor(model => @Model.Subject)</p>
+        <p> @Html.DisplayFor(model => @Model.Subject)</p>*@
 
         <p class="col-sm-2">
             @Html.DisplayNameFor(model => model.Subject)
         </p>
         <p class="col-sm-10">
             @Html.DisplayFor(model => Model.Subject)
-        </p>*@
+        </p>
 
                     <div>
                         <div>
@@ -58,47 +46,6 @@
                         <button type="submit" class="btn btn-indigo"> Save Changes </button>
                     </div>
                 </form>
-
-                @*
-                    <form asp-area="Admin" asp-controller="Users" asp-action="ChangeUserSettings" method="post">
-                        <div class="hide-it">
-                            <input asp-for="ID" class="hidden" name="ID" />
-                            <span asp-validation-for="ID" class="text-danger"></span>
-                        </div>
-
-                        <div class="md-form mb-5">
-                            <i class="fa fa-lock prefix grey-text"></i>
-                            <input asp-for="NewPassword" type="text" class="form-control validate hidden" placeholder="New Password">
-                            <span asp-validation-for="NewPassword" class="text-danger"></span>
-                        </div>
-
-                        <div class="md-form mb-4">
-                            <i class="fa fa-lock prefix grey-text"></i>
-                            <input asp-for="ConfirmPassword" type="text" class="form-control validate hidden" placeholder="Confirm Password">
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-
-                        <div class="d-flex flex-row bd-highlight mb-3" style="padding-left: 50px;">
-                            <strong class="p-2 bd-highlight" style="margin-top: 6px">Admin:</strong>
-                            <span class="p-2 bd-highlight">
-                                <label class="bs-switch">
-                                    <input asp-for="IsAdmin" type="checkbox" checked="Model.IsAdmin?false:'checked'">
-                                    <span class="slider round"></span>
-                                </label>
-                            </span>
-                            <span style="width: 50px;"></span>
-                            <strong class="p-2 bd-highlight" style="margin-top: 6px">Locked:</strong>
-                            <span class="p-2 bd-highlight">
-                                <label class="bs-switch">
-                                    <input asp-for="IsLocked" type="checkbox" checked="Model.IsLocked?false:'checked'">
-                                    <span class="slider round"></span>
-                                </label>
-                            </span>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center">
-                            <button type="submit" class="btn btn-indigo"> Save Changes </button>
-                        </div>
-                    </form>*@
             </div>
         </div>
     </div>
