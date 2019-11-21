@@ -27,6 +27,8 @@ namespace Loanda.Web.Mappings
                 ModifiedOn = entity.ModifiedOn,
                 DeletedOn = entity.DeletedOn,
                 IsDeleted = entity.IsDeleted,
+                TotalAttachments = entity.TotalAttachments,
+                AttachmentsTotalSizeInMB = entity.AttachmentsTotalSizeInMB
             } : null;
         }
 

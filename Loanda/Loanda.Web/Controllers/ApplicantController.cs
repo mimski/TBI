@@ -21,9 +21,11 @@ namespace Loanda.Web.Controllers
             this.applicantService = applicantService ?? throw new ArgumentNullException(nameof(applicantService));
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            return View();
+            var result = await this.applicantService.GetAllAsync(cancellationToken);
+            return View("Index", result.ToViewModel());
         }
 
         [TempData]
@@ -39,19 +41,32 @@ namespace Loanda.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ApplicantViewModel applicantViewModel, CancellationToken cancellationToken)
-        {
-            //if (!this.ModelState.IsValid)
-            //{
-            //    //throw new ArgumentException("Invalid input!");
-            //    return this.View();
-            //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(ApplicantViewModel applicantViewModel, CancellationToken cancellationToken)
+        //{
+        //    //if (!this.ModelState.IsValid)
+        //    //{
+        //    //    //throw new ArgumentException("Invalid input!");
+        //    //    return this.View();
+        //    //}
 
-            await this.applicantService.AddAsync(applicantViewModel.ToServiceModel(), cancellationToken);
+        //    await this.applicantService.AddAsync(applicantViewModel.ToServiceModel(), cancellationToken);
 
-            return RedirectToAction(nameof(Index));
-        }
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+        //[HttpPost]
+        //[Route("")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(LoanApplicationViewModel model, CancellationToken cancellationToken)
+        //{
+        //    /* var loanApplication = */
+        //    await this.loanApplicationService.AddAsync(model.ToServiceModel(), cancellationToken);
+
+        //    //return CreatedAtAction(nameof(GetByIdAsync), new { id = loanApplication.Id }, loanApplication.ToViewModel());
+
+        //    return RedirectToAction("Index");
+        //}
     }
 }
