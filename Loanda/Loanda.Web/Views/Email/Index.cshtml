@@ -68,7 +68,7 @@
                                 @Html.DisplayFor(modelItem => item.IsDeleted)
                             </td>
                         </tr>
-                        <div class="modal" id="my_modal">
+                        <div class="modal @item.Id" id="my_modal">
                             <div class="modal-dialog modal-lg">
 
 
@@ -76,88 +76,59 @@
                                     <div class="bd-example-modal-lg modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header text-center">
-                                                <h4 class="modal-title w-100 font-weight-bold"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Manage User</h4>
+                                                <h4 class="modal-title w-100 font-weight-bold"><i class="fa fa-user-circle-o" aria-hidden="true"></i>E-mail</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <div class="modal-body mx-3">
+                                            <div class="modal-body mx-1">
                                                 <form asp-controller="Email" asp-action="Details" method="post">
-                                                    THIS IS THE MODAL BODY
-                                                    @*@Html.DisplayNameFor(model => @Model.Subject)
-                                <p> @Html.DisplayFor(model => @Model.Subject)</p>*@
-
-                                                    <p class="col-sm-2">
+                                                    <h6 class="modal-title w-100 font-weight-bold">
+                                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                                                         @Html.DisplayNameFor(modelItem => item.Subject)
-                                                    </p>
-                                                    <p class="col-sm-10">
+                                                    </h6>
+                                                    <p class="col">
                                                         @Html.DisplayFor(modelItem => item.Subject)
                                                     </p>
+                                                    <h6 class="modal-title w-100 font-weight-bold">
+                                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                                        @Html.DisplayNameFor(modelItem => item.Body)
+                                                    </h6>
 
-                                                    <div>
-                                                        <div>
-                                                            <a class="btn btn-primary" title="Mark email as invalid" asp-controller="Email">Invalid</a> |
-                                                            <a class="btn btn-primary" title="Create new loan application" asp-controller="Email" asp-action="Details" asp-route-id="@item.Id">New</a>
-
-                                                        </div>
-                                                    </div>
-
+                                                    <p class="col" style="overflow-wrap:break-word">
+                                                        @Html.DisplayFor(modelItem => item.Body)
+                                                    </p>
 
                                                     <div class="modal-footer d-flex justify-content-center">
 
-                                                        <button type="submit" class="btn btn-indigo">
-                                                            <svg id="i-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                                                <path d="M2 30 L30 2 M30 30 L2 2" />
-                                                            </svg>
-                                                        </button>
-                                                        <button type="submit" class="btn btn-indigo"> Save Changes </button>
+                                                        <div>
+                                                            <div>
+                                                                <a class="btn btn-danger" title="Mark email as invalid" asp-controller="Email" asp-route-id="@item.Id">
+                                                                    <svg id="i-ban" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                                                        <circle cx="16" cy="16" r="14" />
+                                                                        <path d="M6 6 L26 26" />
+                                                                    </svg>
+                                                                </a>
+                                                                <a class="btn btn-success" title="Mark email as valid" asp-controller="Email" asp-action="Details" asp-route-id="@item.Id">
+                                                                    <svg id="i-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                                                        <path d="M2 20 L12 28 30 4" />
+                                                                    </svg>
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-                                @*<partial name="_EmailDetail" model="null" />*@
                             </div>
                         </div>
                     }
-                   
+
                 </tbody>
             </table>
         </div>
-
-        <thead>
-
-            <tr>
-            </tr>
-        </thead>
-        <tbody>
-
-            @*<div class="row">
-                    <div class="col-12">
-                        <table class="table">
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>*@
-        </tbody>
-
-
     </form>
 </div>
 
@@ -167,7 +138,7 @@
         var userId;
         function myFunction(id) {
             userId = id;
-            $('#my_modal').modal('show');
+            $(`.${id}`).modal('show');
         }
         $('#my_modal').on('show.bs.modal', function (e) {
             $(e.currentTarget).find('input[name="ID"]').val(userId);
@@ -186,5 +157,4 @@
             return false;
         });
     </script>
-
 }
