@@ -38,5 +38,9 @@ namespace Loanda.Web.Models.Email
         public DateTime? DeletedOn { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public int TotalAttachments { get; set; }
+
+        public double AttachmentsTotalSizeInMB { get; set; }
     }
 }

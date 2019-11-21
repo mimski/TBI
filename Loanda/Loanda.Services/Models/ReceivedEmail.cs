@@ -37,5 +37,9 @@ namespace Loanda.Services.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public int TotalAttachments { get; set; }
+
+        public double AttachmentsTotalSizeInMB { get; set; }
     }
 }
