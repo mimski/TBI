@@ -61,14 +61,12 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpGet]
-        [Route("create")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LoanApplicationViewModel model, CancellationToken cancellationToken)
         {
