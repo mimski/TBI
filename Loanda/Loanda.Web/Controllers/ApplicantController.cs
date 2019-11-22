@@ -41,6 +41,17 @@ namespace Loanda.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ApplicantViewModel model, CancellationToken cancellationToken)
+        {
+            var applicant = await this.applicantService.AddAsync(model.ToServiceModel(), cancellationToken);
+
+            //return CreatedAtAction(nameof(GetByIdAsync), new { id = loanApplication.Id }, loanApplication.ToViewModel());
+
+            return PartialView("_CreateLoanPartial");
+        }
+
         [HttpGet]
         public IActionResult CheckApplicant()
         {
@@ -48,9 +59,22 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CheckApplicant(EGNViewModel egnViewModel)
+        public async Task<IActionResult> CheckApplicant(EGNViewModel egnViewModel, CancellationToken cancellationToken)
         {
-            return View();
+            var applicant = await this.applicantService.GetByEgnAsync(egnViewModel.EGN, cancellationToken);
+
+            if (applicant == null)
+            {
+                return PartialView("_CreateApplicantPartial");
+            }
+            else if (applicant != null)
+            {
+                return PartialView("_EditApplicantPartial", applicant.ToViewModel());
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
 
