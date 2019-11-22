@@ -7,7 +7,6 @@ namespace Loanda.Web.Models.Applicant
     {
         public Guid Id { get; set; }
 
-        [Display(Name = "")]
         [Required]
         public string EGN { get; set; }
 
@@ -28,7 +27,9 @@ namespace Loanda.Web.Models.Applicant
 
         [Display(Name = "Phone Number")]
         [Required]
-        [Range(10, 10)]
+        //[Range(10, 10)]
+        [MaxLength(10)]
+        [MinLength(10)]
         public string PhoneNumber { get; set; }
 
         public string Address { get; set; }
