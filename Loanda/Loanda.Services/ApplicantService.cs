@@ -38,6 +38,12 @@ namespace Loanda.Services
             return applicant.ToService();
         }
 
+        public async Task<Applicant> GetByEgnAsync(string id, CancellationToken cancellationToken)
+        {
+            var applicant = await this.context.Applicants.AsNoTracking().SingleOrDefaultAsync(a => a.EGN.Equals(id), cancellationToken);
+            return applicant.ToService();
+        }
+
         public async Task<Applicant> UpdateAsync(Applicant applicant, CancellationToken cancellationToken)
         {
             var existingApplicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(applicant.Id), cancellationToken);

@@ -61,8 +61,8 @@
 
 <div>
     <div>
-        <a class="btn btn-primary" title="Mark email as invalid" asp-controller="Email" asp-action="MarkAsInvalid" asp-route-id="@Model.Id">Invalid</a> |
-        <a class="btn btn-primary" title="Create new loan application" asp-controller="Applicant" asp-action="Create" asp-route-id="@Model.Id">New</a> |
+        @*<a class="btn btn-primary" title="Mark email as invalid" asp-controller="Email" asp-action="MarkAsInvalid" asp-route-id="@Model.Id">Invalid</a> |
+            <a class="btn btn-primary" title="Create new loan application" asp-controller="Applicant" asp-action="Create" asp-route-id="@Model.Id">New</a> |*@
         <a asp-controller="Email" asp-action="Index">Back to All Emails</a>
     </div>
 </div>
@@ -86,6 +86,24 @@
                 type: 'get',
                 success: function (response) {
                     btn.replaceWith(response)
+
+                    $('#BtnSubmitEGN').ready().click(function (e) {
+                        e.preventDefault();
+                        let btntest = $('#BtnSubmitEGN')
+                        console.log(btntest)
+                        const formD = $('#form-dat').serialize
+                        const divContainer = $('#FormContainer')
+                        //const container = $('#Egn-Container');
+
+                        $.ajax({
+                            url: '/Applicant/CheckApplicant',
+                            data: formD,
+                            type: 'post',
+                            success: function (response) {
+                                divContainer.replaceWith(response)
+                            }
+                        })
+                    })
                 }
             })
         })

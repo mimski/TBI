@@ -1,0 +1,31 @@
+﻿@model Loanda.Web.Models.LoanApplication.LoanApplicationViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="card">
+    <h5 class="card-header">Create Loan Application</h5>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <form asp-controller="LoanApplication" asp-action="Create" method="post">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Loan Amount</span>
+                        </div>
+                        <input type="text" asp-for="LoanAmount" class="form-control" aria-label="LoanAmount" aria-describedby="inputGroup-sizing-default">
+                        <span asp-validation-for="LoanAmount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
