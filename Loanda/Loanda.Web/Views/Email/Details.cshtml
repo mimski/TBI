@@ -66,3 +66,28 @@
         <a asp-controller="Email" asp-action="Index">Back to All Emails</a>
     </div>
 </div>
+
+<a id="EGNbtn" class="btn btn-primary">Create New Applicant</a>
+@*<button id="EGNbtn">Create new Applicant</button>*@
+
+<div id="Egn-Container">
+
+</div>
+
+@section Scripts{
+    <script>
+        $('#EGNbtn').click(function (e) {
+            e.preventDefault();
+            const btn = $('#EGNbtn')
+            //const container = $('#Egn-Container');
+
+            $.ajax({
+                url: '/Applicant/CheckApplicant',
+                type: 'get',
+                success: function (response) {
+                    btn.replaceWith(response)
+                }
+            })
+        })
+    </script>
+}

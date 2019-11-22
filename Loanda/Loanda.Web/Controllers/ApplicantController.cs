@@ -41,6 +41,20 @@ namespace Loanda.Web.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult CheckApplicant()
+        {
+            return PartialView("_EgnPartial");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CheckApplicant(EGNViewModel egnViewModel)
+        {
+            return View();
+        }
+
+
+
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create(ApplicantViewModel applicantViewModel, CancellationToken cancellationToken)

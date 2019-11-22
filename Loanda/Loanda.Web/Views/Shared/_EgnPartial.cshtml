@@ -1,0 +1,21 @@
+﻿@model Loanda.Web.Models.Applicant.EGNViewModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<form asp-controller="Applicant" asp-action="CheckApplicant" method="post">
+    <div class="form-row align-items-end">
+        <div class="col-auto">
+            <label class="sr-only" for="inlineFormInputGroup">EGN</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">EGN</div>
+                </div>
+                <input asp-for="@Model.EGN" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Applicant's EGN">
+            </div>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-amber mb-2">Submit</button>
+        </div>
+    </div>
+</form>
