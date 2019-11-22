@@ -182,3 +182,44 @@
         });
     </script>
 }
+
+<a href="#" class="to-top justify-content-center">
+    <svg id="i-chevron-top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+        <path d="M30 20 L16 8 2 20" />
+    </svg></i>
+</a>
+
+<script>
+    jQuery(document).ready(function () {
+        var duration = 500;
+        jQuery(window).scroll(function () {
+            if (jQuery(this).scrollTop() > 200) {
+                jQuery('.to-top').fadeIn(duration);
+            } else {
+                jQuery('.to-top').fadeOut(duration);
+            }
+        });
+
+        jQuery('.to-top').click(function (event) {
+            event.preventDefault();
+            jQuery('html').animate({ scrollTop: 0 }, duration);
+            return false;
+        })
+    });
+</script>
+
+<style>
+    .to-top {
+        position: fixed;
+        bottom: 50px;
+        right: 20px;
+        text-decoration: none;
+        color: #fb8c00;
+        padding: 10px 20px;
+        display: in-line;
+    }
+
+        .to-top:hover {
+            color: #151f28;
+        }
+</style>	
