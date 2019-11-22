@@ -46,14 +46,14 @@
                             @Html.DisplayNameFor(model => model.AttachmentsTotalSizeInMB)
                         </th>
                         <th>
-                            Att.
+                            @Html.DisplayNameFor(model => model.TotalAttachments)
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr onclick="myFunction('@item.Id')">
+                        <tr onclick="myFunction('@item.Id')" style="cursor: pointer">
                             <td>
                                 @Html.DisplayFor(modelItem => item.Id)
                             </td>
