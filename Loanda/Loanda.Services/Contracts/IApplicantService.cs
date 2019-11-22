@@ -26,5 +26,7 @@ namespace Loanda.Services.Contracts
         Task<Applicant> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken);
 
         Task RemoveAsync(Guid id, CancellationToken cancellationToken);
+
+        Task<Applicant> GetByEgnAsync(string id, CancellationToken cancellationToken);
     }
 }
