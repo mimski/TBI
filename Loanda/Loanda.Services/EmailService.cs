@@ -38,9 +38,6 @@ namespace Loanda.Services
             {
 
             }
-
-            email.SenderEmail = emailDto.SenderEmail;
-            email.SenderName = emailDto.SenderName;
             email.Subject = emailDto.Subject;
             email.Body = emailDto.Body;
             email.AttachmentsTotalSizeInMB = (double)emailDto.AttachmentsTotalSizeInMB;
@@ -49,6 +46,13 @@ namespace Loanda.Services
             this.context.ReceivedEmails.Update(email);
             await this.context.SaveChangesAsync();
             return email.ToService();
+        }
+
+        public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllInvalidAsync(CancellationToken cancellationToken)
+        {
+            var emails = await this.context.ReceivedEmails.Where(e => e.EmailStatusId.Equals(-3)).AsNoTracking().ToListAsync(cancellationToken);
+
+            return emails.ToService();
         }
 
         public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllAsync(CancellationToken cancellationToken)
@@ -87,6 +91,23 @@ namespace Loanda.Services
             {
                 existingEmail.EmailStatusId = -3;
                
+                this.context.ReceivedEmails.Update(existingEmail);
+                await this.context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> MarkNotReviewedAsync(ReceivedEmail receivedEmail, CancellationToken cancellationToken)
+        {
+            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.Id.Equals(receivedEmail.Id), cancellationToken);
+            if (existingEmail != null)
+            {
+                existingEmail.EmailStatusId = -1;
+
                 this.context.ReceivedEmails.Update(existingEmail);
                 await this.context.SaveChangesAsync(cancellationToken);
                 return true;

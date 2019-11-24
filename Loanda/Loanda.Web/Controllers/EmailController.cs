@@ -25,6 +25,14 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Invalid(CancellationToken cancellationToken)
+        {
+            var result = await this.emailService.GetAllInvalidAsync(cancellationToken);
+            return View("Invalid", result.ToViewModel());
+        }
+
+
+        [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             var result = await this.emailService.GetAllAsync(cancellationToken);
@@ -44,6 +52,20 @@ namespace Loanda.Web.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> MarkNotReviewed(EmailViewModel emailViewModel, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await this.emailService.MarkNotReviewedAsync(emailViewModel.ToServiceModel(), cancellationToken);
+            }
+            catch (Exception)
+            {
+                //return NoContent();
+            }
+
+            return RedirectToAction(nameof(Invalid));
         }
 
         //[HttpGet]
