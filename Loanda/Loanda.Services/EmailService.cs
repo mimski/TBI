@@ -6,6 +6,7 @@ using Loanda.Services.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,7 +53,7 @@ namespace Loanda.Services
 
         public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var emails = await this.context.ReceivedEmails.AsNoTracking().ToListAsync(cancellationToken);
+            var emails = await this.context.ReceivedEmails.Where(e => e.EmailStatusId.Equals(-1)).AsNoTracking().ToListAsync(cancellationToken);
 
             foreach (var email in emails)
             {
@@ -77,6 +78,23 @@ namespace Loanda.Services
             base64EncodedData = base64EncodedData.Replace('_', '/');
             byte[] encode = Convert.FromBase64String(base64EncodedData);
             return Encoding.UTF8.GetString(encode);
+        }
+
+        public async Task<bool> MarkInvalidAsync(ReceivedEmail receivedEmail, CancellationToken cancellationToken)
+        {
+            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.Id.Equals(receivedEmail.Id), cancellationToken);
+            if (existingEmail != null)
+            {
+                existingEmail.EmailStatusId = -3;
+               
+                this.context.ReceivedEmails.Update(existingEmail);
+                await this.context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
