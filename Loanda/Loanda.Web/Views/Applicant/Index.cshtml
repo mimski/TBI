@@ -1,9 +1,221 @@
-﻿@{
+﻿@model IEnumerable<Loanda.Web.Models.Applicant.ApplicantViewModel>
+
+@{
     ViewData["Title"] = "Applicants";
 }
 
-    <h1>
-        <svg id="i-user" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="red" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-            <path d="M22 11 C22 16 19 20 16 20 13 20 10 16 10 11 10 6 12 3 16 3 20 3 22 6 22 11 Z M4 30 L28 30 C28 21 22 20 16 20 10 20 4 21 4 30 Z" />
-        </svg> Applicants
-    </h1>
+<h1>
+    <svg id="i-user" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="red" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path d="M22 11 C22 16 19 20 16 20 13 20 10 16 10 11 10 6 12 3 16 3 20 3 22 6 22 11 Z M4 30 L28 30 C28 21 22 20 16 20 10 20 4 21 4 30 Z" />
+    </svg> Applicants
+</h1>
+
+<div class="container-fluid">
+
+    <form asp-controller="Applicant" asp-action="Index" method="post">
+
+        <div class="panel-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Id)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MiddleName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LastName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateOfBirth)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Address)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.City)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedOn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ModifiedOn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsDeleted)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr onclick="myFunction('@item.Id')" style="cursor: pointer">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MiddleName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfBirth)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedOn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsDeleted)
+                        </td>
+                    </tr>
+                        <div class="modal @item.Id" id="my_modal">
+                            <div class="modal-dialog modal-lg border rounded ">
+                                <div id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center p-3 bg-light mb-2">
+                                            <h4 class="modal-title w-100 font-weight-bold"><i class="fa fa-user-circle-o" aria-hidden="true"></i>E-mail</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body mx-2">
+                                            <form asp-controller="Email" asp-action="Details" method="post">
+                                                <h6 class="modal-title w-100 font-weight-bold">
+                                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                                    @Html.DisplayNameFor(modelItem => item.EGN)
+                                                </h6>
+                                                <p class="col">
+                                                    @Html.DisplayFor(modelItem => item.EGN)
+                                                </p>
+                                                <h6 class="modal-title w-100 font-weight-bold">
+                                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                                    @Html.DisplayNameFor(modelItem => item.FirstName)
+                                                </h6>
+
+                                                <p class="col" style="overflow-wrap:break-word">
+                                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                                </p>
+
+                                                <div class="modal-footer d-flex justify-content-center">
+
+                                                    <div>
+                                                        <div>
+                                                            <a class="btn btn-danger rounded" title="Mark email as invalid" asp-controller="Email" asp-route-id="@item.Id">
+                                                                <svg id="i-ban" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                                                    <circle cx="16" cy="16" r="14" />
+                                                                    <path d="M6 6 L26 26" />
+                                                                </svg>
+                                                            </a>
+                                                            <a class="btn btn btn-success rounded" title="Mark email as valid" asp-controller="Email" asp-action="Details" asp-route-id="@item.Id">
+                                                                <svg id="i-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                                                    <path d="M2 20 L12 28 30 4" />
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    <script>
+        var userId;
+        function myFunction(id) {
+            userId = id;
+            $(`.${id}`).modal('show');
+        }
+        $('#my_modal').on('show.bs.modal', function (e) {
+            $(e.currentTarget).find('input[name="ID"]').val(userId);
+        })
+    </script>
+    <script>
+        $(document).on("click", "#contentPager a", function () {
+            $.ajax({
+                url: $(this).attr("href"),
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    $('#content').html(result);
+                }
+            });
+            return false;
+        });
+    </script>
+}
+
+<a href="#" class="to-top justify-content-center">
+    <svg id="i-chevron-top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+        <path d="M30 20 L16 8 2 20" />
+    </svg></i>
+</a>
+
+<script>
+    jQuery(document).ready(function () {
+        var duration = 500;
+        jQuery(window).scroll(function () {
+            if (jQuery(this).scrollTop() > 200) {
+                jQuery('.to-top').fadeIn(duration);
+            } else {
+                jQuery('.to-top').fadeOut(duration);
+            }
+        });
+
+        jQuery('.to-top').click(function (event) {
+            event.preventDefault();
+            jQuery('html').animate({ scrollTop: 0 }, duration);
+            return false;
+        })
+    });
+</script>
+
+<style>
+    .to-top {
+        position: fixed;
+        bottom: 50px;
+        right: 20px;
+        text-decoration: none;
+        color: #fb8c00;
+        padding: 10px 20px;
+        display: in-line;
+    }
+
+        .to-top:hover {
+            color: #151f28;
+        }
+</style>

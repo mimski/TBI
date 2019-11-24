@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Loanda.Services.Contracts;
 using Loanda.Web.Mappings;
 using Loanda.Web.Models.Applicant;
+using Loanda.Web.Models.LoanApplication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Loanda.Web.Controllers
@@ -42,14 +44,22 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ApplicantViewModel model, CancellationToken cancellationToken)
         {
             var applicant = await this.applicantService.AddAsync(model.ToServiceModel(), cancellationToken);
 
             //return CreatedAtAction(nameof(GetByIdAsync), new { id = loanApplication.Id }, loanApplication.ToViewModel());
+            //model.Id = applicant.Id;
 
-            return PartialView("_CreateLoanPartial");
+
+
+            var name = HttpContext.User.Identity.Name;
+
+            // TODO service get user by email/username
+
+            var loanViewModel = new LoanApplicationViewModel { ApplicantId = applicant.Id, OpenedById = "TOdofIndtheloggeduserId" };
+            return PartialView("_CreateLoanPartial", loanViewModel);
         }
 
         [HttpGet]
@@ -59,9 +69,9 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CheckApplicant(EGNViewModel egnViewModel, CancellationToken cancellationToken)
+        public async Task<IActionResult> CheckApplicant(EGNViewModel vm, string id,CancellationToken cancellationToken)
         {
-            var applicant = await this.applicantService.GetByEgnAsync(egnViewModel.EGN, cancellationToken);
+            var applicant = await this.applicantService.GetByEgnAsync(vm.EGN, cancellationToken);
 
             if (applicant == null)
             {
@@ -76,7 +86,28 @@ namespace Loanda.Web.Controllers
                 return NotFound();
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> Test(string egn, string id)
+        {
+            var stop = 0;
+            return View();
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid id, ApplicantViewModel model, CancellationToken cancellationToken)
+        {
+            model.Id = id;
+            var applicant = await this.applicantService.UpdateAsync(model.ToServiceModel(), cancellationToken);
+
+            if (applicant is null)
+            {
+                return NotFound();
+            }
+
+            //return View("", loanApplication.ToViewModel());
+
+            return RedirectToAction("Index");
+        }
 
 
         //[HttpPost]

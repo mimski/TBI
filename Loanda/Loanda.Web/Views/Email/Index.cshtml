@@ -117,7 +117,7 @@
                                                 </h6>
 
                                                 <p class="col" style="overflow-wrap:break-word">
-                                                    @Html.DisplayFor(modelItem => item.Body)
+                                                    @Html.Raw(item.Body)
                                                 </p>
 
                                                 <div class="modal-footer d-flex justify-content-center">
@@ -153,7 +153,7 @@
 </div>
 
 
-@section Scripts {
+@section scripts {
     <script>
         var userId;
         function myFunction(id) {
@@ -186,19 +186,19 @@
 </a>
 
 <script>
-    jQuery(document).ready(function () {
-        var duration = 500;
-        jQuery(window).scroll(function () {
-            if (jQuery(this).scrollTop() > 200) {
-                jQuery('.to-top').fadeIn(duration);
+    $(document).ready(function () {
+        let duration = 500;
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 200) {
+                $('.to-top').fadeIn(duration);
             } else {
-                jQuery('.to-top').fadeOut(duration);
+                $('.to-top').fadeOut(duration);
             }
         });
 
-        jQuery('.to-top').click(function (event) {
+        $('.to-top').click(function (event) {
             event.preventDefault();
-            jQuery('html').animate({ scrollTop: 0 }, duration);
+            $('html').animate({ scrollTop: 0 }, duration);
             return false;
         })
     });

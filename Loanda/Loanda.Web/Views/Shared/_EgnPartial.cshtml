@@ -3,7 +3,7 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <div id="FormContainer">
-    <form id="form-dat" asp-controller="Applicant" asp-action="CheckApplicant" method="post">
+    <form id="form-dat">
         <div class="form-row align-items-end">
             <div class="col-auto">
                 <label class="sr-only" for="inlineFormInputGroup">EGN</label>
@@ -11,12 +11,37 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">EGN</div>
                     </div>
-                    <input asp-for="@Model.EGN" type="text" class="form-control" id="inlineFormInputGroup" placeholder="Applicant's EGN">
+                    <input asp-for="@Model.EGN" class="form-control" id="asdtest123" placeholder="Applicant's EGN">
+                    <span style="color:red" id="checkEgn"></span>
                 </div>
             </div>
             <div class="col-auto">
-                <button type="submit" id="BtnSubmitEGN" class="btn btn-amber mb-2">Submit</button>
+                <button type="button" id="BtnSubmitEGN" class="btn btn-amber mb-2">Submit</button>
             </div>
         </div>
     </form>
 </div>
+
+
+@*<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $('#BtnSubmitEGN').on('click', function () {
+        //let input = $('#asdtest').val;
+        let input = document.getElementById('asdtest123').value;
+        console.log(input);
+        //let egn = document.getElementById(inlineFormInputGroup).val;
+        $.ajax({
+            type: 'Post',
+            URL: "Applicant/Test",
+            data: {
+                'egn': input,
+                'id': '9912301320124034024230420402340230420340234'
+            },
+            success: function () {
+                console.log(123);
+            }
+        })
+    })
+</script>*@
+
+
