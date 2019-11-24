@@ -10,8 +10,8 @@ namespace Loanda.Web.Models.Applicant
     {
         [RegularExpression("([0-9]+)", ErrorMessage = "EGN must be only numbers")]
         [Required]
-        [MinLength(12)]
-        [MaxLength(12)]
+        [MinLength(10)]
+        [MaxLength(10)]
         public string EGN { get; set; }
     }
 }

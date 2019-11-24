@@ -66,8 +66,6 @@ namespace Loanda.Services
         {
             var email = await this.context.ReceivedEmails.AsNoTracking().SingleOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
 
-            Base64Decode(email.Body);
-
             email.Body = Base64Decode(email.Body);
 
             return email.ToService();

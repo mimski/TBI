@@ -66,8 +66,12 @@
         <a asp-controller="Email" asp-action="Index">Back to All Emails</a>
     </div>
 </div>
+<div id="zamestiTUK">
 
-<a id="EGNbtn" class="btn btn-primary">Create New Applicant</a>
+    <div id="test">
+        <a id="EGNbtn" class="btn btn-primary">Create New Applicant</a>
+    </div>
+</div>
 @*<button id="EGNbtn">Create new Applicant</button>*@
 
 <div id="Egn-Container">
@@ -83,29 +87,121 @@
 
             $.ajax({
                 url: '/Applicant/CheckApplicant',
-                type: 'get',
+                type: 'Get',
                 success: function (response) {
-                    btn.replaceWith(response)
+                    btn.replaceWith(response);
 
                     $('#BtnSubmitEGN').ready().click(function (e) {
                         e.preventDefault();
-                        let btntest = $('#BtnSubmitEGN')
-                        console.log(btntest)
+                        //let btntest = $('#BtnSubmitEGN')
+                        //console.log(btntest)
                         const formD = $('#form-dat').serialize
                         const divContainer = $('#FormContainer')
                         //const container = $('#Egn-Container');
+                        let input = document.getElementById('asdtest123').value;
+                        if (!input) {
+                            $('#checkEgn').text('Please enter egn!')
+                        }
+                        else {
 
-                        $.ajax({
-                            url: '/Applicant/CheckApplicant',
-                            data: formD,
-                            type: 'post',
-                            success: function (response) {
-                                divContainer.replaceWith(response)
-                            }
-                        })
+                            $.ajax({
+                                url: '/Applicant/CheckApplicant',
+                                data: {
+                                    'EGN': input
+                                },
+                                type: 'Post',
+                                success: function (abcaba) {
+
+                                    const div = $('#test');
+                                    div.replaceWith(abcaba);
+
+
+
+                                }
+                            })
+                        }
                     })
                 }
             })
         })
+    </script>
+    <script>
+        function raboti() {
+            console.log("stigam li do tuk ve");
+            debugger;
+
+            let egn = $('#customEGN').val();
+            let firstName = $('#customFirstName').val();
+            let middleName = $('#customMiddleName').val();
+            let lastName = $('#customLastName').val();
+            let dateOfBirth = $('#customDateOfBirth').val();
+            let phoneNumber = $('#customPhoneNumber').val();
+            let emailAddress = $('#customEmailAddress').val();
+            let address = $('#customAddress').val();
+            let city = $('#customCity').val();
+            let Id = $('#CustomApplicantId').val();
+
+            console.log(firstName);
+            $.ajax({
+                type: 'Post',
+                url: '/Applicant/Create',
+                data: {
+                    //'id': Id,
+                    'EGN': egn,
+                    'FirstName': firstName,
+                    'MiddleName': middleName,
+                    'LastName': lastName,
+                    'DateOfBirth': dateOfBirth,
+                    'PhoneNumber': phoneNumber,
+                    'EmailAddress': emailAddress,
+                    'Address': address,
+                    'City': city
+                },
+                success: function (result) {
+                    const div = $('#zamestiTUK');
+                    div.replaceWith(result);
+                }
+            })
+        }
+    </script>
+
+    <script>
+        function rabotiEditMode() {
+            console.log("We are in Edit Mode");
+            debugger;
+
+            let egn = $('#customEGN').val();
+            let firstName = $('#customFirstName').val();
+            let middleName = $('#customMiddleName').val();
+            let lastName = $('#customLastName').val();
+            let dateOfBirth = $('#customDateOfBirth').val();
+            let phoneNumber = $('#customPhoneNumber').val();
+            let emailAddress = $('#customEmailAddress').val();
+            let address = $('#customAddress').val();
+            let city = $('#customCity').val();
+            let Id = $('#CustomApplicantId').val();
+
+            console.log(firstName);
+            $.ajax({
+                type: 'Post',
+                url: '/Applicant/Edit',
+                data: {
+                    'id': Id,
+                    'EGN': egn,
+                    'FirstName': firstName,
+                    'MiddleName': middleName,
+                    'LastName': lastName,
+                    'DateOfBirth': dateOfBirth,
+                    'PhoneNumber': phoneNumber,
+                    'EmailAddress': emailAddress,
+                    'Address': address,
+                    'City': city
+                },
+                success: function (result) {
+                    const div = $('#zamestiTUK');
+                    div.replaceWith(result);
+                }
+            })
+        }
     </script>
 }
