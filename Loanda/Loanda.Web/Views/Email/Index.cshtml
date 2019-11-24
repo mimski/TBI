@@ -121,10 +121,9 @@
                                                 </p>
 
                                                 <div class="modal-footer d-flex justify-content-center">
-
                                                     <div>
                                                         <div>
-                                                            <a class="btn btn-danger rounded" title="Mark email as invalid" asp-controller="Email" asp-route-id="@item.Id">
+                                                            <a class="btn btn-danger rounded" title="Mark email as invalid" asp-controller="Email" asp-action="MarkInvalid" asp-route-id="@item.Id" method="post">
                                                                 <svg id="i-ban" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
                                                                     <circle cx="16" cy="16" r="14" />
                                                                     <path d="M6 6 L26 26" />

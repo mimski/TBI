@@ -31,6 +31,20 @@ namespace Loanda.Web.Controllers
             return View("Index", result.ToViewModel());
         }
 
+    
+        public async Task<IActionResult> MarkInvalid(EmailViewModel emailViewModel, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await this.emailService.MarkInvalidAsync(emailViewModel.ToServiceModel(), cancellationToken);
+            }
+            catch (Exception)
+            {
+                //return NoContent();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
 
         //[HttpGet]
         //[Authorize]
