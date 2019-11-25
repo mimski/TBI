@@ -101,9 +101,9 @@ namespace Loanda.Services
             }
         }
 
-        public async Task<bool> MarkNotReviewedAsync(ReceivedEmail receivedEmail, CancellationToken cancellationToken)
+        public async Task<bool> MarkNotReviewedAsync(EmailDTO receivedEmail, CancellationToken cancellationToken)
         {
-            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.Id.Equals(receivedEmail.Id), cancellationToken);
+            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.GmailEmailId.Equals(receivedEmail.GmailEmailId), cancellationToken);
             if (existingEmail != null)
             {
                 existingEmail.EmailStatusId = -1;

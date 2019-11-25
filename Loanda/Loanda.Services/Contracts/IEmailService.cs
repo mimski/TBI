@@ -20,6 +20,6 @@ namespace Loanda.Services.Contracts
 
         Task<bool> MarkInvalidAsync(ReceivedEmail receivedEmail, CancellationToken cancellationToken);
 
-        Task<bool> MarkNotReviewedAsync(ReceivedEmail receivedEmail, CancellationToken cancellationToken);
+        Task<bool> MarkNotReviewedAsync(EmailDTO receivedEmail, CancellationToken cancellationToken);
     }
 }
