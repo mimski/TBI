@@ -24,5 +24,9 @@ namespace Loanda.Entities
         public string ClosedById { get; set; }
 
         public virtual User ClosedBy { get; set; }
+
+        public long EmailId { get; set; }
+
+        public ReceivedEmailEntity ReceivedEmail { get; set; }
     }
 }
