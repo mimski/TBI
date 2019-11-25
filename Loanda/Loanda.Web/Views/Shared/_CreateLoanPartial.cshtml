@@ -10,10 +10,12 @@
         <div class="row">
             <div class="col">
                 <form asp-controller="LoanApplication" asp-action="Create" method="post">
+                    @*<input-asp-for=""  type="hidden"></input>*@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Loan Amount</span>
                         </div>
+                        <input type="hidden" asp-for="ApplicantId"  />
                         <input type="text" asp-for="LoanAmount" class="form-control" aria-label="LoanAmount" aria-describedby="inputGroup-sizing-default">
                         <span asp-validation-for="LoanAmount" class="text-danger"></span>
                     </div>
