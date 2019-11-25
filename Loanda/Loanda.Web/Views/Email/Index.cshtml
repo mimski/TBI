@@ -123,13 +123,13 @@
                                                 <div class="modal-footer d-flex justify-content-center">
                                                     <div>
                                                         <div>
-                                                            <a class="btn btn-danger rounded" title="Mark email as invalid" asp-controller="Email" asp-action="MarkInvalid" asp-route-id="@item.Id" method="post">
+                                                            <a class="btn btn-danger rounded" id="btnFetch" title="Mark email as invalid" asp-controller="Email" asp-action="MarkInvalid" asp-route-id="@item.Id" method="post">
                                                                 <svg id="i-ban" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
                                                                     <circle cx="16" cy="16" r="14" />
                                                                     <path d="M6 6 L26 26" />
                                                                 </svg>
                                                             </a>
-                                                            <a class="btn btn btn-success rounded" title="Mark email as valid" asp-controller="Email" asp-action="Details" asp-route-id="@item.Id">
+                                                            <a class="btn btn btn-success rounded" id="btnFetch" title="Mark email as valid" asp-controller="Email" asp-action="Details" asp-route-id="@item.Id">
                                                                 <svg id="i-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
                                                                     <path d="M2 20 L12 28 30 4" />
                                                                 </svg>
@@ -176,6 +176,23 @@
             return false;
         });
     </script>
+
+
+
+    @*<script>
+        $(document).ready(function () {
+            $("#btnFetch").click(function () {
+
+                console.log('button is clicked');
+                // disable button
+                $(this).prop("disabled", true);
+                // add spinner to button
+                $(this).html(
+                    `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+                );
+            });
+        });
+    </script>*@
 }
 
 <a href="#" class="to-top justify-content-center">
@@ -221,3 +238,18 @@
 
 
 
+
+
+
+@*<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">*@
+
+<@*div style="margin:3em;">
+    <form class="form-inline" id="topicForm" action="" method="POST">
+        <input type="text" id="inputTopic" name="topic" class="form-control mb-2 mr-sm-2" placeholder="Topic of interest" required autofocus />
+        <button type="button" id="btnFetch" class="btn btn-primary mb-2">Submit</button>
+    </form>
+</div>*@
+
+@*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>*@

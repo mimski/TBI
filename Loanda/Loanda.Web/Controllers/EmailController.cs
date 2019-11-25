@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Loanda.EmailClient.Contracts;
 using Loanda.Entities;
 using Loanda.Services.Contracts;
 using Loanda.Web.Mappers.Contracts;
@@ -17,11 +18,15 @@ namespace Loanda.Web.Controllers
     {
         private readonly IEmailService emailService;
         private readonly IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper;
+        private readonly IGmailApi gmailApi;
 
-        public EmailController(IEmailService emailService, IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper)
+
+
+        public EmailController(IEmailService emailService, IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper, IGmailApi gmailApi)
         {
             this.emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
             this.emailMapper = emailMapper ?? throw new ArgumentNullException(nameof(emailMapper));
+            this.gmailApi = gmailApi ?? throw new ArgumentNullException(nameof(gmailApi));
         }
 
         [HttpGet]
@@ -56,9 +61,11 @@ namespace Loanda.Web.Controllers
 
         public async Task<IActionResult> MarkNotReviewed(EmailViewModel emailViewModel, CancellationToken cancellationToken)
         {
+
             try
             {
-                await this.emailService.MarkNotReviewedAsync(emailViewModel.ToServiceModel(), cancellationToken);
+                await this.gmailApi.GetEmailByGmailId(emailViewModel.Id, cancellationToken); 
+                //await this.emailService.MarkNotReviewedAsync(emailViewModel.ToServiceModel(), cancellationToken);
             }
             catch (Exception)
             {

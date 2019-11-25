@@ -18,7 +18,8 @@ namespace Loanda.Services.Mappings
                     ClosedBy = entity.ClosedBy.UserName,
                     OpenedBy = entity.OpenedBy.UserName,
                     ClosedById = entity.ClosedById,
-                    OpenedById = entity.OpenedById
+                    OpenedById = entity.OpenedById,
+                    EmailId = entity.EmailId
                 }
                 : null;
         }
@@ -33,7 +34,8 @@ namespace Loanda.Services.Mappings
                     ApplicantId = model.ApplicantId,
                     ApplicationStatusId = model.ApplicationStatusId,
                     OpenedById = model.OpenedById,
-                    ClosedById = model.ClosedById
+                    ClosedById = model.ClosedById,
+                    EmailId = model.EmailId
                 }
                 : null;
         }

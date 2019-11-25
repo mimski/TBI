@@ -23,7 +23,11 @@ namespace Loanda.Services
 
         public async Task<LoanApplication> AddAsync(LoanApplication loanApplication, CancellationToken cancellationToken)
         {
-            var addedLoanApplicationEntry = this.context.LoanApplications.Add(loanApplication.ToEntity());
+            var application = loanApplication.ToEntity();
+            application.ApplicationStatusId = -1;
+
+            var addedLoanApplicationEntry = this.context.LoanApplications.Add(application);
+
             await this.context.SaveChangesAsync(cancellationToken);
             return addedLoanApplicationEntry.Entity.ToService();
         }

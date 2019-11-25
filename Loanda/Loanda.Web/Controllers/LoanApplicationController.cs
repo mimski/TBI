@@ -8,6 +8,7 @@ using Loanda.Web.Mappings;
 using System.Threading;
 using Loanda.Web.Models.LoanApplication;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Loanda.Web.Controllers
 {
@@ -70,7 +71,9 @@ namespace Loanda.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LoanApplicationViewModel model, CancellationToken cancellationToken)
         {
-           /* var loanApplication = */await this.loanApplicationService.AddAsync(model.ToServiceModel(), cancellationToken);
+            var currentOperatorId = this.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
+            //model.OpenedById = currentOperatorId; 
+            var loanApplication = await this.loanApplicationService.AddAsync(model.ToServiceModel(), cancellationToken);
 
             //return CreatedAtAction(nameof(GetByIdAsync), new { id = loanApplication.Id }, loanApplication.ToViewModel());
 

@@ -45,5 +45,7 @@ namespace Loanda.Entities
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public LoanApplicationEntity LoanApplication { get; set; }
     }
 }

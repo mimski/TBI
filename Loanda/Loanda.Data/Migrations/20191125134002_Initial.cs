@@ -227,56 +227,6 @@ namespace Loanda.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LoanApplications",
-                schema: "public",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "date", nullable: true),
-                    ModifiedOn = table.Column<DateTime>(type: "date", nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
-                    DeletedOn = table.Column<DateTime>(type: "date", nullable: true),
-                    ApplicantId = table.Column<Guid>(nullable: false),
-                    ApplicationStatusId = table.Column<int>(nullable: false),
-                    LoanAmount = table.Column<decimal>(nullable: false),
-                    IsApproved = table.Column<bool>(nullable: true),
-                    OpenedById = table.Column<string>(nullable: true),
-                    ClosedById = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LoanApplications", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LoanApplications_Applicants_ApplicantId",
-                        column: x => x.ApplicantId,
-                        principalSchema: "public",
-                        principalTable: "Applicants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LoanApplications_ApplicationStatuses_ApplicationStatusId",
-                        column: x => x.ApplicationStatusId,
-                        principalSchema: "public",
-                        principalTable: "ApplicationStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LoanApplications_AspNetUsers_ClosedById",
-                        column: x => x.ClosedById,
-                        principalSchema: "public",
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_LoanApplications_AspNetUsers_OpenedById",
-                        column: x => x.OpenedById,
-                        principalSchema: "public",
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ReceivedEmails",
                 schema: "public",
                 columns: table => new
@@ -346,6 +296,64 @@ namespace Loanda.Data.Migrations
                         principalTable: "ReceivedEmails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LoanApplications",
+                schema: "public",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeletedOn = table.Column<DateTime>(type: "date", nullable: true),
+                    ApplicantId = table.Column<Guid>(nullable: false),
+                    ApplicationStatusId = table.Column<int>(nullable: false),
+                    LoanAmount = table.Column<decimal>(nullable: false),
+                    IsApproved = table.Column<bool>(nullable: true),
+                    OpenedById = table.Column<string>(nullable: true),
+                    ClosedById = table.Column<string>(nullable: true),
+                    EmailId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoanApplications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_Applicants_ApplicantId",
+                        column: x => x.ApplicantId,
+                        principalSchema: "public",
+                        principalTable: "Applicants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_ApplicationStatuses_ApplicationStatusId",
+                        column: x => x.ApplicationStatusId,
+                        principalSchema: "public",
+                        principalTable: "ApplicationStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_AspNetUsers_ClosedById",
+                        column: x => x.ClosedById,
+                        principalSchema: "public",
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_ReceivedEmails_EmailId",
+                        column: x => x.EmailId,
+                        principalSchema: "public",
+                        principalTable: "ReceivedEmails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_AspNetUsers_OpenedById",
+                        column: x => x.OpenedById,
+                        principalSchema: "public",
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -468,6 +476,13 @@ namespace Loanda.Data.Migrations
                 column: "ClosedById");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LoanApplications_EmailId",
+                schema: "public",
+                table: "LoanApplications",
+                column: "EmailId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LoanApplications_OpenedById",
                 schema: "public",
                 table: "LoanApplications",
@@ -527,11 +542,11 @@ namespace Loanda.Data.Migrations
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "ReceivedEmails",
+                name: "ApplicationStatuses",
                 schema: "public");
 
             migrationBuilder.DropTable(
-                name: "ApplicationStatuses",
+                name: "ReceivedEmails",
                 schema: "public");
 
             migrationBuilder.DropTable(

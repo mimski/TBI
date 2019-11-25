@@ -23,5 +23,7 @@ namespace Loanda.Services.Models
         public string ClosedById { get; set; }
 
         public string ClosedBy { get; set; }
+
+        public long EmailId { get; set; }
     }
 }

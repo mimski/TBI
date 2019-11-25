@@ -167,6 +167,8 @@ namespace Loanda.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("date");
 
+                    b.Property<long>("EmailId");
+
                     b.Property<bool?>("IsApproved")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(null);
@@ -189,6 +191,9 @@ namespace Loanda.Data.Migrations
                     b.HasIndex("ApplicationStatusId");
 
                     b.HasIndex("ClosedById");
+
+                    b.HasIndex("EmailId")
+                        .IsUnique();
 
                     b.HasIndex("OpenedById");
 
@@ -501,6 +506,11 @@ namespace Loanda.Data.Migrations
                         .WithMany("ClosedLoanApplication")
                         .HasForeignKey("ClosedById")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Loanda.Entities.ReceivedEmailEntity", "ReceivedEmail")
+                        .WithOne("LoanApplication")
+                        .HasForeignKey("Loanda.Entities.LoanApplicationEntity", "EmailId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Loanda.Entities.User", "OpenedBy")
                         .WithMany("OpenLoanApplications")

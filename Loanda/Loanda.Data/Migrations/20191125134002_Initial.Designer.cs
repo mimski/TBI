@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Loanda.Data.Migrations
 {
     [DbContext(typeof(LoandaContext))]
-    [Migration("20191120201321_Initial")]
+    [Migration("20191125134002_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,6 +169,8 @@ namespace Loanda.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("date");
 
+                    b.Property<long>("EmailId");
+
                     b.Property<bool?>("IsApproved")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(null);
@@ -191,6 +193,9 @@ namespace Loanda.Data.Migrations
                     b.HasIndex("ApplicationStatusId");
 
                     b.HasIndex("ClosedById");
+
+                    b.HasIndex("EmailId")
+                        .IsUnique();
 
                     b.HasIndex("OpenedById");
 
@@ -503,6 +508,11 @@ namespace Loanda.Data.Migrations
                         .WithMany("ClosedLoanApplication")
                         .HasForeignKey("ClosedById")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Loanda.Entities.ReceivedEmailEntity", "ReceivedEmail")
+                        .WithOne("LoanApplication")
+                        .HasForeignKey("Loanda.Entities.LoanApplicationEntity", "EmailId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Loanda.Entities.User", "OpenedBy")
                         .WithMany("OpenLoanApplications")
