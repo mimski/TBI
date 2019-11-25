@@ -173,7 +173,7 @@ namespace Loanda.EmailClient
             }
         }
 
-        public async Task GetEmailByGmailId(string emailId)
+        public async Task GetEmailByGmailId(long emailId, CancellationToken cancelationToken)
         {
             UserCredential credential;
 
@@ -207,7 +207,9 @@ namespace Loanda.EmailClient
 
             var emailListRespons = await emailListRequest.ExecuteAsync();
 
-            var emailInfoRequest = service.Users.Messages.Get(SERVICE_ACCOUNT_EMAIL, emailId);
+            var gmail = await this.emailService.FindByIdAsync(emailId, cancelationToken);
+
+            var emailInfoRequest = service.Users.Messages.Get(SERVICE_ACCOUNT_EMAIL, gmail.GmailEmailId);
 
             if (emailListRespons != null)
             {
@@ -258,7 +260,9 @@ namespace Loanda.EmailClient
                     emailDto.TotalAttachments = attachments.Count;
                 }
 
-                await this.emailService.CreateAsync(emailDto);
+                await this.emailService.MarkNotReviewedAsync(emailDto, cancelationToken);
+
+                //await this.emailService.CreateAsync(emailDto);
 
                 var markAsReadRequest = new ModifyMessageRequest { RemoveLabelIds = new[] { "UNREAD" } };
                 await service.Users.Messages.Modify(markAsReadRequest, SERVICE_ACCOUNT_EMAIL, emailInfoResponse.Id).ExecuteAsync();
