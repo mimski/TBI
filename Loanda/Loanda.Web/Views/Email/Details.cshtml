@@ -16,7 +16,7 @@
     </div>
 }
 
-<div>
+<div class="container-fluid">
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -57,25 +57,26 @@
         </dd>
     </dl>
 
-</div>
-
-<div>
     <div>
-        @*<a class="btn btn-primary" title="Mark email as invalid" asp-controller="Email" asp-action="MarkAsInvalid" asp-route-id="@Model.Id">Invalid</a> |
-            <a class="btn btn-primary" title="Create new loan application" asp-controller="Applicant" asp-action="Create" asp-route-id="@Model.Id">New</a> |*@
-        <a asp-controller="Email" asp-action="Index">Back to All Emails</a>
+        <div>
+            @*<a class="btn btn-primary" title="Mark email as invalid" asp-controller="Email" asp-action="MarkAsInvalid" asp-route-id="@Model.Id">Invalid</a> |
+                <a class="btn btn-primary" title="Create new loan application" asp-controller="Applicant" asp-action="Create" asp-route-id="@Model.Id">New</a> |*@
+            <a asp-controller="Email" asp-action="Index">Back to All Emails</a>
+        </div>
     </div>
-</div>
-<div id="zamestiTUK">
 
-    <div id="test">
-        <a id="EGNbtn" class="btn btn-primary">Create New Applicant</a>
+
+    <div id="zamestiTUKA">
+        <div id="zamestiTUK">
+            <div id="test">
+                <a id="EGNbtn" class="btn btn-primary">Create New Applicant</a>
+            </div>
+        </div>
     </div>
-</div>
-@*<button id="EGNbtn">Create new Applicant</button>*@
+    @*<button id="EGNbtn">Create new Applicant</button>*@
 
-<div id="Egn-Container">
-
+    <div id="Egn-Container">
+    </div>
 </div>
 
 @section Scripts{
@@ -127,7 +128,7 @@
     </script>
     <script>
         function raboti() {
-            console.log("stigam li do tuk ve");
+            console.log("We are in Create Mode");
             debugger;
 
             let egn = $('#customEGN').val();
@@ -170,16 +171,16 @@
             console.log("We are in Edit Mode");
             debugger;
 
-            let egn = $('#customEGN').val();
-            let firstName = $('#customFirstName').val();
-            let middleName = $('#customMiddleName').val();
-            let lastName = $('#customLastName').val();
-            let dateOfBirth = $('#customDateOfBirth').val();
-            let phoneNumber = $('#customPhoneNumber').val();
-            let emailAddress = $('#customEmailAddress').val();
-            let address = $('#customAddress').val();
-            let city = $('#customCity').val();
-            let Id = $('#CustomApplicantId').val();
+            let egn = $('#ecustomEGN').val();
+            let firstName = $('#ecustomFirstName').val();
+            let middleName = $('#ecustomMiddleName').val();
+            let lastName = $('#ecustomLastName').val();
+            let dateOfBirth = $('#ecustomDateOfBirth').val();
+            let phoneNumber = $('#ecustomPhoneNumber').val();
+            let emailAddress = $('#ecustomEmailAddress').val();
+            let address = $('#ecustomAddress').val();
+            let city = $('#ecustomCity').val();
+            let Id = $('#eCustomApplicantId').val();
 
             console.log(firstName);
             $.ajax({
@@ -197,11 +198,13 @@
                     'Address': address,
                     'City': city
                 },
-                success: function (result) {
-                    const div = $('#zamestiTUK');
-                    div.replaceWith(result);
+                success: function (resulta) {
+                    const div = $('#zamestiTUKA');
+                    div.replaceWith(resulta);
                 }
             })
         }
     </script>
+
+    @{<partial name="_ValidationScriptsPartial" />}
 }
