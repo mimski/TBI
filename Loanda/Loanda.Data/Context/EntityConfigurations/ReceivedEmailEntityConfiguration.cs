@@ -12,23 +12,27 @@ namespace Loanda.Data.Context.EntityConfigurations
 
             builder.HasKey(receivedEmail => receivedEmail.Id);
 
+            builder.HasOne(a => a.LoanApplication)
+                .WithOne(b => b.ReceivedEmail)
+                .HasForeignKey<LoanApplicationEntity>(b => b.EmailId);
+
             builder.Property(loanApplication => loanApplication.CreatedOn)
-              .HasColumnType("date")
-            .IsRequired(false);
+                .HasColumnType("date")
+                .IsRequired(false);
 
             builder.Property(loanApplication => loanApplication.ModifiedOn)
                  .HasColumnType("date")
-               .IsRequired(false);
+                 .IsRequired(false);
 
             builder.Property(loanApplication => loanApplication.DeletedOn)
                  .HasColumnType("date")
-               .IsRequired(false);
+                 .IsRequired(false);
 
             builder.Property(loanApplication => loanApplication.IsDeleted)
-                .HasDefaultValue(false);
+                 .HasDefaultValue(false);
 
             builder.Property(loanApplication => loanApplication.EmailStatusId)
-                .HasDefaultValue(-1);
+                 .HasDefaultValue(-1);
         }
     }
 }
