@@ -10,12 +10,12 @@
         <div class="row">
             <div class="col">
                 <form method="post">
-                    <lable id="CustomApplicantId" type="hidden"></lable>
+                    <input id="eCustomApplicantId" value="@Model.Id" type="hidden">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">EGN</span>
                         </div>
-                        <input type="text" id="customEGN" asp-for="EGN" class="form-control" aria-label="EGN" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" id="ecustomEGN" asp-for="EGN" class="form-control" aria-label="EGN" aria-describedby="inputGroup-sizing-default">
                         <span asp-validation-for="EGN" class="text-danger"></span>
                     </div>
                     <div class="input-group mb-3">
@@ -23,11 +23,11 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="">Names</span>
                             </div>
-                            <input type="text" id="customFirstName" asp-for="FirstName" class="form-control" aria-label="FirstName" aria-describedby="inputGroup-sizing-default">
+                            <input type="text" id="ecustomFirstName" asp-for="FirstName" class="form-control" aria-label="FirstName" aria-describedby="inputGroup-sizing-default">
                             <span asp-validation-for="FirstName" class="text-danger"></span>
-                            <input type="text" id="customMiddleName" asp-for="MiddleName" class="form-control" aria-label="MiddleName" aria-describedby="inputGroup-sizing-default">
+                            <input type="text" id="ecustomMiddleName" asp-for="MiddleName" class="form-control" aria-label="MiddleName" aria-describedby="inputGroup-sizing-default">
                             <span asp-validation-for="MiddleName" class="text-danger"></span>
-                            <input type="text"  id="customLastName" asp-for="LastName" class="form-control" aria-label="LastName" aria-describedby="inputGroup-sizing-default">
+                            <input type="text"  id="ecustomLastName" asp-for="LastName" class="form-control" aria-label="LastName" aria-describedby="inputGroup-sizing-default">
                             <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                     </div>
@@ -35,35 +35,35 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Birth date</span>
                         </div>
-                        <input type="text" id="customDateOfBirth" asp-for="DateOfBirth" class="form-control" aria-label="DateOfBirth" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" id="ecustomDateOfBirth" asp-for="DateOfBirth" class="form-control" aria-label="DateOfBirth" aria-describedby="inputGroup-sizing-default">
                         <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Phone number</span>
                         </div>
-                        <input type="text" id="customPhoneNumber" asp-for="PhoneNumber" class="form-control" aria-label="PhoneNumber" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" id="ecustomPhoneNumber" asp-for="PhoneNumber" class="form-control" aria-label="PhoneNumber" aria-describedby="inputGroup-sizing-default">
                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">@@</span>
                         </div>
-                        <input type="text" id="customEmailAddress" asp-for="EmailAddress" class="form-control" placeholder="e-mail" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" id="ecustomEmailAddress" asp-for="EmailAddress" class="form-control" placeholder="e-mail" aria-label="Username" aria-describedby="basic-addon1">
                         <span asp-validation-for="EmailAddress" class="text-danger"></span>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Address</span>
                         </div>
-                        <input type="text" id="customAddress" asp-for="Address" class="form-control" aria-label="Address" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" id="ecustomAddress" asp-for="Address" class="form-control" aria-label="Address" aria-describedby="inputGroup-sizing-default">
                         <span asp-validation-for="Address" class="text-danger"></span>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">City</span>
                         </div>
-                        <input type="text" id="customCity" asp-for="City" class="form-control" aria-label="City" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" id="ecustomCity" asp-for="City" class="form-control" aria-label="City" aria-describedby="inputGroup-sizing-default">
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -75,6 +75,3 @@
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
