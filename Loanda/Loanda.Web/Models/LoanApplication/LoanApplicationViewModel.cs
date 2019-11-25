@@ -32,5 +32,8 @@ namespace Loanda.Web.Models.LoanApplication
 
         [Display(Name = "Closed By")]
         public string ClosedBy { get; set; }
+
+        [Display(Name = "Email Id")]
+        public long EmailId { get; set; }
     }
 }
