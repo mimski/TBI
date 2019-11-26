@@ -67,6 +67,30 @@ namespace Loanda.Services
             return emails.ToService();
         }
 
+        public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllNotReviewedAsync(CancellationToken cancellationToken)
+        {
+            var emails = await this.context.ReceivedEmails.Where(e => e.EmailStatusId.Equals(-1)).AsNoTracking().ToListAsync(cancellationToken);
+
+            foreach (var email in emails)
+            {
+                email.Body = Base64Decode(email.Body);
+            }
+
+            return emails.ToService();
+        }
+
+        public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllNewAsync(CancellationToken cancellationToken)
+        {
+            var emails = await this.context.ReceivedEmails.Where(e => e.EmailStatusId.Equals(-2)).AsNoTracking().ToListAsync(cancellationToken);
+
+            foreach (var email in emails)
+            {
+                email.Body = Base64Decode(email.Body);
+            }
+
+            return emails.ToService();
+        }
+
         public async Task<ReceivedEmail> FindByIdAsync(long id, CancellationToken cancellationToken)
         {
             var email = await this.context.ReceivedEmails.AsNoTracking().SingleOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
@@ -107,6 +131,23 @@ namespace Loanda.Services
             if (existingEmail != null)
             {
                 existingEmail.EmailStatusId = -1;
+
+                this.context.ReceivedEmails.Update(existingEmail);
+                await this.context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ChangeEmailStatusToNewAsync(long id, CancellationToken cancellationToken)
+        {
+            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.Id.Equals(id), cancellationToken);
+            if (existingEmail != null)
+            {
+                existingEmail.EmailStatusId = -2;
 
                 this.context.ReceivedEmails.Update(existingEmail);
                 await this.context.SaveChangesAsync(cancellationToken);

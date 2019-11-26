@@ -14,9 +14,15 @@ namespace Loanda.Services.Contracts
 
         Task<IReadOnlyCollection<ReceivedEmail>> GetAllAsync(CancellationToken cancellationToken);
 
+        Task<IReadOnlyCollection<ReceivedEmail>> GetAllNotReviewedAsync(CancellationToken cancellationToken);
+
+        Task<IReadOnlyCollection<ReceivedEmail>> GetAllNewAsync(CancellationToken cancellationToken);
+
         Task<IReadOnlyCollection<ReceivedEmail>> GetAllInvalidAsync(CancellationToken cancellationToken);
 
         Task<ReceivedEmail> FindByIdAsync(long id, CancellationToken cancellationToken);
+
+        Task<bool> ChangeEmailStatusToNewAsync(long id, CancellationToken cancellationToken);
 
         Task<bool> MarkInvalidAsync(ReceivedEmail receivedEmail, CancellationToken cancellationToken);
 

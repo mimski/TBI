@@ -40,11 +40,18 @@ namespace Loanda.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var result = await this.emailService.GetAllAsync(cancellationToken);
+            var result = await this.emailService.GetAllNotReviewedAsync(cancellationToken);
             return View("Index", result.ToViewModel());
         }
 
-    
+        [HttpGet]
+        public async Task<IActionResult> New(CancellationToken cancellationToken)
+        {
+            var result = await this.emailService.GetAllNewAsync(cancellationToken);
+            return View("Index", result.ToViewModel());
+        }
+
+
         public async Task<IActionResult> MarkInvalid(EmailViewModel emailViewModel, CancellationToken cancellationToken)
         {
             try
@@ -125,6 +132,9 @@ namespace Loanda.Web.Controllers
             {
                 return NotFound();
             }
+
+            await this.emailService.ChangeEmailStatusToNewAsync(id, cancellationToken);
+
 
             return View("Details", email.ToViewModel());
         }
