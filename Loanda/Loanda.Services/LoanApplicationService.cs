@@ -21,7 +21,7 @@ namespace Loanda.Services
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<LoanApplication> AddAsync(LoanApplication loanApplication, CancellationToken cancellationToken)
+        public async Task<bool> AddAsync(LoanApplication loanApplication, CancellationToken cancellationToken)
         {
             var application = loanApplication.ToEntity();
             application.ApplicationStatusId = -1;
@@ -29,7 +29,7 @@ namespace Loanda.Services
             var addedLoanApplicationEntry = this.context.LoanApplications.Add(application);
 
             await this.context.SaveChangesAsync(cancellationToken);
-            return application.ToService();
+            return true;
         }
 
         public async Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(CancellationToken cancellationToken)

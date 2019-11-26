@@ -77,7 +77,7 @@ namespace Loanda.Web.Controllers
 
             //return CreatedAtAction(nameof(GetByIdAsync), new { id = loanApplication.Id }, loanApplication.ToViewModel());
 
-            return RedirectToAction("Index");
+            return Redirect("/Email/Index");
         }
 
         [HttpDelete]

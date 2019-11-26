@@ -15,7 +15,7 @@ namespace Loanda.Services.Contracts
 
         Task<LoanApplication> UpdateAsync(LoanApplication loanApplication, CancellationToken cancellationToken);
 
-        Task<LoanApplication> AddAsync(LoanApplication loanApplication, CancellationToken cancellationToken);
+        Task<bool> AddAsync(LoanApplication loanApplication, CancellationToken cancellationToken);
 
         Task<LoanApplication> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken);
 
