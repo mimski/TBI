@@ -48,7 +48,7 @@ namespace Loanda.Web.Controllers
         public async Task<IActionResult> New(CancellationToken cancellationToken)
         {
             var result = await this.emailService.GetAllNewAsync(cancellationToken);
-            return View("Index", result.ToViewModel());
+            return View("New", result.ToViewModel());
         }
 
 
