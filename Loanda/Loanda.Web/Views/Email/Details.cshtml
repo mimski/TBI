@@ -86,20 +86,46 @@
             const btn = $('#EGNbtn')
             //const container = $('#Egn-Container');
 
+    //        var getUrlParameter = function getUrlParameter(sParam) {
+    //var sPageURL = window.location.search.substring(1),
+    //    sURLVariables = sPageURL.split('&'),
+    //    sParameterName,
+    //    i;
+
+    //for (i = 0; i < sURLVariables.length; i++) {
+    //    sParameterName = sURLVariables[i].split('=');
+
+    //    if (sParameterName[0] === sParam) {
+    //        return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+    //    }
+    //}
+    //        };
+
+            $.urlParam = function(name){
+	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	return results[1] || 0;
+}
+
+           let emailIdto = $.urlParam('id'); 
+            //debugger;
+
             $.ajax({
-                url: '/Applicant/CheckApplicant',
+                url: `/Applicant/CheckApplicant/?emailId=${emailIdto}`,
                 type: 'Get',
                 success: function (response) {
                     btn.replaceWith(response);
 
                     $('#BtnSubmitEGN').ready().click(function (e) {
                         e.preventDefault();
-                        //let btntest = $('#BtnSubmitEGN')
-                        //console.log(btntest)
+                        let btntest = $('#BtnSubmitEGN')
+                        console.log(btntest)
                         const formD = $('#form-dat').serialize
                         const divContainer = $('#FormContainer')
                         //const container = $('#Egn-Container');
                         let input = document.getElementById('asdtest123').value;
+                        console.log(input);
+                        console.log(emailIdto);
+                        debugger;
                         if (!input) {
                             $('#checkEgn').text('Please enter egn!')
                         }
@@ -108,16 +134,14 @@
                             $.ajax({
                                 url: '/Applicant/CheckApplicant',
                                 data: {
-                                    'EGN': input
+                                    'EGN': input,
+                                    'EmailId': emailIdto
                                 },
                                 type: 'Post',
                                 success: function (abcaba) {
 
                                     const div = $('#test');
                                     div.replaceWith(abcaba);
-
-
-
                                 }
                             })
                         }
@@ -127,9 +151,17 @@
         })
     </script>
     <script>
+
         function raboti() {
             console.log("We are in Create Mode");
             debugger;
+
+             $.urlParam = function(name){
+	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	return results[1] || 0;
+}
+
+           let emailIdto = $.urlParam('id'); 
 
             let egn = $('#customEGN').val();
             let firstName = $('#customFirstName').val();
@@ -141,6 +173,7 @@
             let address = $('#customAddress').val();
             let city = $('#customCity').val();
             let Id = $('#CustomApplicantId').val();
+            let EmailId =  emailIdto;
 
             console.log(firstName);
             $.ajax({
@@ -156,7 +189,8 @@
                     'PhoneNumber': phoneNumber,
                     'EmailAddress': emailAddress,
                     'Address': address,
-                    'City': city
+                    'City': city,
+                     'EmailId': EmailId
                 },
                 success: function (result) {
                     const div = $('#zamestiTUK');
@@ -171,6 +205,13 @@
             console.log("We are in Edit Mode");
             debugger;
 
+             $.urlParam = function(name){
+	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	return results[1] || 0;
+}
+
+           let emailIdto = $.urlParam('id'); 
+
             let egn = $('#ecustomEGN').val();
             let firstName = $('#ecustomFirstName').val();
             let middleName = $('#ecustomMiddleName').val();
@@ -181,6 +222,7 @@
             let address = $('#ecustomAddress').val();
             let city = $('#ecustomCity').val();
             let Id = $('#eCustomApplicantId').val();
+            let EmailId = emailIdto;
 
             console.log(firstName);
             $.ajax({
@@ -196,7 +238,8 @@
                     'PhoneNumber': phoneNumber,
                     'EmailAddress': emailAddress,
                     'Address': address,
-                    'City': city
+                    'City': city,
+                    'EmailId': EmailId
                 },
                 success: function (resulta) {
                     const div = $('#zamestiTUKA');

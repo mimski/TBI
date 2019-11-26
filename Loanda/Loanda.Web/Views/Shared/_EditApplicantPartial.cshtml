@@ -11,6 +11,7 @@
             <div class="col">
                 <form method="post">
                     <input id="eCustomApplicantId" value="@Model.Id" type="hidden">
+                    <input id="EmaiIdEd" value="@Model.EmailId" type="hidden">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">EGN</span>
@@ -27,7 +28,7 @@
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                             <input type="text" id="ecustomMiddleName" asp-for="MiddleName" class="form-control" aria-label="MiddleName" aria-describedby="inputGroup-sizing-default">
                             <span asp-validation-for="MiddleName" class="text-danger"></span>
-                            <input type="text"  id="ecustomLastName" asp-for="LastName" class="form-control" aria-label="LastName" aria-describedby="inputGroup-sizing-default">
+                            <input type="text" id="ecustomLastName" asp-for="LastName" class="form-control" aria-label="LastName" aria-describedby="inputGroup-sizing-default">
                             <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                     </div>

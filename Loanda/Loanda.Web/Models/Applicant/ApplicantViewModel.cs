@@ -54,5 +54,7 @@ namespace Loanda.Web.Models.Applicant
         [Display(Name = "Deleted")]
         [DataType(DataType.Date)]
         public bool IsDeleted { get; set; }
+
+       public long EmailId { get; set; }
     }
 }

@@ -13,5 +13,7 @@ namespace Loanda.Web.Models.Applicant
         [MinLength(10)]
         [MaxLength(10)]
         public string EGN { get; set; }
+
+        public long EmialId { get; set; }
     }
 }

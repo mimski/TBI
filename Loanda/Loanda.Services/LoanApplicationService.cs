@@ -29,7 +29,7 @@ namespace Loanda.Services
             var addedLoanApplicationEntry = this.context.LoanApplications.Add(application);
 
             await this.context.SaveChangesAsync(cancellationToken);
-            return addedLoanApplicationEntry.Entity.ToService();
+            return application.ToService();
         }
 
         public async Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(CancellationToken cancellationToken)

@@ -15,7 +15,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Loan Amount</span>
                         </div>
-                        <input type="hidden" asp-for="ApplicantId"  />
+                        <input type="hidden" asp-for="ApplicantId"/>
+                        <input type="hidden"  asp-for="EmailId" value="@Model.EmailId"/>
                         <input type="text" asp-for="LoanAmount" class="form-control" aria-label="LoanAmount" aria-describedby="inputGroup-sizing-default">
                         <span asp-validation-for="LoanAmount" class="text-danger"></span>
                     </div>

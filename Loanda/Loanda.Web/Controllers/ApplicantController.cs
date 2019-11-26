@@ -46,7 +46,7 @@ namespace Loanda.Web.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ApplicantViewModel model, [FromQuery] long emailId, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(ApplicantViewModel model, CancellationToken cancellationToken)
         {
             var applicant = await this.applicantService.AddAsync(model.ToServiceModel(), cancellationToken);
 
@@ -59,7 +59,7 @@ namespace Loanda.Web.Controllers
 
             // TODO service get user by email/username
 
-            var loanViewModel = new LoanApplicationViewModel { ApplicantId = applicant.Id, OpenedById = userId, EmailId = emailId };
+            var loanViewModel = new LoanApplicationViewModel { ApplicantId = applicant.Id, OpenedById = userId, EmailId = model.EmailId };
             return PartialView("_CreateLoanPartial", loanViewModel);
         }
 
@@ -75,7 +75,7 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(/*Guid id, */ApplicantViewModel model, [FromQuery] long emailId, CancellationToken cancellationToken)
+        public async Task<IActionResult> Edit(/*Guid id, */ApplicantViewModel model, CancellationToken cancellationToken)
         {
             //model.Id = id;
             var applicant = await this.applicantService.UpdateAsync(model.ToServiceModel(), cancellationToken);
@@ -93,19 +93,20 @@ namespace Loanda.Web.Controllers
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
 
-            var loanViewModel = new LoanApplicationViewModel { ApplicantId = applicant.Id, OpenedById = userId, EmailId = emailId };
+            var loanViewModel = new LoanApplicationViewModel { ApplicantId = applicant.Id, OpenedById = userId, EmailId = model.EmailId };
 
             return PartialView("_CreateLoanPartial", loanViewModel);
         }
 
         [HttpGet]
-        public IActionResult CheckApplicant()
+        public IActionResult CheckApplicant(long emailId)
         {
-            return PartialView("_EgnPartial");
+            var egnViewModel = new EGNViewModel { EmialId = emailId };
+            return PartialView("_EgnPartial", egnViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CheckApplicant(EGNViewModel vm, string id,CancellationToken cancellationToken)
+        public async Task<IActionResult> CheckApplicant(EGNViewModel vm, CancellationToken cancellationToken)
         {
             var applicant = await this.applicantService.GetByEgnAsync(vm.EGN, cancellationToken);
 
