@@ -14,6 +14,7 @@ namespace Loanda.Entities
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+        public bool IsFirstLogin { get; set; }
 
         public virtual ICollection<LoanApplicationEntity> OpenLoanApplications { get; set; }
 
