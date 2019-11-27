@@ -43,6 +43,16 @@ namespace Loanda.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+
             services.AddDbContext<LoandaContext>(options =>
                 options.UseNpgsql(Configuration.GetDefaultConnectionString()));
 
@@ -52,6 +62,7 @@ namespace Loanda.Web
                 .AddDefaultTokenProviders();
 
             services.AddScoped(typeof(IUserManager<>), typeof(UserManagerWrapper<>));
+            services.AddScoped<IUserService, UserService>();
 
             #region Register all services from the service layer
             services.AddBusiness();
