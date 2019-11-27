@@ -166,7 +166,7 @@ namespace Loanda.Web.Controllers
 
         public async Task<IActionResult> Edit()
         {
-            return PartialView("_EmailDetails");
+            return  PartialView("_EmailDetails");
         }
     }
 }
