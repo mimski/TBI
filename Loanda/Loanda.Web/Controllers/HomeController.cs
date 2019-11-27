@@ -27,7 +27,7 @@ namespace Loanda.Web.Controllers
 
         public /*async Task <*/IActionResult/*>*/ Index()
         {
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 //await this.gmailApi.GetEmailsFromGmailAsync();
                 return View("Privacy");
@@ -71,6 +71,19 @@ namespace Loanda.Web.Controllers
             {
                 return true;
             }
+            return false;
+        }
+
+        [HttpPost]
+        public async Task<bool> CheckIfFirstLogin()
+        {
+            var user = await userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                return user.IsFirstLogin;
+            }
+
             return false;
         }
     }

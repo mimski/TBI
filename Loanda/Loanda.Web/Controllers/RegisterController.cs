@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Loanda.Data.Context;
 using Loanda.Entities;
 using Loanda.Services.Contracts;
 using Loanda.Web.Areas.Admin.Models;
@@ -16,11 +17,13 @@ namespace Loanda.Web.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly IUserService userService;
+        private readonly LoandaContext context;
 
-        public RegisterController(IUserService userService, UserManager<User> userManager)
+        public RegisterController(IUserService userService, UserManager<User> userManager, LoandaContext context)
         {
             this.userService = userService;
             this.userManager = userManager;
+            this.context = context;
         }
 
         // GET: /<controller>/
@@ -59,6 +62,9 @@ namespace Loanda.Web.Controllers
                 var user = userManager.GetUserAsync(User);
                 var oldPassword = user.Result.PasswordHash;
                 userManager.ChangePasswordAsync(user.Result, oldPassword, newPass);
+
+                user.Result.IsFirstLogin = false;
+                context.SaveChanges();
                 return true;
             }
             return false;

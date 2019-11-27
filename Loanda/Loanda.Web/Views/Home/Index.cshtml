@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--===============================================================================================-->
     <style>
-        #customPass{
+        #customPass {
             color: red;
             margin-left: 60px;
         }
@@ -61,7 +61,7 @@
                     </div>
                     <div>
                         <span>
-                            <span id="customPass" ></span>
+                            <span id="customPass"></span>
                         </span>
                     </div>
                     <div class="container-login100-form-btn">
@@ -107,7 +107,7 @@
         function Check() {
             let email = $("#emailId").val();
             let password = $("#passwordId").val();
-            
+
             $.ajax(
                 {
                     type: 'post',
@@ -118,14 +118,33 @@
                     },
                     success: function (result) {
                         if (result) {
-                            window.location.replace("/Home/Privacy");
+
+                            $.ajax(
+                                {
+                                    type: 'post',
+                                    url: "home/checkiffirstlogin",
+
+                                    success: function (result) {
+                                        if (result) {
+                                            window.location.replace("/Home/ChangePassword");
+                                        }
+                                        else
+                                        {
+                                            window.location.replace("/Home/Privacy");
+                                        }
+
+                                    },
+
+                                })
+
+
                         }
                         else {
                             $('#customPass').text('Invalid Login Attempt!');
                         }
                     },
-                    
-            })
+
+                })
         }
     </script>
 </body>
