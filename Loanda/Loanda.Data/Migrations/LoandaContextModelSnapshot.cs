@@ -91,11 +91,16 @@ namespace Loanda.Data.Migrations
                         new
                         {
                             Id = -1,
-                            Name = "Open"
+                            Name = "Processing"
                         },
                         new
                         {
                             Id = -2,
+                            Name = "Approved"
+                        },
+                        new
+                        {
+                            Id = -3,
                             Name = "Closed"
                         });
                 });
@@ -147,6 +152,16 @@ namespace Loanda.Data.Migrations
                         {
                             Id = -3,
                             Name = "Invalid"
+                        },
+                        new
+                        {
+                            Id = -4,
+                            Name = "Open"
+                        },
+                        new
+                        {
+                            Id = -5,
+                            Name = "Closed"
                         });
                 });
 

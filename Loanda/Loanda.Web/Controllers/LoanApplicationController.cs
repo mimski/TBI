@@ -16,10 +16,12 @@ namespace Loanda.Web.Controllers
     public class LoanApplicationController : Controller
     {
         private readonly ILoanApplicationService loanApplicationService;
+        private readonly IEmailService emailService;
 
-        public LoanApplicationController(ILoanApplicationService loanApplicationService)
+        public LoanApplicationController(ILoanApplicationService loanApplicationService, IEmailService emailService)
         {
             this.loanApplicationService = loanApplicationService ?? throw new ArgumentNullException(nameof(loanApplicationService));
+            this.emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         }
 
         [HttpGet]
@@ -76,6 +78,8 @@ namespace Loanda.Web.Controllers
             model.OpenedById = currentUserId;
             //model.OpenedById = currentOperatorId; 
             var loanApplication = await this.loanApplicationService.AddAsync(model.ToServiceModel(), cancellationToken);
+
+            await this.emailService.ChangeToOpenAsync(model.EmailId, cancellationToken);
 
             //return CreatedAtAction(nameof(GetByIdAsync), new { id = loanApplication.Id }, loanApplication.ToViewModel());
 

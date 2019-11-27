@@ -32,6 +32,16 @@ namespace Loanda.Data.Context.EntityConfigurations
                     {
                         Id = -3,
                         Name = "Invalid"
+                    },
+                    new EmailStatusEntity
+                    {
+                          Id = -4,
+                          Name = "Open"
+                    },
+                    new EmailStatusEntity
+                    {
+                          Id = -5,
+                          Name = "Closed"
                     });
         }
     }

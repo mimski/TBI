@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Loanda.Data.Migrations
 {
     [DbContext(typeof(LoandaContext))]
-    [Migration("20191127153857_Initial")]
+    [Migration("20191127161528_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,11 +93,16 @@ namespace Loanda.Data.Migrations
                         new
                         {
                             Id = -1,
-                            Name = "Open"
+                            Name = "Processing"
                         },
                         new
                         {
                             Id = -2,
+                            Name = "Approved"
+                        },
+                        new
+                        {
+                            Id = -3,
                             Name = "Closed"
                         });
                 });
@@ -149,6 +154,16 @@ namespace Loanda.Data.Migrations
                         {
                             Id = -3,
                             Name = "Invalid"
+                        },
+                        new
+                        {
+                            Id = -4,
+                            Name = "Open"
+                        },
+                        new
+                        {
+                            Id = -5,
+                            Name = "Closed"
                         });
                 });
 

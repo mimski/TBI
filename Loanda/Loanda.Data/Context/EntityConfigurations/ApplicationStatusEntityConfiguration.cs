@@ -21,13 +21,18 @@ namespace Loanda.Data.Context.EntityConfigurations
                 new ApplicationStatusEntity
                 {
                     Id = -1,
-                    Name = "Open"
+                    Name = "Processing"
                 },
                 new ApplicationStatusEntity
                 {
                     Id = -2,
-                    Name = "Closed"
-                });
+                    Name = "Approved"
+                },
+                 new ApplicationStatusEntity
+                 {
+                     Id = -3,
+                     Name = "Closed"
+                 });
         }
     }
 }

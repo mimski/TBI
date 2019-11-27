@@ -362,8 +362,9 @@ namespace Loanda.Data.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { -1, "Open" },
-                    { -2, "Closed" }
+                    { -1, "Processing" },
+                    { -2, "Approved" },
+                    { -3, "Closed" }
                 });
 
             migrationBuilder.InsertData(
@@ -394,7 +395,9 @@ namespace Loanda.Data.Migrations
                 {
                     { -1, "Not Reviewed" },
                     { -2, "New" },
-                    { -3, "Invalid" }
+                    { -3, "Invalid" },
+                    { -4, "Open" },
+                    { -5, "Closed" }
                 });
 
             migrationBuilder.InsertData(

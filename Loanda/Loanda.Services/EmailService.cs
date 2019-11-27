@@ -158,5 +158,22 @@ namespace Loanda.Services
                 return false;
             }
         }
+
+        public async Task<bool> ChangeToOpenAsync(long emailId, CancellationToken cancellationToken)
+        {
+            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.Id.Equals(emailId), cancellationToken);
+            if (existingEmail != null)
+            {
+                existingEmail.EmailStatusId = -4;
+
+                this.context.ReceivedEmails.Update(existingEmail);
+                await this.context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
