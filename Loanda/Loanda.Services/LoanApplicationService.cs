@@ -33,9 +33,9 @@ namespace Loanda.Services
             return true;
         }
 
-        public async Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(string userId, CancellationToken cancellationToken)
         {
-            var loanApplications = await this.context.LoanApplications.Include(x => x.OpenedBy).OrderByDescending(application => application.LoanAmount).AsNoTracking().ToListAsync(cancellationToken);
+            var loanApplications = await this.context.LoanApplications.Where(x=> x.OpenedById.Equals(userId)).Include(x => x.OpenedBy).OrderByDescending(application => application.LoanAmount).AsNoTracking().ToListAsync(cancellationToken);
 
             var a = 0;
 

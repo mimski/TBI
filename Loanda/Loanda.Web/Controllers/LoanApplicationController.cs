@@ -27,7 +27,8 @@ namespace Loanda.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var result = await this.loanApplicationService.GetAllAsync(cancellationToken);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var result = await this.loanApplicationService.GetAllAsync(userId, cancellationToken);
             return View("Index", result.ToViewModel());
         }
 

@@ -9,7 +9,7 @@ namespace Loanda.Services.Contracts
 {
     public interface ILoanApplicationService
     {
-        Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(string userId, CancellationToken cancellationToken);
 
         Task<LoanApplication> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
