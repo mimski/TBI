@@ -95,7 +95,7 @@ namespace Loanda.Services
         {
             var emails = await this.context.ReceivedEmails.Where(e => e.EmailStatusId.Equals(-4))
                 .Include(x => x.LoanApplication)
-                .Where(la => la.LoanApplication.OpenedById == userId)
+                .Where(la => la.LoanApplication.OpenedById == userId && la.LoanApplication.ApplicationStatusId != -4)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
 
@@ -181,6 +181,23 @@ namespace Loanda.Services
             if (existingEmail != null)
             {
                 existingEmail.EmailStatusId = -4;
+
+                this.context.ReceivedEmails.Update(existingEmail);
+                await this.context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ChangeToCloseAsync(Guid loanId, CancellationToken cancellationToken)
+        {
+            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.LoanApplication.Id.Equals(loanId), cancellationToken);
+            if (existingEmail != null)
+            {
+                existingEmail.EmailStatusId = -5;
 
                 this.context.ReceivedEmails.Update(existingEmail);
                 await this.context.SaveChangesAsync(cancellationToken);

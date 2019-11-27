@@ -110,6 +110,7 @@ namespace Loanda.Web.Controllers
         {
             try
             {
+                await this.emailService.ChangeToCloseAsync(loanViewModel.Id, cancellationToken);
                 await this.loanApplicationService.RejectAsync(loanViewModel.ToServiceModel(), cancellationToken);
             }
             catch (Exception)
@@ -124,6 +125,7 @@ namespace Loanda.Web.Controllers
         {
             try
             {
+                await this.emailService.ChangeToCloseAsync(loanViewModel.Id, cancellationToken);
                 await this.loanApplicationService.ApproveAsync(loanViewModel.ToServiceModel(), cancellationToken);
             }
             catch (Exception)
