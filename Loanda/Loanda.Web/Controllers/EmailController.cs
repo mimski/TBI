@@ -19,14 +19,15 @@ namespace Loanda.Web.Controllers
         private readonly IEmailService emailService;
         private readonly IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper;
         private readonly IGmailApi gmailApi;
+        private readonly ILoanApplicationService loanApplicationService;
 
 
-
-        public EmailController(IEmailService emailService, IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper, IGmailApi gmailApi)
+        public EmailController(IEmailService emailService, IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper, IGmailApi gmailApi, ILoanApplicationService loanApplicationService)
         {
             this.emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
             this.emailMapper = emailMapper ?? throw new ArgumentNullException(nameof(emailMapper));
             this.gmailApi = gmailApi ?? throw new ArgumentNullException(nameof(gmailApi));
+            this.loanApplicationService = loanApplicationService ?? throw new ArgumentNullException(nameof(loanApplicationService));
         }
 
         [HttpGet]
@@ -64,6 +65,21 @@ namespace Loanda.Web.Controllers
             try
             {
                 await this.emailService.MarkInvalidAsync(emailViewModel.ToServiceModel(), cancellationToken);
+            }
+            catch (Exception)
+            {
+                //return NoContent();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> MarkNew(EmailViewModel emailViewModel, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await this.emailService.ChangeEmailStatusToNewAsync(emailViewModel.Id, cancellationToken);
+                await this.loanApplicationService.RemoveAsync(emailViewModel.Id, cancellationToken);
             }
             catch (Exception)
             {

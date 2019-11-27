@@ -86,14 +86,14 @@ namespace Loanda.Web.Controllers
             return Redirect("/Email/Index");
         }
 
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> RemoveAsync(Guid id, CancellationToken cancellationToken)
-        {
-            await this.loanApplicationService.RemoveAsync(id, cancellationToken);
+        //[HttpDelete]
+        //[Route("{id}")]
+        //public async Task<IActionResult> RemoveAsync(Guid id, CancellationToken cancellationToken)
+        //{
+        //    await this.loanApplicationService.RemoveAsync(id, cancellationToken);
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [Route("{id}")]
         public async Task<IActionResult> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken)

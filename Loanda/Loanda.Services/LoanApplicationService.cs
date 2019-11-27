@@ -82,13 +82,18 @@ namespace Loanda.Services
             }
         }
 
-        public async Task RemoveAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<bool> RemoveAsync(long id, CancellationToken cancellationToken)
         {
-            var loanApplication = await this.context.LoanApplications.SingleOrDefaultAsync(application => application.Id.Equals(id), cancellationToken);
+            var loanApplication = await this.context.LoanApplications.SingleOrDefaultAsync(application => application.EmailId.Equals(id), cancellationToken);
             if (loanApplication != null)
             {
                 this.context.Remove(loanApplication);
                 await this.context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

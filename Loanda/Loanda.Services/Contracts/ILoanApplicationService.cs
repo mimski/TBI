@@ -19,6 +19,6 @@ namespace Loanda.Services.Contracts
 
         Task<LoanApplication> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken);
 
-        Task RemoveAsync(Guid id, CancellationToken cancellationToken);
+        Task<bool> RemoveAsync(long id, CancellationToken cancellationToken);
     }
 }
