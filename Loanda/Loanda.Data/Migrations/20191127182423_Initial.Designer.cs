@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Loanda.Data.Migrations
 {
     [DbContext(typeof(LoandaContext))]
-    [Migration("20191127153857_Initial")]
+    [Migration("20191127182423_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,7 +19,7 @@ namespace Loanda.Data.Migrations
             modelBuilder
                 .HasDefaultSchema("public")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Loanda.Entities.ApplicantEntity", b =>
@@ -276,6 +276,8 @@ namespace Loanda.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<bool>("IsFirstLogin");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -321,6 +323,7 @@ namespace Loanda.Data.Migrations
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
+                            IsFirstLogin = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN100@ABV.BG",
@@ -338,6 +341,7 @@ namespace Loanda.Data.Migrations
                             Email = "user_pesho@abv.bg",
                             EmailConfirmed = false,
                             IsDeleted = false,
+                            IsFirstLogin = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER_PESHO@ABV.BG",
                             NormalizedUserName = "USER_PESHO@ABV.BG",

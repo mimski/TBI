@@ -88,7 +88,8 @@ namespace Loanda.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: true),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    IsFirstLogin = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -379,11 +380,11 @@ namespace Loanda.Data.Migrations
             migrationBuilder.InsertData(
                 schema: "public",
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedOn", "DeletedOn", "Email", "EmailConfirmed", "IsDeleted", "LockoutEnabled", "LockoutEnd", "ModifiedOn", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedOn", "DeletedOn", "Email", "EmailConfirmed", "IsDeleted", "IsFirstLogin", "LockoutEnabled", "LockoutEnd", "ModifiedOn", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "010dbb8b-5eb3-47ef-9c53-22018551b422", 0, "578ddff5-8f49-48f0-a5c8-69b2bbb20552", null, null, "admin@admin.com", false, false, false, null, null, "ADMIN@ADMIN.COM", "ADMIN100@ABV.BG", "AQAAAAEAACcQAAAAED1sUbN+sPoFdrWJk/ICn2vfzPbC9s6bV/ae5bApThXRg9oKJOUmtPfdAVyfpIsVRw==", null, false, "CFQ3UGEFW7IBYB5GSVN2XPABAZW4DMYC", false, "Admin100@abv.bg" },
-                    { "31d4807f-7f5f-4ffa-90c1-a131e2d3855e", 0, "715dad2a-9a3f-4a7d-bca1-e40799bb172c", null, null, "user_pesho@abv.bg", false, false, false, null, null, "USER_PESHO@ABV.BG", "USER_PESHO@ABV.BG", "AQAAAAEAACcQAAAAECewgbwibVC/7nEpYLbJB26wOJyT9i8Dfcx6WFFCTnGy5xqwptVYNBIZEWK37eaaMA==", null, false, "WNDRYHCTXU3MSZ7NYBDFJQDL5VU2LBXS", false, "user_pesho@abv.bg" }
+                    { "010dbb8b-5eb3-47ef-9c53-22018551b422", 0, "578ddff5-8f49-48f0-a5c8-69b2bbb20552", null, null, "admin@admin.com", false, false, false, false, null, null, "ADMIN@ADMIN.COM", "ADMIN100@ABV.BG", "AQAAAAEAACcQAAAAED1sUbN+sPoFdrWJk/ICn2vfzPbC9s6bV/ae5bApThXRg9oKJOUmtPfdAVyfpIsVRw==", null, false, "CFQ3UGEFW7IBYB5GSVN2XPABAZW4DMYC", false, "Admin100@abv.bg" },
+                    { "31d4807f-7f5f-4ffa-90c1-a131e2d3855e", 0, "715dad2a-9a3f-4a7d-bca1-e40799bb172c", null, null, "user_pesho@abv.bg", false, false, false, false, null, null, "USER_PESHO@ABV.BG", "USER_PESHO@ABV.BG", "AQAAAAEAACcQAAAAECewgbwibVC/7nEpYLbJB26wOJyT9i8Dfcx6WFFCTnGy5xqwptVYNBIZEWK37eaaMA==", null, false, "WNDRYHCTXU3MSZ7NYBDFJQDL5VU2LBXS", false, "user_pesho@abv.bg" }
                 });
 
             migrationBuilder.InsertData(
