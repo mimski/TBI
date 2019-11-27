@@ -82,6 +82,7 @@
                                 @Html.DisplayFor(modelItem => item.AttachmentsTotalSizeInMB)
                             </td>
                             <td>
+
                                 @if (item.TotalAttachments > 0)
                                 {
                                     <a href="#" class="badge badge-pill badge-warning">@Html.DisplayFor(modelItem => item.TotalAttachments)</a>
@@ -180,22 +181,22 @@
 
 
     @*<script>
-        $(document).ready(function () {
-            $("#btnFetch").click(function () {
+            $(document).ready(function () {
+                $("#btnFetch").click(function () {
 
-                console.log('button is clicked');
-                // disable button
-                $(this).prop("disabled", true);
-                // add spinner to button
-                $(this).html(
-                    `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
-                );
+                    console.log('button is clicked');
+                    // disable button
+                    $(this).prop("disabled", true);
+                    // add spinner to button
+                    $(this).html(
+                        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+                    );
+                });
             });
-        });
-    </script>*@
+        </script>*@
 }
 
-<a href="#" class="to-top justify-content-center">
+@*<a href="#" class="to-top justify-content-center">
     <svg id="i-chevron-top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
         <path d="M30 20 L16 8 2 20" />
     </svg></i>
@@ -234,22 +235,22 @@
         .to-top:hover {
             color: #151f28;
         }
-</style>
+</style>*@
 
 
 
 
 
 
-@*<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">*@
+@*<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
-<@*div style="margin:3em;">
-    <form class="form-inline" id="topicForm" action="" method="POST">
-        <input type="text" id="inputTopic" name="topic" class="form-control mb-2 mr-sm-2" placeholder="Topic of interest" required autofocus />
-        <button type="button" id="btnFetch" class="btn btn-primary mb-2">Submit</button>
-    </form>
-</div>*@
+    <div style="margin:3em;">
+        <form class="form-inline" id="topicForm" action="" method="POST">
+            <input type="text" id="inputTopic" name="topic" class="form-control mb-2 mr-sm-2" placeholder="Topic of interest" required autofocus />
+            <button type="button" id="btnFetch" class="btn btn-primary mb-2">Submit</button>
+        </form>
+    </div>
 
-@*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>*@
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>*@

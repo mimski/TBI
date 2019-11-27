@@ -25,6 +25,7 @@ namespace Loanda.Services
         {
             var application = loanApplication.ToEntity();
             application.ApplicationStatusId = -1;
+            //application.OpenedById = loanApplication.OpenedById;
 
             var addedLoanApplicationEntry = this.context.LoanApplications.Add(application);
 
@@ -34,7 +35,10 @@ namespace Loanda.Services
 
         public async Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var loanApplications = await this.context.LoanApplications.AsNoTracking().OrderByDescending(application => application.LoanAmount).ToListAsync(cancellationToken);
+            var loanApplications = await this.context.LoanApplications.Include(x => x.OpenedBy).OrderByDescending(application => application.LoanAmount).AsNoTracking().ToListAsync(cancellationToken);
+
+            var a = 0;
+
             return loanApplications.ToService();
         }
 

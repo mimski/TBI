@@ -71,7 +71,9 @@ namespace Loanda.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LoanApplicationViewModel model, CancellationToken cancellationToken)
         {
-            var currentOperatorId = this.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
+            //var currentOperatorId = this.User.FindFirst(u => u.Type == ClaimTypes.NameIdentifier);
+            var currentUserId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            model.OpenedById = currentUserId;
             //model.OpenedById = currentOperatorId; 
             var loanApplication = await this.loanApplicationService.AddAsync(model.ToServiceModel(), cancellationToken);
 

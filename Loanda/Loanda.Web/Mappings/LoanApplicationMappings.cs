@@ -36,8 +36,8 @@ namespace Loanda.Web.Mappings
                 ApplicationStatusId = viewModel.ApplicationStatusId,
                 ClosedBy = viewModel.ClosedBy,
                 OpenedBy = viewModel.OpenedBy,
-                ClosedById = viewModel.OpenedById,
-                OpenedById = viewModel.ClosedById,
+                ClosedById = viewModel.ClosedById,
+                OpenedById = viewModel.OpenedById,
                 EmailId = viewModel.EmailId
             } : null;
         }
