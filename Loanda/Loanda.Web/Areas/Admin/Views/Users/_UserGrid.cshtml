@@ -12,7 +12,76 @@
                     <th>Email</th>
                     <th>Id</th>
                     <th></th>
-                    <th></th>
+                    <!-- Button trigger modal -->
+                    <th>
+                        <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#exampleModal">
+                            Register Operator
+                        </button>
+                    </th>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Register Operator</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div row>
+                                    <div class="container-fluid">
+                                        <br />
+                                        <form>
+                                            <div>
+                                                <span>
+                                                    <font color="red">  <span id="checkforusername"> </span></font>
+                                                </span>
+                                            </div>
+
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">Username</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="registerusername" aria-describedby="emailHelp" placeholder="operator username">
+                                            </div>
+
+
+
+                                            @*<div class="form-group">
+            <input type="text" class="form-control" id="registerEmail" aria-describedby="emailHelp" placeholder="Email">
+
+        </div>*@
+                                            <div>
+                                                <span>
+                                                    <font color="red"><span id="checkforemail"> </span> </font>
+                                                </span>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">@@</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="registerEmail" aria-describedby="emailHelp" placeholder="e-mail">
+                                            </div>
+
+
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">Password</span>
+                                                </div>
+                                                <input align="center" type="password" class="form-control" id="registerpassword" aria-describedby="emailHelp" placeholder="**********">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger rounded" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success rounded" onclick="registeroperator()">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +95,7 @@
                         <td><button type="button" class="btn btn-success">Manage</button></td>
                     </tr>
                 }
+
             </tbody>
         </table>
     </div>
@@ -36,4 +106,57 @@
             Model, page => Url.Action("UserGrid", new { page })
         )
     </div>
+    <script>
+        function test() {
+            $('.modalTest').modal('show');
+        }
+    </script>
+    <script>
+
+        function registeroperator() {
+            console.log(321);
+            let isEverythingFine = true;
+            let email = $('#registerEmail').val();
+            if (!email) {
+                console.log(2);
+                isEverythingFine = false;
+                $('#checkemail').text('Please enter email');
+            }
+            else {
+                console.log(1);
+                $('#checkemail').text('');
+            }
+            let username = $('#registerusername').val();
+            // let username = document.getElementById("registerusername").value;
+            let password = $('#registerpassword').val();
+            console.log(123);
+            data =
+                {
+                    'UserName': username,
+                    'Email': email,
+                    'Password': password
+                }
+            if (isEverythingFine) {
+
+                $.ajax({
+                    type: "Post",
+                    url: '/register/registerasync',
+                    data: data,
+                    success: function (data) {
+                        console.log(data);
+                        if (data === "true email") {
+                            $('#checkforemail').text('There is already registered user with this email');
+                        }
+                        else if (data === "true username") {
+                            $('#checkforusername').text('There is already registered user with this username');
+                        }
+                        else {
+                            $('#exampleModal').modal('hide')
+                            $('.modal-backdrop').hide();
+                        }
+                    }
+                })
+            }
+        }
+    </script>
 </div>
