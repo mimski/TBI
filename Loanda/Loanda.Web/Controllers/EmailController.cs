@@ -51,6 +51,13 @@ namespace Loanda.Web.Controllers
             return View("New", result.ToViewModel());
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Open(CancellationToken cancellationToken)
+        {
+            var result = await this.emailService.GetAllOpenAsync(cancellationToken);
+            return View("Open", result.ToViewModel());
+        }
+
 
         public async Task<IActionResult> MarkInvalid(EmailViewModel emailViewModel, CancellationToken cancellationToken)
         {
