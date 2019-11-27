@@ -91,9 +91,13 @@ namespace Loanda.Services
             return emails.ToService();
         }
 
-        public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllOpenAsync(CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllOpenAsync(string userId, CancellationToken cancellationToken)
         {
-            var emails = await this.context.ReceivedEmails.Where(e => e.EmailStatusId.Equals(-4)).AsNoTracking().ToListAsync(cancellationToken);
+            var emails = await this.context.ReceivedEmails.Where(e => e.EmailStatusId.Equals(-4))
+                .Include(x => x.LoanApplication)
+                .Where(la => la.LoanApplication.OpenedById == userId)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
 
             foreach (var email in emails)
             {

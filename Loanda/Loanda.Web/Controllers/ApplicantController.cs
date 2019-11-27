@@ -123,12 +123,12 @@ namespace Loanda.Web.Controllers
                 return NotFound();
             }
         }
-        [HttpPost]
-        public async Task<IActionResult> Test(string egn, string id)
-        {
-            var stop = 0;
-            return View();
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Test(string egn, string id)
+        //{
+        //    var stop = 0;
+        //    return View();
+        //}
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]

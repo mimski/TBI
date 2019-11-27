@@ -30,6 +30,6 @@ namespace Loanda.Services.Contracts
 
         Task<bool> ChangeToOpenAsync(long emailId, CancellationToken cancellationToken);
 
-        Task<IReadOnlyCollection<ReceivedEmail>> GetAllOpenAsync(CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<ReceivedEmail>> GetAllOpenAsync(string userId, CancellationToken cancellationToken);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Loanda.EmailClient.Contracts;
@@ -55,7 +56,8 @@ namespace Loanda.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Open(CancellationToken cancellationToken)
         {
-            var result = await this.emailService.GetAllOpenAsync(cancellationToken);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var result = await this.emailService.GetAllOpenAsync(userId,cancellationToken);
             return View("Open", result.ToViewModel());
         }
 
