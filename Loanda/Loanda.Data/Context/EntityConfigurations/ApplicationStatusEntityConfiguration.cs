@@ -31,7 +31,7 @@ namespace Loanda.Data.Context.EntityConfigurations
                  new ApplicationStatusEntity
                  {
                      Id = -3,
-                     Name = "Closed"
+                     Name = "Closed" //Rejected
                  });
         }
     }

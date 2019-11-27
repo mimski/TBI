@@ -32,6 +32,8 @@ namespace Loanda.Web.Controllers
             return View("Index", result.ToViewModel());
         }
 
+
+
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -102,6 +104,34 @@ namespace Loanda.Web.Controllers
             await this.loanApplicationService.MarkAsDeletedAsync(id, cancellationToken);
 
             return NoContent();
+        }
+
+        public async Task<IActionResult> RejectApplication(LoanApplicationViewModel loanViewModel, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await this.loanApplicationService.RejectAsync(loanViewModel.ToServiceModel(), cancellationToken);
+            }
+            catch (Exception)
+            {
+                //return NoContent();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> ApproveApplication(LoanApplicationViewModel loanViewModel, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await this.loanApplicationService.ApproveAsync(loanViewModel.ToServiceModel(), cancellationToken);
+            }
+            catch (Exception)
+            {
+                //return NoContent();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

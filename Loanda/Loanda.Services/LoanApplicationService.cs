@@ -35,10 +35,8 @@ namespace Loanda.Services
 
         public async Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(string userId, CancellationToken cancellationToken)
         {
-            var loanApplications = await this.context.LoanApplications.Where(x=> x.OpenedById.Equals(userId)).Include(x => x.OpenedBy).OrderByDescending(application => application.LoanAmount).AsNoTracking().ToListAsync(cancellationToken);
-
-            var a = 0;
-
+            var loanApplications = await this.context.LoanApplications.Where(x=> x.OpenedById.Equals(userId) && x.ApplicationStatusId == -1).Include(x => x.OpenedBy).OrderByDescending(application => application.LoanAmount).AsNoTracking().ToListAsync(cancellationToken);
+            
             return loanApplications.ToService();
         }
 
@@ -88,6 +86,42 @@ namespace Loanda.Services
             if (loanApplication != null)
             {
                 this.context.Remove(loanApplication);
+                await this.context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
+        public async Task<bool> RejectAsync(LoanApplication loanApplication, CancellationToken cancellationToken)
+        {
+            var existingApplication = await this.context.LoanApplications.SingleOrDefaultAsync(a => a.Id.Equals(loanApplication.Id), cancellationToken);
+            if (existingApplication != null)
+            {
+                existingApplication.ApplicationStatusId = -3;
+
+                this.context.LoanApplications.Update(existingApplication);
+                await this.context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ApproveAsync(LoanApplication loanApplication, CancellationToken cancellationToken)
+        {
+            var existingApplication = await this.context.LoanApplications.SingleOrDefaultAsync(a => a.Id.Equals(loanApplication.Id), cancellationToken);
+            if (existingApplication != null)
+            {
+                existingApplication.ApplicationStatusId = -2;
+
+                this.context.LoanApplications.Update(existingApplication);
                 await this.context.SaveChangesAsync(cancellationToken);
                 return true;
             }
