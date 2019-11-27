@@ -260,6 +260,7 @@ namespace Loanda.EmailClient
                     emailDto.TotalAttachments = attachments.Count;
                 }
 
+                //await this.emailService.UpdateAsync(emailDto);
                 await this.emailService.MarkNotReviewedAsync(emailDto, cancelationToken);
 
                 //await this.emailService.CreateAsync(emailDto);

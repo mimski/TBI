@@ -3,21 +3,23 @@ using System;
 using Loanda.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Loanda.Data.Migrations
 {
     [DbContext(typeof(LoandaContext))]
-    partial class LoandaContextModelSnapshot : ModelSnapshot
+    [Migration("20191127161528_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("public")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Loanda.Entities.ApplicantEntity", b =>
@@ -289,8 +291,6 @@ namespace Loanda.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<bool>("IsFirstLogin");
-
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -336,7 +336,6 @@ namespace Loanda.Data.Migrations
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             IsDeleted = false,
-                            IsFirstLogin = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN100@ABV.BG",
@@ -354,7 +353,6 @@ namespace Loanda.Data.Migrations
                             Email = "user_pesho@abv.bg",
                             EmailConfirmed = false,
                             IsDeleted = false,
-                            IsFirstLogin = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER_PESHO@ABV.BG",
                             NormalizedUserName = "USER_PESHO@ABV.BG",

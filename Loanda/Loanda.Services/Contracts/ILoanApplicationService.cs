@@ -9,7 +9,7 @@ namespace Loanda.Services.Contracts
 {
     public interface ILoanApplicationService
     {
-        Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<LoanApplication>> GetAllAsync(string userId, CancellationToken cancellationToken);
 
         Task<LoanApplication> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
@@ -19,6 +19,9 @@ namespace Loanda.Services.Contracts
 
         Task<LoanApplication> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken);
 
-        Task RemoveAsync(Guid id, CancellationToken cancellationToken);
+        Task<bool> RemoveAsync(long id, CancellationToken cancellationToken);
+        Task<bool> RejectAsync(LoanApplication loanApplication, CancellationToken cancellationToken);
+
+        Task<bool> ApproveAsync(LoanApplication loanApplication, CancellationToken cancellationToken);
     }
 }

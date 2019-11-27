@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<Loanda.Web.Models.Email.EmailViewModel>
 @{
-    ViewData["Title"] = "Inbox";
+    ViewData["Title"] = "New";
 }
 <div class="container-fluid">
-<div align="justify">
-    <h1>
-        <svg id="i-inbox" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="red" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-            <path d="M2 15 L2 25 30 25 30 15 26 7 6 7 Z M2 15 L10 15 C10 15 11 20 16 20 21 20 22 15 22 15 L30 15" />
-        </svg> Inbox
-    </h1>
-</div>
+    <div align="justify">
+        <h1>
+            <svg id="i-mail" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="red" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="M2 26 L30 26 30 6 2 6 Z M2 6 L16 16 30 6" />
+            </svg> Open
+        </h1>
+    </div>
 
 
-    <form asp-controller="Email" asp-action="Index" method="post">
+    <form asp-controller="Email" asp-action="Open" method="post">
 
         <div class="panel-body">
             <table class="table table-striped table-hover">
@@ -82,7 +82,6 @@
                                 @Html.DisplayFor(modelItem => item.AttachmentsTotalSizeInMB)
                             </td>
                             <td>
-
                                 @if (item.TotalAttachments > 0)
                                 {
                                     <a href="#" class="badge badge-pill badge-warning">@Html.DisplayFor(modelItem => item.TotalAttachments)</a>
@@ -124,15 +123,15 @@
                                                 <div class="modal-footer d-flex justify-content-center">
                                                     <div>
                                                         <div>
-                                                            <a class="btn btn-danger rounded" id="btnFetch" title="Mark email as invalid" asp-controller="Email" asp-action="MarkInvalid" asp-route-id="@item.Id" method="post">
-                                                                <svg id="i-ban" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
-                                                                    <circle cx="16" cy="16" r="14" />
-                                                                    <path d="M6 6 L26 26" />
-                                                                </svg>
-                                                            </a>
-                                                            <a class="btn btn btn-success rounded" id="btnFetch" title="Mark email as valid" asp-controller="Email" asp-action="Details" asp-route-id="@item.Id">
-                                                                <svg id="i-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
-                                                                    <path d="M2 20 L12 28 30 4" />
+                                                            @if (User.IsInRole("Administrator"))
+                                                            {
+                                                                <a class="btn btn-success rounded" id="btnFetch" title="Mark email as new" asp-controller="Email" asp-action="MarkNew" asp-route-id="@item.Id" method="post">
+                                                                    Change to New
+                                                                </a>
+                                                            }
+                                                            <a class="btn btn btn-success rounded" id="btnFetch" title="View email details" asp-controller="Email" asp-action="Details" asp-route-id="@item.Id">
+                                                                <svg id="i-compose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                                                                    <path d="M27 15 L27 30 2 30 2 5 17 5 M30 6 L26 2 9 19 7 25 13 23 Z M22 6 L26 10 Z M9 19 L13 23 Z" />
                                                                 </svg>
                                                             </a>
                                                         </div>
@@ -196,10 +195,10 @@
         </script>*@
 }
 
-@*<a href="#" class="to-top justify-content-center">
+<a href="#" class="to-top justify-content-center">
     <svg id="i-chevron-top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
         <path d="M30 20 L16 8 2 20" />
-    </svg></i>
+    </svg>
 </a>
 
 <script>
@@ -235,22 +234,16 @@
         .to-top:hover {
             color: #151f28;
         }
-</style>*@
+</style>
 
 
+@*<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">*@
 
-
-
-
-@*<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-
-    <div style="margin:3em;">
-        <form class="form-inline" id="topicForm" action="" method="POST">
-            <input type="text" id="inputTopic" name="topic" class="form-control mb-2 mr-sm-2" placeholder="Topic of interest" required autofocus />
-            <button type="button" id="btnFetch" class="btn btn-primary mb-2">Submit</button>
-        </form>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>*@
+<@*div style="margin:3em;">
+    <form class="form-inline" id="topicForm" action="" method="POST">
+        <input type="text" id="inputTopic" name="topic" class="form-control mb-2 mr-sm-2" placeholder="Topic of interest" required autofocus />
+        <button type="button" id="btnFetch" class="btn btn-primary mb-2">Submit</button>
+    </form>
+</div>*@ @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>*@

@@ -91,6 +91,22 @@ namespace Loanda.Services
             return emails.ToService();
         }
 
+        public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllOpenAsync(string userId, CancellationToken cancellationToken)
+        {
+            var emails = await this.context.ReceivedEmails.Where(e => e.EmailStatusId.Equals(-4))
+                .Include(x => x.LoanApplication)
+                .Where(la => la.LoanApplication.OpenedById == userId && la.LoanApplication.ApplicationStatusId != -4)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+
+            foreach (var email in emails)
+            {
+                email.Body = Base64Decode(email.Body);
+            }
+
+            return emails.ToService();
+        }
+
         public async Task<ReceivedEmail> FindByIdAsync(long id, CancellationToken cancellationToken)
         {
             var email = await this.context.ReceivedEmails.AsNoTracking().SingleOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
@@ -148,6 +164,40 @@ namespace Loanda.Services
             if (existingEmail != null)
             {
                 existingEmail.EmailStatusId = -2;
+
+                this.context.ReceivedEmails.Update(existingEmail);
+                await this.context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ChangeToOpenAsync(long emailId, CancellationToken cancellationToken)
+        {
+            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.Id.Equals(emailId), cancellationToken);
+            if (existingEmail != null)
+            {
+                existingEmail.EmailStatusId = -4;
+
+                this.context.ReceivedEmails.Update(existingEmail);
+                await this.context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ChangeToCloseAsync(Guid loanId, CancellationToken cancellationToken)
+        {
+            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.LoanApplication.Id.Equals(loanId), cancellationToken);
+            if (existingEmail != null)
+            {
+                existingEmail.EmailStatusId = -5;
 
                 this.context.ReceivedEmails.Update(existingEmail);
                 await this.context.SaveChangesAsync(cancellationToken);

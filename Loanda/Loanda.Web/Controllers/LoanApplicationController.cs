@@ -16,18 +16,23 @@ namespace Loanda.Web.Controllers
     public class LoanApplicationController : Controller
     {
         private readonly ILoanApplicationService loanApplicationService;
+        private readonly IEmailService emailService;
 
-        public LoanApplicationController(ILoanApplicationService loanApplicationService)
+        public LoanApplicationController(ILoanApplicationService loanApplicationService, IEmailService emailService)
         {
             this.loanApplicationService = loanApplicationService ?? throw new ArgumentNullException(nameof(loanApplicationService));
+            this.emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var result = await this.loanApplicationService.GetAllAsync(cancellationToken);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var result = await this.loanApplicationService.GetAllAsync(userId, cancellationToken);
             return View("Index", result.ToViewModel());
         }
+
+
 
         [HttpGet]
         [Route("{id}")]
@@ -77,19 +82,21 @@ namespace Loanda.Web.Controllers
             //model.OpenedById = currentOperatorId; 
             var loanApplication = await this.loanApplicationService.AddAsync(model.ToServiceModel(), cancellationToken);
 
+            await this.emailService.ChangeToOpenAsync(model.EmailId, cancellationToken);
+
             //return CreatedAtAction(nameof(GetByIdAsync), new { id = loanApplication.Id }, loanApplication.ToViewModel());
 
             return Redirect("/Email/Index");
         }
 
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> RemoveAsync(Guid id, CancellationToken cancellationToken)
-        {
-            await this.loanApplicationService.RemoveAsync(id, cancellationToken);
+        //[HttpDelete]
+        //[Route("{id}")]
+        //public async Task<IActionResult> RemoveAsync(Guid id, CancellationToken cancellationToken)
+        //{
+        //    await this.loanApplicationService.RemoveAsync(id, cancellationToken);
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [Route("{id}")]
         public async Task<IActionResult> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken)
@@ -97,6 +104,36 @@ namespace Loanda.Web.Controllers
             await this.loanApplicationService.MarkAsDeletedAsync(id, cancellationToken);
 
             return NoContent();
+        }
+
+        public async Task<IActionResult> RejectApplication(LoanApplicationViewModel loanViewModel, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await this.emailService.ChangeToCloseAsync(loanViewModel.Id, cancellationToken);
+                await this.loanApplicationService.RejectAsync(loanViewModel.ToServiceModel(), cancellationToken);
+            }
+            catch (Exception)
+            {
+                //return NoContent();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> ApproveApplication(LoanApplicationViewModel loanViewModel, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await this.emailService.ChangeToCloseAsync(loanViewModel.Id, cancellationToken);
+                await this.loanApplicationService.ApproveAsync(loanViewModel.ToServiceModel(), cancellationToken);
+            }
+            catch (Exception)
+            {
+                //return NoContent();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
