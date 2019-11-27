@@ -251,7 +251,7 @@ iframe {
 .login100-form-title {
     font-family: Poppins-Bold;
     font-size: 30px;
-    color: #ff6a00;
+    color: black;
     line-height: 1.2;
     text-align: center;
     width: 100%;
@@ -359,7 +359,6 @@ iframe {
 }
 
 .login100-form-btn {
-    font-family: Montserrat-Bold;
     font-size: 15px;
     line-height: 1.5;
     color: #fff;
