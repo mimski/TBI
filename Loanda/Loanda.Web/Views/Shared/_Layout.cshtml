@@ -58,13 +58,13 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Open"><b>Open</b></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="LoanApplication" asp-action="Index"><b>Opened Loan Applications</b></a>
+                    </li>
                     @if (User.IsInRole("Administrator"))
                     {
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Closed"><b>Closed</b></a>
-                    </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="LoanApplication" asp-action="Index"><b>Opened Loan Applications</b></a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Closed"><b>Closed</b></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Applicant" asp-action="Index"><b>Applicants</b></a>
