@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +9,7 @@ using Loanda.Web.Mappers.Contracts;
 using Loanda.Web.Mappings;
 using Loanda.Web.Models.Email;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Loanda.Web.Controllers
@@ -21,19 +21,27 @@ namespace Loanda.Web.Controllers
         private readonly IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper;
         private readonly IGmailApi gmailApi;
         private readonly ILoanApplicationService loanApplicationService;
+        private readonly UserManager<User> userManager;
 
 
-        public EmailController(IEmailService emailService, IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper, IGmailApi gmailApi, ILoanApplicationService loanApplicationService)
+        public EmailController(IEmailService emailService, IMapper<ReceivedEmailEntity, EmailViewModel> emailMapper, IGmailApi gmailApi, ILoanApplicationService loanApplicationService, UserManager<User> userManager)
         {
             this.emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
             this.emailMapper = emailMapper ?? throw new ArgumentNullException(nameof(emailMapper));
             this.gmailApi = gmailApi ?? throw new ArgumentNullException(nameof(gmailApi));
             this.loanApplicationService = loanApplicationService ?? throw new ArgumentNullException(nameof(loanApplicationService));
+            this.userManager = userManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Invalid(CancellationToken cancellationToken)
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
             var result = await this.emailService.GetAllInvalidAsync(cancellationToken);
             return View("Invalid", result.ToViewModel());
         }
@@ -42,6 +50,12 @@ namespace Loanda.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
             var result = await this.emailService.GetAllNotReviewedAsync(cancellationToken);
             return View("Index", result.ToViewModel());
         }
@@ -49,6 +63,12 @@ namespace Loanda.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> New(CancellationToken cancellationToken)
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
             var result = await this.emailService.GetAllNewAsync(cancellationToken);
             return View("New", result.ToViewModel());
         }
@@ -56,6 +76,12 @@ namespace Loanda.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Open(CancellationToken cancellationToken)
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var result = await this.emailService.GetAllOpenAsync(userId,cancellationToken);
             return View("Open", result.ToViewModel());
