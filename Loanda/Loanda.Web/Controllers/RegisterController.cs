@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Loanda.Data.Context;
 using Loanda.Entities;
 using Loanda.Services.Contracts;
@@ -31,7 +28,7 @@ namespace Loanda.Web.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> RegisterAsync(RegisterViewModel vm)
         {
@@ -55,19 +52,38 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpPost]
-        public bool Changepassword(string newPass, string confirmPass)
+        public async Task<string> ChangePassword(string currPassword, string newPassword, string confirmNewPassword)
         {
-            if (newPass.Length > 4 && newPass.Equals(confirmPass))
+            if (newPassword.Equals(confirmNewPassword))
             {
-                var user = userManager.GetUserAsync(User);
-                var oldPassword = user.Result.PasswordHash;
-                userManager.ChangePasswordAsync(user.Result, oldPassword, newPass);
+                if (newPassword.Length < 4)
+                {
+                    return "New Password must be more than 4 symbols";
+                }
+                if (currPassword.Equals(newPassword))
+                {
+                    return "Passwords must be different";
+                }
 
-                user.Result.IsFirstLogin = false;
-                context.SaveChanges();
-                return true;
+                var user = userManager.GetUserAsync(User);
+
+                var isPasswordCorrect = userManager.CheckPasswordAsync(user.Result, currPassword);
+
+                if (isPasswordCorrect.Result == false)
+                {
+                    return "Password is incorrect";
+                }
+
+                await userManager.ChangePasswordAsync(user.Result, currPassword, newPassword);
+
+                if (user.Result.IsFirstLogin)
+                {
+                    user.Result.IsFirstLogin = false;
+                    await context.SaveChangesAsync();
+                }
+                return null;
             }
-            return false;
+            return "New Passwords do not match";
         }
     }
 }

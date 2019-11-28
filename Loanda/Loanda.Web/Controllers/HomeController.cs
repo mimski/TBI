@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Loanda.Web.Models;
-using Loanda.Web.Areas.Identity.Pages.Account;
 using Microsoft.AspNetCore.Identity;
 using Loanda.Entities;
-using Loanda.EmailClient.Contracts;
 
 namespace Loanda.Web.Controllers
 {
@@ -27,8 +22,14 @@ namespace Loanda.Web.Controllers
 
         public /*async Task <*/IActionResult/*>*/ Index()
         {
+
             if (User.Identity.IsAuthenticated)
             {
+                var user = userManager.GetUserAsync(User);
+                if (user.Result.IsFirstLogin)
+                {
+                    return View("ChangePassword");
+                }
                 //await this.gmailApi.GetEmailsFromGmailAsync();
                 return View("Privacy");
             }
@@ -38,6 +39,11 @@ namespace Loanda.Web.Controllers
 
         public IActionResult Privacy()
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("ChangePassword");
+            }
             return View();
         }
 
