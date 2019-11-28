@@ -49,12 +49,18 @@ namespace Loanda.Web.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Index(CancellationToken cancellationToken)
+        public async Task<IActionResult> Index(CancellationToken cancellationToken, string search = null)
         {
             var user = userManager.GetUserAsync(User);
             if (user.Result.IsFirstLogin)
             {
                 return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                var searchResult = await this.emailService.Search(search, cancellationToken);
+                return View("Index", searchResult.ToViewModel());
             }
 
             var result = await this.emailService.GetAllNotReviewedAsync(cancellationToken);
