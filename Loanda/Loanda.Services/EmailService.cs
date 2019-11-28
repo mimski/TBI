@@ -165,6 +165,7 @@ namespace Loanda.Services
             if (existingEmail != null)
             {
                 existingEmail.EmailStatusId = -2;
+                existingEmail.ModifiedOn = DateTime.UtcNow.AddHours(2);
 
                 this.context.ReceivedEmails.Update(existingEmail);
                 await this.context.SaveChangesAsync(cancellationToken);
@@ -192,6 +193,8 @@ namespace Loanda.Services
                 return false;
             }
         }
+
+        
 
         public async Task<bool> ChangeToCloseAsync(Guid loanId, CancellationToken cancellationToken)
         {

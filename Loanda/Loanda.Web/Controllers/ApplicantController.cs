@@ -26,6 +26,7 @@ namespace Loanda.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             var user = userManager.GetUserAsync(User);
