@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Loanda.Services.Mappings;
 using Loanda.Services.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace Loanda.Services
 {

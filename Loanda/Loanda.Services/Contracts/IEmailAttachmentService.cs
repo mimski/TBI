@@ -1,8 +1,4 @@
-﻿using Loanda.Entities;
-using Loanda.Services.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Loanda.Services.DTOs;
 using System.Threading.Tasks;
 
 namespace Loanda.Services.Contracts

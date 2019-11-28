@@ -6,6 +6,8 @@ namespace Loanda.Services.DTOs
 {
     public class EmailDTO
     {
+        public long Id { get; set; }
+
         public string SenderEmail { get; set; }
 
         public string SenderName { get; set; }

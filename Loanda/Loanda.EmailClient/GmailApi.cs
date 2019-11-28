@@ -37,8 +37,6 @@ namespace Loanda.EmailClient
             using (var stream =
                 new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
             {
-                // The file token.json stores the user's access and refresh tokens, and is created
-                // automatically when the authorization flow completes for the first time.
                 string credPath = "token.json";
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
@@ -62,9 +60,6 @@ namespace Loanda.EmailClient
             emailThreads.LabelIds = labels;
             emailThreads.IncludeSpamTrash = false;
             emailThreads.MaxResults = 5000;
-
-            //emailThreads.Q = "has:attachment";
-            //emailThreads.Q = "in:anywhere";
 
             var emailThreadResult = await emailThreads.ExecuteAsync();
 
@@ -170,103 +165,6 @@ namespace Loanda.EmailClient
                         }
                     }
                 }
-            }
-        }
-
-        public async Task GetEmailByGmailId(long emailId, CancellationToken cancelationToken)
-        {
-            UserCredential credential;
-
-            using (var stream =
-                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-            {
-                string credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
-            }
-            // Create Gmail API service.
-            var service = new GmailService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential
-            });
-
-            // Define parameters of request.
-            UsersResource.LabelsResource.ListRequest request = service.Users.Labels.List("me");
-
-            var emailListRequest = service.Users.Messages.List(SERVICE_ACCOUNT_EMAIL);
-            emailListRequest.MaxResults = 5000;
-            emailListRequest.Q = "in:anywhere"; //Get emails from all emails
-            emailListRequest.IncludeSpamTrash = false;
-
-            //emailListRequest.Q = "has:attachment";
-
-            var emailListRespons = await emailListRequest.ExecuteAsync();
-
-            var gmail = await this.emailService.FindByIdAsync(emailId, cancelationToken);
-
-            var emailInfoRequest = service.Users.Messages.Get(SERVICE_ACCOUNT_EMAIL, gmail.GmailEmailId);
-
-            if (emailListRespons != null)
-            {
-                var emailInfoResponse = await emailInfoRequest.ExecuteAsync();
-
-                var header = emailInfoResponse?.Payload?.Headers;
-                var parts = emailInfoResponse.Payload.Parts;
-
-                var emailDto = new EmailDTO
-                {
-                    Subject = header?.FirstOrDefault(e => e.Name.Equals("Subject"))?.Value ?? string.Empty,
-                    From = header?.FirstOrDefault(e => e.Name.Equals("From"))?.Value,
-                };
-
-                double attachmentSize = 0;
-                double totalAttachmentsSizeInMb = 0;
-
-                // Email do not have attachments
-                if (emailInfoResponse.Payload.Parts[0].MimeType.Contains("text/plain"))
-                {
-                    emailDto.Body = parts.First().Body.Data;
-                    emailDto.AttachmentsTotalSizeInMB = 0;
-                    emailDto.TotalAttachments = 0;
-                }
-                else // Email have attachments
-                {
-                    emailDto.Body = parts.First().Parts.First().Body.Data;
-
-                    var attachments = parts.Skip(1).ToList();
-
-                    var attachmentsToAdd = new List<EmailAttachmentDTO>();
-
-                    foreach (var attachment in attachments)
-                    {
-                        attachmentSize = double.Parse(attachment.Body.Size.ToString());
-
-                        var emailAttachmentDto = new EmailAttachmentDTO
-                        {
-                            FileSizeInMb = attachmentSize,
-                        };
-
-                        totalAttachmentsSizeInMb += attachmentSize;
-
-                        attachmentsToAdd.Add(emailAttachmentDto);
-                    }
-                    totalAttachmentsSizeInMb /= (1024 * 1024);
-                    emailDto.AttachmentsTotalSizeInMB = totalAttachmentsSizeInMb;
-                    emailDto.TotalAttachments = attachments.Count;
-                }
-
-                //await this.emailService.UpdateAsync(emailDto);
-                await this.emailService.MarkNotReviewedAsync(emailDto, cancelationToken);
-
-                //await this.emailService.CreateAsync(emailDto);
-
-                var markAsReadRequest = new ModifyMessageRequest { RemoveLabelIds = new[] { "UNREAD" } };
-                await service.Users.Messages.Modify(markAsReadRequest, SERVICE_ACCOUNT_EMAIL, emailInfoResponse.Id).ExecuteAsync();
             }
         }
     }

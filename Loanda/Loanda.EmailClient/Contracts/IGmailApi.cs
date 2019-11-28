@@ -6,7 +6,5 @@ namespace Loanda.EmailClient.Contracts
     public interface IGmailApi
     {
         Task GetUnreadEmailsFromGmailAsync();
-
-        Task GetEmailByGmailId(long emailId, CancellationToken cancellationToken);
     }
 }

@@ -42,9 +42,6 @@
                             @Html.DisplayNameFor(model => model.ModifiedOn)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.IsDeleted)
-                        </th>
-                        <th>
                         </th>
                     </tr>
                 </thead>
@@ -76,10 +73,6 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ModifiedOn)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsDeleted)
-                        </td>
-
                         <td>
                             <div>
                                 <a class="btn btn-danger rounded" title="Mark email mark as not reviewed" asp-controller="Email" asp-action="MarkNotReviewed" asp-route-id="@item.Id" method="post">
