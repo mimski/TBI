@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Loanda.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +7,8 @@ using System.Threading;
 using Loanda.Web.Models.LoanApplication;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Loanda.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Loanda.Web.Controllers
 {
@@ -17,27 +17,41 @@ namespace Loanda.Web.Controllers
     {
         private readonly ILoanApplicationService loanApplicationService;
         private readonly IEmailService emailService;
+        private readonly UserManager<User> userManager;
 
-        public LoanApplicationController(ILoanApplicationService loanApplicationService, IEmailService emailService)
+        public LoanApplicationController(ILoanApplicationService loanApplicationService, IEmailService emailService, UserManager<User> userManager)
         {
             this.loanApplicationService = loanApplicationService ?? throw new ArgumentNullException(nameof(loanApplicationService));
             this.emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
+            this.userManager = userManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var result = await this.loanApplicationService.GetAllAsync(userId, cancellationToken);
             return View("Index", result.ToViewModel());
         }
 
 
-
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
+
             var loanApplication = await this.loanApplicationService.GetByIdAsync(id, cancellationToken);
 
             if (loanApplication == null)
@@ -69,6 +83,13 @@ namespace Loanda.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
+
             return View();
         }
 
