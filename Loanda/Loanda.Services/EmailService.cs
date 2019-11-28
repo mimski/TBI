@@ -208,5 +208,20 @@ namespace Loanda.Services
                 return false;
             }
         }
+
+        public async Task<IReadOnlyCollection<ReceivedEmail>> Search(string search, CancellationToken cancellationToken)
+        {
+            var emails = await this.context.ReceivedEmails
+                .Where(e => e.EmailStatusId.Equals(-1) && (e.SenderEmail.Contains(search) || e.Subject.Contains(search)))
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+
+            foreach (var email in emails)
+            {
+                email.Body = Base64Decode(email.Body);  
+            }
+
+            return emails.ToService();
+        }
     }
 }

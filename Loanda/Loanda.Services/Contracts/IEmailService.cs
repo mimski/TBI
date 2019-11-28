@@ -32,5 +32,6 @@ namespace Loanda.Services.Contracts
 
         Task<IReadOnlyCollection<ReceivedEmail>> GetAllOpenAsync(string userId, CancellationToken cancellationToken);
         Task<bool> ChangeToCloseAsync(Guid loanId, CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<ReceivedEmail>> Search(string search, CancellationToken cancellationToken);
     }
 }
