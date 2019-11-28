@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Loanda.Entities;
 using Loanda.Services.Contracts;
 using Loanda.Web.Mappings;
 using Loanda.Web.Models.Applicant;
 using Loanda.Web.Models.LoanApplication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Loanda.Web.Controllers
@@ -18,15 +18,22 @@ namespace Loanda.Web.Controllers
     public class ApplicantController : Controller
     {
         private readonly IApplicantService applicantService;
-
-        public ApplicantController(IApplicantService applicantService)
+        private readonly UserManager<User> userManager;
+        public ApplicantController(IApplicantService applicantService, UserManager<User> userManager)
         {
             this.applicantService = applicantService ?? throw new ArgumentNullException(nameof(applicantService));
+            this.userManager = userManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
             var result = await this.applicantService.GetAllAsync(cancellationToken);
             return View("Index", result.ToViewModel());
         }
@@ -37,6 +44,11 @@ namespace Loanda.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
             //var bookViewModel = new BookViewModel();
 
             //return View(bookViewModel);
@@ -48,6 +60,13 @@ namespace Loanda.Web.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ApplicantViewModel model, CancellationToken cancellationToken)
         {
+
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
             var applicant = await this.applicantService.AddAsync(model.ToServiceModel(), cancellationToken);
 
             //return CreatedAtAction(nameof(GetByIdAsync), new { id = loanApplication.Id }, loanApplication.ToViewModel());
@@ -67,6 +86,13 @@ namespace Loanda.Web.Controllers
         [HttpGet]
         public IActionResult Edit()
         {
+
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
             //var bookViewModel = new BookViewModel();
 
             //return View(bookViewModel);
@@ -77,6 +103,11 @@ namespace Loanda.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(/*Guid id, */ApplicantViewModel model, CancellationToken cancellationToken)
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
             //model.Id = id;
             var applicant = await this.applicantService.UpdateAsync(model.ToServiceModel(), cancellationToken);
 
@@ -101,6 +132,12 @@ namespace Loanda.Web.Controllers
         [HttpGet]
         public IActionResult CheckApplicant(long emailId)
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
             var egnViewModel = new EGNViewModel { EmialId = emailId };
             return PartialView("_EgnPartial", egnViewModel);
         }
@@ -108,6 +145,11 @@ namespace Loanda.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckApplicant(EGNViewModel vm, CancellationToken cancellationToken)
         {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
             var applicant = await this.applicantService.GetByEgnAsync(vm.EGN, cancellationToken);
 
             if (applicant == null)
