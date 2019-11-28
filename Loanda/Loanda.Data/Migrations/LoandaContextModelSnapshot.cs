@@ -17,7 +17,7 @@ namespace Loanda.Data.Migrations
             modelBuilder
                 .HasDefaultSchema("public")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Loanda.Entities.ApplicantEntity", b =>
