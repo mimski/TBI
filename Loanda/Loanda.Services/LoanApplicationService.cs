@@ -130,5 +130,22 @@ namespace Loanda.Services
                 return false;
             }
         }
+
+        //public async Task<bool> ChangeStatusToDefaultAsync(long id, CancellationToken cancellationToken)
+        //{
+        //    var existingApplication = await this.context.LoanApplications.SingleOrDefaultAsync(a => a.Id.Equals(loanApplication.Id), cancellationToken);
+        //    if (existingApplication != null)
+        //    {
+        //        existingApplication.ApplicationStatusId = -1;
+
+        //        this.context.LoanApplications.Update(existingApplication);
+        //        await this.context.SaveChangesAsync(cancellationToken);
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
     }
 }

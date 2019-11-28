@@ -88,6 +88,18 @@ namespace Loanda.Web.Controllers
             return View("Open", result.ToViewModel());
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Closed(CancellationToken cancellationToken)
+        {
+            var user = userManager.GetUserAsync(User);
+            if (user.Result.IsFirstLogin)
+            {
+                return View("~/Views/Home/ChangePassword.cshtml");
+            }
+
+            var result = await this.emailService.GetAllClosedAsync(cancellationToken);
+            return View("Open", result.ToViewModel());
+        }
 
         public async Task<IActionResult> MarkInvalid(EmailViewModel emailViewModel, CancellationToken cancellationToken)
         {
@@ -117,6 +129,21 @@ namespace Loanda.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        //public async Task<IActionResult> MarkClosedToNew(EmailViewModel emailViewModel, CancellationToken cancellationToken)
+        //{
+        //    try
+        //    {
+        //        await this.emailService.ChangeEmailStatusToNewAsync(emailViewModel.Id, cancellationToken);
+        //        await this.loanApplicationService.ChangeStatusToDefaultAsync(emailViewModel.Id, cancellationToken);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        //return NoContent();
+        //    }
+
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         public async Task<IActionResult> MarkNotReviewed(EmailViewModel emailViewModel, CancellationToken cancellationToken)
         {

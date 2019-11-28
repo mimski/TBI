@@ -194,8 +194,6 @@ namespace Loanda.Services
             }
         }
 
-        
-
         public async Task<bool> ChangeToCloseAsync(Guid loanId, CancellationToken cancellationToken)
         {
             var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.LoanApplication.Id.Equals(loanId), cancellationToken);
@@ -223,6 +221,21 @@ namespace Loanda.Services
             await this.context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<IReadOnlyCollection<ReceivedEmail>> GetAllClosedAsync(CancellationToken cancellationToken)
+        {
+            var emails = await this.context.ReceivedEmails.Where(e => e.EmailStatusId.Equals(-5))
+               .Include(x => x.LoanApplication)
+               .AsNoTracking()
+               .ToListAsync(cancellationToken);
+
+            foreach (var email in emails)
+            {
+                email.Body = Base64Decode(email.Body);
+            }
+
+            return emails.ToService();
         }
     }
 }

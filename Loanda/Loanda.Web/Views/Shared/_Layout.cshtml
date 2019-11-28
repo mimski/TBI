@@ -46,30 +46,30 @@
                     {
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Invalid">Invalid</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Invalid"><b>Invalid</b></a>
                         </li>
                     }
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Index">Inbox</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Index"><b>Inbox</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="New">New</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="New"><b>New</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Open">Open</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Open"><b>Open</b></a>
                     </li>
-                    @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Closed">Closed</a>
-                        </li>*@
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="LoanApplication" asp-action="Index">Opened Loan Applications</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Email" asp-action="Closed"><b>Closed</b></a>
                     </li>
                     @if (User.IsInRole("Administrator"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Applicant" asp-action="Index">Applicants</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="LoanApplication" asp-action="Index"><b>Opened Loan Applications</b></a>
                         </li>
-                        <li class="nav-item text-black"><a class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Applicant" asp-action="Index"><b>Applicants</b></a>
+                        </li>
+                        <li class="nav-item text-black"><a class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="Index"><b>Users</b></a></li>
                     }
                 </ul>
             </div>

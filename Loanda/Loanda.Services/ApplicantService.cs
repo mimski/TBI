@@ -53,6 +53,11 @@ namespace Loanda.Services
             return existingApplicant.ToService();
         }
 
+        public async Task<int> CountAsync()
+        {
+            return await context.Applicants.CountAsync();
+        }
+
         public async Task<Applicant> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken)
         {
             var applicant = await this.context.Applicants.SingleOrDefaultAsync(a => a.Id.Equals(id), cancellationToken);

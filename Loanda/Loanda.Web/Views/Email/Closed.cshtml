@@ -1,19 +1,17 @@
 ﻿@model IEnumerable<Loanda.Web.Models.Email.EmailViewModel>
 @{
-    ViewData["Title"] = "New";
+    ViewData["Title"] = "Closed";
 }
 <div class="container-fluid">
     <div align="justify">
         <h1>
             <svg id="i-mail" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="red" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                 <path d="M2 26 L30 26 30 6 2 6 Z M2 6 L16 16 30 6" />
-            </svg> Open
+            </svg> Closed
         </h1>
     </div>
 
-
-    <form asp-controller="Email" asp-action="Open" method="post">
-
+    <form asp-controller="Email" asp-action="Closed" method="post">
         <div class="panel-body">
             <table class="table table-striped table-hover">
                 <thead>

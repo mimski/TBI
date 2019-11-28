@@ -20,8 +20,10 @@ namespace Loanda.Services.Contracts
         Task<LoanApplication> MarkAsDeletedAsync(Guid id, CancellationToken cancellationToken);
 
         Task<bool> RemoveAsync(long id, CancellationToken cancellationToken);
+
         Task<bool> RejectAsync(LoanApplication loanApplication, CancellationToken cancellationToken);
 
         Task<bool> ApproveAsync(LoanApplication loanApplication, CancellationToken cancellationToken);
+        //Task<bool> ChangeStatusToDefaultAsync(long id, CancellationToken cancellationToken);
     }
 }
