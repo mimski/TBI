@@ -42,7 +42,7 @@ namespace Loanda.Services
             email.Body = emailDto.Body;
             email.AttachmentsTotalSizeInMB = (double)emailDto.AttachmentsTotalSizeInMB;
             email.TotalAttachments = emailDto.TotalAttachments;
-          
+
             this.context.ReceivedEmails.Update(email);
             await this.context.SaveChangesAsync();
             return email.ToService();
@@ -73,7 +73,7 @@ namespace Loanda.Services
 
             foreach (var email in emails)
             {
-                email.Body = Base64Decode(email.Body);
+                email.Body = Base64Decode(email.Body ?? string.Empty);
             }
 
             return emails.ToService();
@@ -130,7 +130,8 @@ namespace Loanda.Services
             if (existingEmail != null)
             {
                 existingEmail.EmailStatusId = -3;
-               
+                existingEmail.DeletedOn = DateTime.UtcNow.AddHours(2);
+
                 this.context.ReceivedEmails.Update(existingEmail);
                 await this.context.SaveChangesAsync(cancellationToken);
                 return true;
@@ -141,9 +142,9 @@ namespace Loanda.Services
             }
         }
 
-        public async Task<bool> MarkNotReviewedAsync(EmailDTO receivedEmail, CancellationToken cancellationToken)
+        public async Task<bool> MarkNotReviewedAsync(ReceivedEmail receivedEmail, CancellationToken cancellationToken)
         {
-            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.GmailEmailId.Equals(receivedEmail.GmailEmailId), cancellationToken);
+            var existingEmail = await this.context.ReceivedEmails.SingleOrDefaultAsync(email => email.Id.Equals(receivedEmail.Id), cancellationToken);
             if (existingEmail != null)
             {
                 existingEmail.EmailStatusId = -1;
@@ -207,6 +208,18 @@ namespace Loanda.Services
             {
                 return false;
             }
+        }
+
+        public async Task<bool> UpdateAsync(EmailDTO emailDto)
+        {
+            var existingApplicant = await this.context.ReceivedEmails.SingleOrDefaultAsync(a => a.Id.Equals(emailDto.Id));
+            var email = emailDto.ToEntity();
+            email.EmailStatusId = -1;
+
+            this.context.Entry(existingApplicant).CurrentValues.SetValues(email);
+            await this.context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

@@ -93,11 +93,9 @@ namespace Loanda.Web.Controllers
 
         public async Task<IActionResult> MarkNotReviewed(EmailViewModel emailViewModel, CancellationToken cancellationToken)
         {
-
             try
             {
-                await this.gmailApi.GetEmailByGmailId(emailViewModel.Id, cancellationToken); 
-                //await this.emailService.MarkNotReviewedAsync(emailViewModel.ToServiceModel(), cancellationToken);
+                await this.emailService.MarkNotReviewedAsync(emailViewModel.ToServiceModel(), cancellationToken);
             }
             catch (Exception)
             {

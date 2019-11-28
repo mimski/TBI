@@ -38,6 +38,7 @@ namespace Loanda.Services.Mappings
             return dto != null
                 ? new ReceivedEmailEntity
                 {
+                    Id = dto.Id,
                     Body = dto.Body,
                     Subject = dto.Subject,
                     DateReceived = dto.DateReceived,
